@@ -1,0 +1,81 @@
+# Ignore node_modules in the React frontend
+job_buddy_frontend/node_modules/
+
+# Ignore build output in the React frontend
+job_buddy_frontend/build/
+
+# Ignore package-lock.json (optional, can be tracked if needed)
+job_buddy_frontend/package-lock.json
+
+# Ignore Yarn files (optional, can be tracked if needed)
+job_buddy_frontend/yarn.lock
+
+# Ignore React coverage reports
+job_buddy_frontend/coverage/
+
+# Ignore environment files for React
+job_buddy_frontend/.env
+
+# Ignore log files
+job_buddy_frontend/npm-debug.log*
+
+# Ignore build and dist folders (if using custom setups)
+job_buddy_frontend/dist/
+
+# Ignore Dotnet Core bin and obj folders
+job_buddy_backend/bin/
+job_buddy_backend/obj/
+
+# Ignore Visual Studio temporary files
+job_buddy_backend/.vs/
+
+# Ignore .NET user-specific files
+job_buddy_backend/*.dbmdl
+job_buddy_backend/*.log
+job_buddy_backend/.DS_Store
+job_buddy_backend/*.suo
+job_buddy_backend/*.user
+job_buddy_backend/*.userosscache
+job_buddy_backend/*.sln.docstates
+
+# Ignore ASP.NET Core Identity data
+job_buddy_backend/appsettings.Development.json
+job_buddy_backend/appsettings.Local.json
+job_buddy_backend/appsettings.Production.json
+job_buddy_backend/appsettings.Staging.json
+
+# Ignore IDE-specific files (e.g., Visual Studio Code, JetBrains Rider)
+.vscode/
+.idea/
+
+# Ignore environment files for .NET backend
+job_buddy_backend/.env
+job_buddy_backend/.vs/
+
+# Ignore macOS-specific files
+.DS_Store
+
+# Ignore Windows-specific files
+Thumbs.db
+
+# Ignore build artifacts
+job_buddy_backend/artifacts/
+job_buddy_backend/publish/
+job_buddy_backend/wwwroot/
+
+# Ignore additional files specific to CI/CD
+*.bak
+*.cache
+*.swp
+*.bak
+*.tmp
+*.backup
+*.diff
+*.orig
+*.rej
+
+# Ignore temporary files in both frontend and backend
+*.tmp
+
+# Ignore log files in both frontend and backend
+*.log

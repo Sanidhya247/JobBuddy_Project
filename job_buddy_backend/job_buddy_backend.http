@@ -1,0 +1,6 @@
+@job_buddy_backend_HostAddress = http://localhost:5188
+
+GET {{job_buddy_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
