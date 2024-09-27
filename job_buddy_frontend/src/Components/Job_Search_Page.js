@@ -1,10 +1,18 @@
 import React from 'react';
 import "../assets/css/job_search_page.css";
 
-const job_search_Page = () => {
+const Job_Search_Page = () => {
   return (
-    <div>Job_search_Page</div>
+    <div className="search-container">
+      <div className="search-bar">
+        <div className="search-input">
+          <span className="search-icon">Icon</span>
+          <input type="text" placeholder="Job Title" />
+        </div>
+        <button className="search-button">Search</button>
+      </div>
+    </div>
   )
 }
 
-export default job_search_Page;
+export default Job_Search_Page;
