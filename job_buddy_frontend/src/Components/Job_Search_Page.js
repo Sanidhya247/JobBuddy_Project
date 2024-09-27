@@ -5,7 +5,7 @@ const Job_Search_Page = () => {
   return (
 
     <div className="main-container">
-      
+
       <div className="search-bar">
         <div className="search-input">
           <span className="search-icon">Icon</span>
@@ -17,7 +17,7 @@ const Job_Search_Page = () => {
       <div className="content-container">
 
           <div className="job-list">
-              <div className="job-card">
+            <div className="job-card">
                 <div className="company-logo">
                   <img src="#" alt="Company Logo" />
                 </div>
@@ -39,7 +39,7 @@ const Job_Search_Page = () => {
                   <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                   <button className="apply-now-btn">Quick Apply</button>
                 </div>
-              </div>
+            </div>
         </div>
 
         <div className="filter-sidebar">
@@ -69,8 +69,18 @@ const Job_Search_Page = () => {
             <button className="clear-btn">Clear All</button>
           </div>
         </div>
-      
       </div>
+
+      <div className="pagination">
+        <div className="pagination-button active">1</div>
+        <div className="pagination-button">2</div>
+        <div className="pagination-button">3</div>
+        <div className="pagination-dots">.....</div>
+        <div className="pagination-button">
+          <i className="pagination-next">100</i>
+        </div>
+      </div>
+
     </div>
     
   )
