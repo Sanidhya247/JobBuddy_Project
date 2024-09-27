@@ -5,6 +5,7 @@ const Job_Search_Page = () => {
   return (
 
     <div className="main-container">
+      
       <div className="search-bar">
         <div className="search-input">
           <span className="search-icon">Icon</span>
@@ -14,6 +15,33 @@ const Job_Search_Page = () => {
       </div>
 
       <div className="content-container">
+
+          <div className="job-list">
+              <div className="job-card">
+                <div className="company-logo">
+                  <img src="#" alt="Company Logo" />
+                </div>
+                <div className="company-details">
+                  <h3>Pharmacy Assistant | Grimsby Pharmacy</h3>
+                  <p>Kitchener, ON | Full Time | Employee | $15 / hour</p>
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                  <button className="apply-now-btn">Quick Apply</button>
+                </div>
+              </div>
+
+              <div className="job-card">
+                <div className="company-logo">
+                  <img src="#" alt="Company Logo" />
+                </div>
+                <div className="company-details">
+                  <h3>Pharmacy Assistant | Grimsby Pharmacy</h3>
+                  <p>Kitchener, ON | Full Time | Employee | $15 / hour</p>
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                  <button className="apply-now-btn">Quick Apply</button>
+                </div>
+              </div>
+        </div>
+
         <div className="filter-sidebar">
           <h2>Filters</h2>
           <div className="filter-group">
@@ -41,8 +69,8 @@ const Job_Search_Page = () => {
             <button className="clear-btn">Clear All</button>
           </div>
         </div>
+      
       </div>
-
     </div>
     
   )
