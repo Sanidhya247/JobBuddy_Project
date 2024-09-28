@@ -30,6 +30,9 @@
         public DateTime? LastLoginAt { get; set; }  
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string? EmailConfirmationToken { get; set; }  
+
+        public string? PasswordResetToken { get; set; }
 
         ////Navigation properties
         //public ICollection<Resume> Resumes { get; set; } = new List<Resume>();
