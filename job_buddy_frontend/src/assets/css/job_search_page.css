@@ -252,9 +252,7 @@
   
 .pagination-button .pagination-next {
     font-size: 20px;
-}
-
-  
+}  
 
 /* Tablet View (834px) */
 @media (max-width: 834px) {
@@ -330,29 +328,84 @@
   
 /* Mobile View (430px) */
 @media (max-width: 430px) {
+
+    .search-bar {
+        flex-direction: column;
+        align-items: stretch; 
+        border-radius: 25px; 
+    }
     
-.search-bar {
-    flex-direction: column;
-    align-items: stretch; 
-    border-radius: 25px; 
-}
-  
-.search-input {
-    padding: 8px 15px; 
-    border-top-left-radius: 25px; 
-    border-top-right-radius: 25px;
-}
-  
-.search-input input {
-    font-size: 16px; 
-}
-  
-.search-button {
-    border-radius: 25px; 
-    margin-top: 10px; 
-    padding: 12px 20px;
-    font-size: 16px; 
-    width: 100%;
-    background-color: var(--primary-color);
+    .search-input {
+        padding: 8px 15px; 
+        border-top-left-radius: 25px; 
+        border-top-right-radius: 25px;
+    }
+    
+    .search-input input {
+        font-size: 16px; 
+    }
+    
+    .search-button {
+        border-radius: 25px; 
+        margin-top: 10px; 
+        padding: 12px 20px;
+        font-size: 16px; 
+        width: 100%;
+        background-color: var(--primary-color);
+        }
+        
+    .job-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        gap: 10px;
+        text-align: center;
+    }
+
+    .company-logo {
+        font-size: 40px;
+        background-color: var(--secondary-color);
+        color: #fff;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+
+    .company-details h3 {
+        margin: 0;
+        font-size: 18px;
+        color: #304e40;
+        line-height: 1.2;
+    }
+
+    .company-details p {
+        margin: 5px 0;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .apply-now-btn {
+        padding: 10px 20px;
+        background-color: #304e40;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        transition: background-color 0.3s;
+        width: 100%;
+    }
+
+    .apply-now-btn:hover {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
     }
 }

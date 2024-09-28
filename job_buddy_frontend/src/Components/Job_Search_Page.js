@@ -69,6 +69,7 @@ const Job_Search_Page = () => {
                 </div>
             </div>
         </div>
+        
       </div>
 
       <div className="pagination">
