@@ -9,6 +9,7 @@ import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Contact from './Components/Contact';
 import About from './Components/About';
+import Job_Search_Page from './Components/Job_Search_Page';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
+        <Route path="/Job" element={<Job_Search_Page />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
