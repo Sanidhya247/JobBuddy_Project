@@ -16,6 +16,7 @@
 .logo-img {
     height: 50px;
     margin-right: 10px;
+    cursor: pointer;
 }
 
 .logo-text {
@@ -47,13 +48,27 @@
 }
 
 /* Profile icon */
-.navbar-icon {
+.navbar-right {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+.navbar-right a{
+    margin: 2%;
 }
 
 .profile-img {
     height: 30px;
     width: 30px;
     border-radius: 50%;
+}
+
+.nav-link{
+    margin: 2%;
+}
+
+.profile-icon{
+    width: 3vw;
+  height: 3vw;
+  color: black;
 }
