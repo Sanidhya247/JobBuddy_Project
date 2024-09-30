@@ -1,0 +1,39 @@
+.form-container {
+  position: relative;
+}
+
+.form-group {
+  margin: 3% auto;  
+}
+
+.floating-label {
+  position: absolute;
+  top: 40%;
+  left: 2%;
+  font-size: 14px;
+  background-color: white;
+  padding: 0 5px;
+  transition: all 0.3s ease; 
+}
+
+.label-up {
+  top: -5%;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  border: 2px solid black;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: darkgreen;
+}
+
+.form-input::placeholder {
+  color: transparent;
+}

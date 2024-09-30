@@ -1,0 +1,33 @@
+
+  h2 {
+    text-align: center;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  .form-group input[type="file"] {
+    text-align: center;
+  }
+  
+  .column {
+    width: 48%;
+  }
+  
+  .form-group a {
+    color: #004c3f;
+    text-decoration: none;
+  }
+
+  .job-application-header h2{
+    text-align: center;
+  }
+  
