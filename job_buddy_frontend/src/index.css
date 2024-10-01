@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Global variables */
+:root {
+  --form-bg-color: #ffffff;
+  --form-shadow-color: rgba(0, 0, 0, 0.1);
+  --font-primary: "Arial", sans-serif;
+  --input-border-color: #dcdcdc;
+  --input-focus-border: #62a87c;
+  --error-color: #e74c3c;
+  --button-bg-color: #254336;
+  --button-hover-color: #1e3b2f;
+  --button-active-color: #19322a;
+  --link-color: #254336;
+  --link-hover-color: #1e3b2f;
+}
+
+
