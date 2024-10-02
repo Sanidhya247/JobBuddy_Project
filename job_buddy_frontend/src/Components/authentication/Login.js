@@ -12,7 +12,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [localError, setLocalError] = useState(""); 
   const [fieldErrors, setFieldErrors] = useState({}); 
-  const [showToaster, setShowToaster] = useState(false); 
 
   // Form submission handler
   const handleSubmit = async (e) => {
