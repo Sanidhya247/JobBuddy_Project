@@ -55,8 +55,7 @@ namespace job_buddy_backend.Core
 
                 if (!emailSent)
                 {
-                    await transaction.RollbackAsync(); // Rollback if email sending fails
-                    throw new InvalidOperationException("Error sending confirmation email. Registration rolled back.");
+                    throw new InvalidOperationException("Error sending confirmation email. Please contact Admin.");
                 }
 
                 await transaction.CommitAsync(); // Commit transaction if everything is successful
@@ -78,7 +77,7 @@ namespace job_buddy_backend.Core
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
                 if (user == null || !VerifyPassword(loginDto.Password, user.PasswordHash))
                 {
-                    throw new UnauthorizedAccessException("Invalid credentials.");
+                    throw new UnauthorizedAccessException("Invalid credentials! Please try again.");
                 }
 
                 if (!user.IsEmailVerified)
@@ -95,7 +94,7 @@ namespace job_buddy_backend.Core
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred during login.");
+                _logger.LogError(ex, "An error occurred during login. Please contact Admin.");
                 throw;
             }
         }
@@ -182,31 +181,46 @@ namespace job_buddy_backend.Core
         // Generate JWT Token for the logged-in user
         public string GenerateJwtToken(User user)
         {
-            return _jwtService.GenerateToken(user); // Use JwtService to create the token
+            return _jwtService.GenerateToken(user).Result; // Use JwtService to create the token
         }
 
         // Hash the user's password
         public string HashPassword(string password)
         {
             return BCrypt.Net.BCrypt.HashPassword(password); // Using BCrypt for hashing
+            //We are currently using Bcrypt hashing algorithm, we can also use any other alogorithms like SHA-256 etc.,
         }
 
         // Verify the user's password
         public bool VerifyPassword(string password, string hashedPassword)
         {
             return BCrypt.Net.BCrypt.Verify(password, hashedPassword); // Verify hashed password
+            //We are currently using Bcrypt hashing algorithm, we can also use any other alogorithms like SHA-256 etc.,
         }
 
         // Generate a token for email confirmation
         private string GenerateConfirmationToken()
         {
             return Guid.NewGuid().ToString(); // Use GUID here; can be replaced by JWT if needed
+            //This method creates a unique 16 digits random characters. We can also replace with our JWT token 
         }
 
         // Generate a token for password reset
         private string GenerateResetToken()
         {
             return Guid.NewGuid().ToString(); // Use GUID here; can be replaced by JWT if needed
+            //This method creates a unique 16 digits random characters. We can also replace with our JWT token 
+        }
+
+        //Get User by user id
+        public async Task<User> GetUserByIdAsync(int userId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserID == userId);
+            if (user == null)
+            {
+                throw new InvalidOperationException("User not found.");
+            }
+            return user;
         }
     }
 }

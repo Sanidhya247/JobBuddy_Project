@@ -13,5 +13,6 @@ namespace job_buddy_backend.Core.Interfaces
         string GenerateJwtToken(User user);
         Task<string> GenerateEmailConfirmationTokenAsync(int userId);
         Task<string> GeneratePasswordResetTokenAsync(int userId);
+        Task<User> GetUserByIdAsync(int userId);
     }
 }
