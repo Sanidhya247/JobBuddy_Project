@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import "./Auth.css";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const { register, setError } = useContext(AuthContext);
@@ -24,7 +25,7 @@ const Register = () => {
   const validateForm = () => {
     let formErrors = {};
 
-    // Add validation logic
+    //validation logic for the registration form
     if (!formData.fullName) formErrors.fullName = "Full name is required.";
     if (!formData.email) {
       formErrors.email = "Email is required.";
@@ -55,11 +56,14 @@ const Register = () => {
     if (validateForm()) {
       try {
         await register(formData);
+        toast.success("Registration successful! Please check your email to confirm your account.");
         navigate("/verify-email");
       } catch (err) {
-        const errorMessage = err.response?.data?.message || "Registration failed.";
+        console.log(err?.message);
+        const errorMessage = err?.message || "Registration failed.";
         setErrors({ server: errorMessage });
         setError(errorMessage); 
+        toast.error(errorMessage);
       }
     }
   };
@@ -67,6 +71,7 @@ const Register = () => {
   return (
     <div className="auth-container">
       <h2>Create Account</h2>
+      {errors.server && <div className="error">{errors.server}</div>}
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group">
           <label>Full Name</label>
@@ -125,9 +130,6 @@ const Register = () => {
             onChange={handleChange}
           />
         </div>
-
-        {errors.server && <div className="error-text server-error">{errors.server}</div>}
-
         <button type="submit" className="auth-button">Sign Up</button>
         <p>Already have an account? <Link to="/login" className="switch-auth-link">Log In</Link></p>
       </form>

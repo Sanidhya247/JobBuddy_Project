@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import Toaster from "../../components/commons/Toaster"; 
 import "./Auth.css";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { login, setError } = useContext(AuthContext);
@@ -26,7 +26,7 @@ const Login = () => {
 
     try {
       await login({ email, password }); // Call the login function from context
-      setShowToaster(true); // Show success toaster when login is successful
+      toast.success("Login Successful! Welcome to JobBuddy.");
       setTimeout(() => {
         navigate("/home"); 
       }, 2000); 
@@ -35,6 +35,7 @@ const Login = () => {
       setLocalError(errorMessage);
       setError(errorMessage); 
       setFieldErrors({});
+      toast.error(errorMessage);
     }
   };
 
@@ -87,14 +88,7 @@ const Login = () => {
           <p>Don’t have an account? <Link to="/register" className="switch-auth-link">Sign Up</Link></p>
         </div>
       </form>
-      
-      {showToaster && (
-        <Toaster
-          message="Login Successful! Redirecting to home..."
-          type="success"
-          onClose={() => setShowToaster(false)} // Function to hide the toaster
-        />
-      )}
+
     </div>
   );
 };
