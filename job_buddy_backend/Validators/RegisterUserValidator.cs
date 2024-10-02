@@ -37,21 +37,6 @@ namespace job_buddy_backend.Validators
                 .Matches(@"^\+?[1-9]\d{1,14}$").WithMessage("Phone number is invalid.")
                 .When(x => !string.IsNullOrEmpty(x.PhoneNumber));
 
-            // LinkedIn URL is optional, but if provided, it should be a valid URL
-            RuleFor(x => x.LinkedInUrl)
-                .Must(IsValidUrl).WithMessage("A valid LinkedIn URL is required.")
-                .When(x => !string.IsNullOrEmpty(x.LinkedInUrl));
-
-            // Address is optional but should not exceed 255 characters if provided
-            RuleFor(x => x.Address)
-                .MaximumLength(255).WithMessage("Address cannot be longer than 255 characters.")
-                .When(x => !string.IsNullOrEmpty(x.Address));
-        }
-
-        // Helper function to validate URLs
-        private bool IsValidUrl(string url)
-        {
-            return Uri.TryCreate(url, UriKind.Absolute, out _);
-        }
+        }  
     }
 }

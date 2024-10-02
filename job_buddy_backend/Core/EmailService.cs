@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using job_buddy_backend.Core.Interfaces;
 using job_buddy_backend.Models;
+using job_buddy_backend.Helpers;
 
 namespace job_buddy_backend.Core
 {
@@ -13,22 +14,30 @@ namespace job_buddy_backend.Core
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<EmailService> _logger;
+        private readonly IConfigurationService _configurationService;
 
-        public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
+        public EmailService(IConfiguration configuration, ILogger<EmailService> logger, IConfigurationService configurationService)
         {
             _configuration = configuration;
             _logger = logger;
+            _configurationService = configurationService;
         }
 
         public async Task<bool> SendEmailConfirmationAsync(string email, string token, int userId)
         {
             try
             {
-                var apiKey = _configuration["EmailSettings:MailgunApiKey"];
-                var domain = _configuration["EmailSettings:MailgunDomain"];
-                var baseUrl = _configuration["EmailSettings:MailgunBaseUrl"];
-                var fromEmail = _configuration["EmailSettings:SenderEmail"];
-                var fromName = _configuration["EmailSettings:SenderName"];
+                var apiKey = await _configurationService.GetSettingAsync("MailgunApiKey");
+                var domain = await _configurationService.GetSettingAsync("MailgunDomain");
+                var baseUrl = await _configurationService.GetSettingAsync("MailgunBaseUrl");
+                var fromEmail = await _configurationService.GetSettingAsync("SenderEmail");
+                var fromName = await _configurationService.GetSettingAsync("SenderName");
+                //var apiKey = _configuration["EmailSettings:MailgunApiKey"];
+                //var domain = _configuration["EmailSettings:MailgunDomain"];
+                //var baseUrl = _configuration["EmailSettings:MailgunBaseUrl"];
+                //var fromEmail = _configuration["EmailSettings:SenderEmail"];
+                //var fromName = _configuration["EmailSettings:SenderName"];
+
                 var confirmationUrl = $"{_configuration["AppSettings:BaseUrl"]}/api/auth/confirm-email?token={token}&userId={userId}";
                 
 

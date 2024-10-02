@@ -1,4 +1,5 @@
 ﻿using job_buddy_backend.Core.Interfaces;
+using job_buddy_backend.Helpers;
 using job_buddy_backend.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,13 +11,15 @@ namespace job_buddy_backend.Core
     public class JwtService : IJwtService
     {
         private readonly IConfiguration _configuration;
+        private readonly IConfigurationService _configurationService;
 
-        public JwtService(IConfiguration configuration)
+        public JwtService(IConfiguration configuration, IConfigurationService configurationService)
         {
             _configuration = configuration;
+            _configurationService = configurationService;
         }
 
-        public string GenerateToken(User user)
+        public async Task<string> GenerateToken(User user)
         {
             // Create claims based on the user's information
             var claims = new[]
@@ -28,7 +31,7 @@ namespace job_buddy_backend.Core
             };
 
             // Get the key and credentials from the configuration
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(await _configurationService.GetSettingAsync("JwtKey")));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             // Define the token's expiration and other properties

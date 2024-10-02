@@ -5,6 +5,7 @@ using job_buddy_backend.Core;
 using job_buddy_backend.Core.Interfaces;
 using job_buddy_backend.DTO;
 using job_buddy_backend.DTO.Mapping;
+using job_buddy_backend.Helpers;
 using job_buddy_backend.Models.DataContext;
 using job_buddy_backend.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,7 +20,9 @@ namespace job_buddy_backend
     {
         public static void Main(string[] args)
         {
+            
             var builder = WebApplication.CreateBuilder(args);
+            var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
 
             // Set up Serilog
             Log.Logger = new LoggerConfiguration()
@@ -35,6 +38,9 @@ namespace job_buddy_backend
             // Configure SQL Server
             builder.Services.AddDbContext<JobBuddyDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            //Register the memory cache DI
+            builder.Services.AddMemoryCache();
 
             // Configure JWT Authentication
             builder.Services.AddAuthentication(options =>
@@ -61,13 +67,23 @@ namespace job_buddy_backend
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserValidator>(
 ));
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
-            //Configure the lifetime cycle for validators
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowSpecificOrigins",
+                                  policy =>
+                                  {
+                                      policy.WithOrigins(allowedOrigins)
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                                  });
+            });
+            //Configure the lifetime cycle for registered services
             builder.Services.AddTransient<IValidator<RegisterUserDto>, RegisterUserValidator>();
             builder.Services.AddTransient<IValidator<LoginUserDto>, LoginUserValidator>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IJwtService, JwtService>();
+            builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -84,7 +100,7 @@ namespace job_buddy_backend
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors("AllowSpecificOrigins");
             app.UseAuthentication();
             app.UseAuthorization();
 

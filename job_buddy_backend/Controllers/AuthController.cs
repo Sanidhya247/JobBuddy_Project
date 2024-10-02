@@ -44,13 +44,28 @@ namespace job_buddy_backend.Controllers
                     return StatusCode(500, ApiResponse<string>.FailureResponse("Unable to register user! Please contact admin"));
                 }
 
+                var userDto = new UserDto
+                {
+                    UserID = user.UserID,
+                    Email = user.Email,
+                    FullName = user.FullName,
+                    Role = user.Role,
+                    IsEmailVerified = user.IsEmailVerified,
+                };
+
                 _logger.LogInformation($"User {user.Email} registered successfully.");
-                return Ok(ApiResponse<string>.SuccessResponse("Registration successful. Please check your email to confirm your account."));
+                return Ok(ApiResponse<UserDto>.SuccessResponse(userDto, "Registration successful. Please check your email to confirm your account."));
+            }
+            catch(InvalidOperationException ex)
+            {
+                _logger.LogError(ex, "An error occurred during registration.");
+                return StatusCode(500, ApiResponse<string>.FailureResponse($"{ex.Message}"));
+
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred during registration.");
-                return StatusCode(500, ApiResponse<string>.FailureResponse("An error occurred during registration."));
+                return StatusCode(500, ApiResponse<string>.FailureResponse("An error occurred during registration. Please try again."));
             }
         }
 
@@ -72,8 +87,25 @@ namespace job_buddy_backend.Controllers
                     return Unauthorized(ApiResponse<string>.FailureResponse("Please confirm your email before logging in."));
                 }
 
+
                 var token = _authService.GenerateJwtToken(user);
-                return Ok(ApiResponse<string>.SuccessResponse(token, "Login successful."));
+
+                var userDto = new UserDto
+                {
+                    UserID = user.UserID,
+                    Email = user.Email,
+                    FullName = user.FullName,
+                    Role = user.Role,
+                    IsEmailVerified = user.IsEmailVerified,
+                };
+
+                var loginResponse = new LoginResponseDto
+                {
+                    Token = token,
+                    User = userDto
+                };
+
+                return Ok(ApiResponse<LoginResponseDto>.SuccessResponse(loginResponse, "Login successful."));
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -183,6 +215,47 @@ namespace job_buddy_backend.Controllers
                 return StatusCode(500, ApiResponse<string>.FailureResponse("An error occurred during password reset."));
             }
         }
+
+        [HttpGet("verify-token")]
+        public IActionResult VerifyToken()
+        {
+            try
+            {
+
+                var userIdClaim = User?.FindFirst("UserID")?.Value;
+                if (string.IsNullOrEmpty(userIdClaim))
+                {
+                    return Unauthorized(ApiResponse<string>.FailureResponse("Invalid or expired token."));
+                }
+
+                
+                var userId = int.Parse(userIdClaim);
+                var user = _authService.GetUserByIdAsync(userId).Result;  
+
+                if (user == null)
+                {
+                    return Unauthorized(ApiResponse<string>.FailureResponse("User not found."));
+                }
+
+                // Return minimal user details for frontend for handling session state
+                var userDto = new UserDto
+                {
+                    UserID = user.UserID,
+                    Email = user.Email,
+                    FullName = user.FullName,
+                    Role = user.Role,
+                    IsEmailVerified = user.IsEmailVerified,
+                };
+
+                return Ok(ApiResponse<UserDto>.SuccessResponse(userDto, "Token is valid."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while verifying token.");
+                return StatusCode(500, ApiResponse<string>.FailureResponse("An error occurred while verifying the token."));
+            }
+        }
+
 
     }
 }

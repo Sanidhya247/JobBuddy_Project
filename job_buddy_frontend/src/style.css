@@ -12,6 +12,12 @@ body {
     --button-bg-color: #254336; 
     --button-hover-color: #1e3b2f; 
     --button-active-color: #19322a; 
+    --input-border-color: #dcdcdc;
+    --input-focus-border: #2c6655;
+    --form-bg-color: #f7f9fc;
+    --form-shadow-color: rgba(0, 0, 0, 0.15);
+    --error-color: #e74c3c;
+    --font-color: #333;
 }
 
 .container {
