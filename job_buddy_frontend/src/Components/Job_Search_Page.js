@@ -136,7 +136,7 @@ const jobListings = [
 ];
 
 
-const Job_Search_Page = () => {
+const JobSearchPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;
 
@@ -213,4 +213,4 @@ const Job_Search_Page = () => {
   )
 }
 
-export default Job_Search_Page;
+export default JobSearchPage;
