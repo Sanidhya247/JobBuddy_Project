@@ -27,8 +27,8 @@ const Login = () => {
       await login({ email, password }); // Call the login function from context
       toast.success("Login Successful! Welcome to JobBuddy.");
       setTimeout(() => {
-        navigate("/home"); 
-      }, 2000); 
+        navigate("/"); 
+      }, 1000); 
     } catch (err) {
       const errorMessage = err.message || "Invalid email or password. Please try again.";
       setLocalError(errorMessage);

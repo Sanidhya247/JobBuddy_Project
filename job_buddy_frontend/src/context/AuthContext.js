@@ -11,17 +11,17 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("authToken") || "");
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  // Define backend URL using environment variables
+ // Define backend URL using environment variables
   const BASE_URL = process.env.REACT_APP_API_URL || "https://localhost:7113";
 
-  // Configure Axios instance for authentication-related API calls
+    // Configure Axios instance for authentication-related API calls
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
   });
 
-  // Logout function to clear state and navigate to login
+  // Logout function
   const logout = useCallback(() => {
     setUser(null);
     setToken("");
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     navigate("/login");
   }, [navigate]);
 
-  // Effect to check user authentication status on initial load
+  // Check if user is authenticated on initial load
   useEffect(() => {
     const checkAuthenticatedUser = async () => {
       try {
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
               Authorization: `Bearer ${token}`,
             },
           });
-          setUser(data.user);
+          setUser(data?.data || null);
         }
       } catch (err) {
         setError("Invalid token. Please log in again.");
@@ -51,12 +51,12 @@ export const AuthProvider = ({ children }) => {
     checkAuthenticatedUser();
   }, [token, logout, axiosInstance]);
 
-  // Register function 
+  // Register function
   const register = async (registerData) => {
     try {
       const { data } = await axiosInstance.post("/api/auth/register", registerData);
       if (data.success) {
-        setUser(data.data);
+        setUser(data.data.user);
         setError(null);
       } else {
         throw new Error(data.message);
@@ -66,14 +66,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Login function 
+  // Login function
   const login = async (loginData) => {
     try {
       const { data } = await axiosInstance.post("/api/auth/login", loginData);
       if (data.success) {
-        setToken(data.data); //set token 
-        localStorage.setItem("authToken", data.data); //add token to local storage
-        setUser(null);
+        setToken(data.data.token);
+        localStorage.setItem("authToken", data.data.token);
+        setUser(data.data.user);
         setError(null);
       } else {
         throw new Error(data.message);
