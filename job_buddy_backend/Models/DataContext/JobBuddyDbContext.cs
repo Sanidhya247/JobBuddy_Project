@@ -22,6 +22,8 @@ namespace job_buddy_backend.Models.DataContext
         public DbSet<JobTag> JobTags { get; set; }
         public DbSet<ResumeSkill> ResumeSkills { get; set; }
 
+        public DbSet<EmployerProfile> EmployerProfiles { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
