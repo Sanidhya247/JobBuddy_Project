@@ -11,6 +11,7 @@ import Register from "./components/authentication/Register";
 import PostJob from "./components/PostJob"; 
 import Profile from "./components/Profile"; 
 import JobSearchPage from "./components/Job_Search_Page";
+import VerifyEmail from './components/authentication/VerifyEmail';
 
 
 function App() {
@@ -25,8 +26,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/post" element={<PostJob />} />
-          <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
       </Routes>
       <Footer />
     </>
