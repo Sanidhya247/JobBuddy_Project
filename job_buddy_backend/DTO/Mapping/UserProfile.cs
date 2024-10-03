@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using job_buddy_backend.Models;
+using JobBuddyBackend.Models;
 
 namespace job_buddy_backend.DTO.Mapping
 {
@@ -9,8 +10,10 @@ namespace job_buddy_backend.DTO.Mapping
             CreateMap<RegisterUserDto, User>();
             CreateMap<User, RegisterUserDto>();
             CreateMap<LoginUserDto, User>();
+            CreateMap<JobListing, JobListingDto>().ReverseMap();
+
 
         }
-        
+
     }
 }
