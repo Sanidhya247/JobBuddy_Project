@@ -53,10 +53,13 @@ Open the backend project solution in either Visual studio(Preffered) or Visual s
 Go to Appsettings.json file and change the server name to your sql server name (for eg., "localhost","Your-laptopname"check for the server name in your ssms connections)
 ```
 ```bash 
-Go to Tools menu > Nuget package manager > Package manager console > run "update-database"
+Run the Sql file "Jobbuddy_Create_Db_Script"
 ```
 ```bash 
-If the build is successful, database is created for you for Job Buddy application. You can verify in SSMS.
+Once JobBuddy DB is created in your sql server, Run the Sql file "Jobbuddy_SQL_Script".
+```
+```bash 
+Now! Job buddy database with tables are created in your sql server.
 ```
 ```bash 
 Run the application from Visual studio by clicking on green button from below the menu section. The app starts on port 7113.
@@ -77,8 +80,11 @@ Run "Npm run" command
 ```bash 
 Now UI application runs on localhost:3000
 ```
+## Demo
 
-# job_buddy_backend
+https://drive.google.com/file/d/1oZIWdZHSxJO3qT2auFkxFE0SbhnUQ-OT/view?usp=drive_link
+
+# API Documentation - Swagger
 ## Version: 1.0
 
 ### /api/Auth/register
