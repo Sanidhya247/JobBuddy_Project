@@ -2,15 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import "../assets/css/navbar.css";
 import logo from '../assets/imgs/logos/logo-transparent.svg';
 import Button from "./commons/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+// reference : https://www.npmjs.com/package/@fortawesome/free-regular-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext); // Directly access `user` context state
-  const [display, setDisplay] = useState(!!user);
-  //const navigate = useNavigate();
+  const { user, logout } = useContext(AuthContext); // Access user and logout information from AuthContext
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [display , setDisplay] = useState();
 
   
 
@@ -18,34 +20,41 @@ const Navbar = () => {
     setDisplay(!!user);
   }, [user]);
 
-  // Handle logout operation and navigate to login page
   const handleLogout = () => {
-    logout();
-    setDisplay(false);
+    logout(); 
+    navigate("/"); 
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <Link to="/">
+        <Link onClick={toggleMenu} to="/">
           <img src={logo} alt="JobBuddy Logo" className="logo-img" />
         </Link>
       </div>
-      <ul className="navbar-links full-width content-center">
-        <Link className="nav-link" to={"/"}>Home</Link>
-        <Link className="nav-link" to={"/Job"}>Jobs</Link>
-        <Link className="nav-link" to={"/about"}>About</Link>
-        <Link className="nav-link" to={"/contact"}>Contact</Link>
-        <Link className="nav-link" to={"/post"}>Post Job</Link>
+
+      <div className={`hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <ul className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/">Home</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/Job">Jobs</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/about">About</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/contact">Contact</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/post">Post Job</Link></li>
       </ul>
-      <div className="navbar-right">
-        {/* Show profile icon only if the user is logged in */}
-        {display && (
-          <Link to={"/profile"}>
-            <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
-          </Link>
-        )}
-        {display ? (
+      <div className={`navbar-right ${isMenuOpen ? 'active' : ''}`}>
+        {/* <Link to="/profile">
+          <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
+        </Link> */}
+        {user ? (
           <Button label={"Logout"} className={"btn-submit"} onClick={handleLogout} />
         ) : (
           <Link to="/login">

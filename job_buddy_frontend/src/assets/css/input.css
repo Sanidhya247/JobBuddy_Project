@@ -1,39 +1,82 @@
-.form-container {
+/* input.css */
+.text-field-container {
   position: relative;
+  margin-bottom: 1rem;
 }
 
-.form-group {
-  margin: 3% auto;  
-}
-
-.floating-label {
+.text-field-label {
   position: absolute;
-  top: 40%;
+  top: -8px;
   left: 2%;
-  font-size: 14px;
-  background-color: white;
-  padding: 0 5px;
-  transition: all 0.3s ease; 
+  background: white;
+  padding: 0 4px;
+  font-size: 0.75rem;
+  color: #666;
 }
 
-.label-up {
-  top: -5%;
-}
-
-.form-input {
+.text-field-input {
   width: 100%;
-  padding: 12px;
-  font-size: 18px;
-  border: 2px solid black;
-  border-radius: 12px;
-  box-sizing: border-box;
-}
-
-.form-input:focus {
+  padding: 14px 20px;
+  font-size: 16px;
+  border: 2px solid #2b3a42;
+  border-radius: 25px;
   outline: none;
-  border-color: darkgreen;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-input::placeholder {
+.text-field-input:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(43, 58, 66, 0.3);
+
+}
+
+.text-field-input::placeholder {
   color: transparent;
+}
+
+.form-group-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-group-checkbox input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.form-group-checkbox label {
+  font-size: 14px;
+}
+
+.form-group-checkbox a {
+  color: #2b3a42;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.form-group-checkbox a:hover {
+  text-decoration: underline;
+}
+
+.form-radio {
+  margin-bottom: 20px;
+  margin-top: -7px;
+}
+.radio-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.radio-buttons label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #2b3a42;
+}
+
+.radio-buttons input[type="radio"] {
+  margin-right: 8px;
 }
