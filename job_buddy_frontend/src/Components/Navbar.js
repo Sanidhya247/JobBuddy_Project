@@ -2,27 +2,26 @@ import React, { useContext, useEffect, useState } from "react";
 import "../assets/css/navbar.css";
 import logo from '../assets/imgs/logos/logo-transparent.svg';
 import Button from "./commons/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext); // Access user and logout information from AuthContext
-  const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(!!user); // Initial state based on `user` context
+  const { user, logout } = useContext(AuthContext); // Directly access `user` context state
+  const [display, setDisplay] = useState(!!user);
+  //const navigate = useNavigate();
+
+  
 
   useEffect(() => {
-    setIsLoggedIn(!!user);
-
+    setDisplay(!!user);
   }, [user]);
 
-  // Handle logout operation and navigate
-  const handleLogout = async () => {
-    await logout(); 
-    setIsLoggedIn(false); 
-    localStorage.removeItem("authToken"); 
-    navigate("/login");
+  // Handle logout operation and navigate to login page
+  const handleLogout = () => {
+    logout();
+    setDisplay(false);
   };
 
   return (
@@ -40,13 +39,13 @@ const Navbar = () => {
         <Link className="nav-link" to={"/post"}>Post Job</Link>
       </ul>
       <div className="navbar-right">
-        {/* Show the profile icon only if the user is logged in */}
-        {isLoggedIn && (
+        {/* Show profile icon only if the user is logged in */}
+        {display && (
           <Link to={"/profile"}>
             <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
           </Link>
         )}
-        {isLoggedIn ? (
+        {display ? (
           <Button label={"Logout"} className={"btn-submit"} onClick={handleLogout} />
         ) : (
           <Link to="/login">
