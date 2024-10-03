@@ -1,9 +1,14 @@
-﻿using static System.Net.Mime.MediaTypeNames;
+﻿using JobBuddyBackend.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace job_buddy_backend.Models
 {
     public class Resume
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ResumeID { get; set; }
 
         public int UserID { get; set; }
