@@ -50,5 +50,6 @@ namespace job_buddy_backend.Models
             PhoneNumbers = PhoneNumbers ?? new List<UserPhoneNumber>();
             Educations = Educations ?? new List<UserEducation>();
         }
+
     }
 }
