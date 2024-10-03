@@ -1,4 +1,6 @@
-﻿namespace JobBuddyBackend.Models
+﻿using job_buddy_backend.Models;
+
+namespace JobBuddyBackend.Models
 {
     public class JobListing
     {

@@ -43,20 +43,20 @@ namespace job_buddy_backend.Core
                     Email = registerDto.Email,
                     PasswordHash = HashPassword(registerDto.Password), // Hash password before saving
                     Role = registerDto.Role,
-                    IsEmailVerified = false, // Set as false until email confirmation
+                    IsEmailVerified = true, // Set as false until email confirmation
                     CreatedAt = DateTime.UtcNow,
                     EmailConfirmationToken = GenerateConfirmationToken() // Generate confirmation token
                 };
 
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync(); // Save user to DB
+                //This logic is not available for development purpose
+                //var emailSent = await _emailService.SendEmailConfirmationAsync(user.Email, user.EmailConfirmationToken, user.UserID);
 
-                var emailSent = await _emailService.SendEmailConfirmationAsync(user.Email, user.EmailConfirmationToken, user.UserID);
-
-                if (!emailSent)
-                {
-                    throw new InvalidOperationException("Error sending confirmation email. Please contact Admin.");
-                }
+                //if (!emailSent)
+                //{
+                //    throw new InvalidOperationException("Error sending confirmation email. Please contact Admin.");
+                //}
 
                 await transaction.CommitAsync(); // Commit transaction if everything is successful
                 return user;

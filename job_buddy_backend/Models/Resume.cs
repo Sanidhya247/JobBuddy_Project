@@ -1,4 +1,5 @@
-﻿using static System.Net.Mime.MediaTypeNames;
+﻿using JobBuddyBackend.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace job_buddy_backend.Models
 {

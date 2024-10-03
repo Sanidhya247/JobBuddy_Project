@@ -1,4 +1,6 @@
-﻿namespace job_buddy_backend.Models
+﻿using JobBuddyBackend.Models;
+
+namespace job_buddy_backend.Models
 {
     //This is the model for user class
     public class User
@@ -34,19 +36,18 @@
 
         public string? PasswordResetToken { get; set; }
 
-        ////Navigation properties
-        //public ICollection<Resume> Resumes { get; set; } = new List<Resume>();
-        //public ICollection<JobListing> JobListings { get; set; } = new List<JobListing>();
-        //public ICollection<UserPhoneNumber> PhoneNumbers { get; set; } = new List<UserPhoneNumber>();
-        //public ICollection<UserEducation> Educations { get; set; } = new List<UserEducation>();
+        //Navigation properties
+        public ICollection<Resume> Resumes { get; set; } = new List<Resume>();
+        public ICollection<JobListing> JobListings { get; set; } = new List<JobListing>();
+        public ICollection<UserPhoneNumber> PhoneNumbers { get; set; } = new List<UserPhoneNumber>();
+        public ICollection<UserEducation> Educations { get; set; } = new List<UserEducation>();
 
-        //// Makes sure navigation properties are initialized
-        //public User()
-        //{
-        //    Resumes = Resumes ?? new List<Resume>();
-        //    JobListings = JobListings ?? new List<JobListing>();
-        //    PhoneNumbers = PhoneNumbers ?? new List<UserPhoneNumber>();
-        //    Educations = Educations ?? new List<UserEducation>();
-        //}
+        public User()
+        {
+            Resumes = Resumes ?? new List<Resume>();
+            JobListings = JobListings ?? new List<JobListing>();
+            PhoneNumbers = PhoneNumbers ?? new List<UserPhoneNumber>();
+            Educations = Educations ?? new List<UserEducation>();
+        }
     }
 }
