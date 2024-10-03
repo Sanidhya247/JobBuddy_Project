@@ -1,9 +1,14 @@
 ﻿using job_buddy_backend.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace JobBuddyBackend.Models
 {
     public class JobListing
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int JobID { get; set; }
 
         public int EmployerID { get; set; }

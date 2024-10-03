@@ -1,7 +1,12 @@
-﻿namespace job_buddy_backend.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace job_buddy_backend.Models
 {
     public class UserEducation
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserEducationID { get; set; }
 
         public int UserID { get; set; }
