@@ -13,6 +13,7 @@ namespace job_buddy_backend.DTO.Mapping
             CreateMap<JobListing, JobListingDto>().ReverseMap();
 
 
+            CreateMap<EmployerProfile, EmployerProfileDto>().ReverseMap();
         }
 
     }
