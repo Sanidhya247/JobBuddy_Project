@@ -1,0 +1,226 @@
+:root {
+    --primary-color: #254336; 
+    --secondary-color: #D1D1BD;
+}
+
+body {
+    font-family: Garamond;
+}
+
+.banner {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    background: url('../imgs/banner.jpg') no-repeat center center/cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.banner-text {
+    position: relative;
+    color: white;
+    z-index: 1;
+    text-align: left;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    max-width: 500px;
+}
+
+.banner-text h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.search-btn {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+}
+
+h2 {
+    text-align: center;
+    margin: 50px 0 20px 0;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+.profile-section {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    gap: 10%;
+    padding: 50px 0;
+}
+
+.profile-image-container {
+    position: relative;
+    width: 450px;
+    height: 400px;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+}
+
+.background-div {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color);
+    z-index: 1;
+}
+
+.profile-text {
+    max-width: 400px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    gap: 15px;
+}
+
+.profile-text h3 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.profile-text p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #333;
+    line-height: 1.5; 
+}
+
+.create-btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 150px;
+    align-self: center; 
+}
+
+.create-btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+
+/* tablet view (max-width: 834px) */
+@media (max-width: 834px) {
+    .banner {
+        height: 60vh;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .banner-text {
+        position: absolute;
+        top: 35%;
+        left: 5%;
+        text-align: left;
+        max-width: 80%;
+    }
+
+    .banner-text h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .search-btn {
+        padding: 12px 24px;
+        font-size: 1rem;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .profile-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .profile-image-container {
+        width: 80%; 
+        height: auto;
+    }
+
+    .profile-text {
+        max-width: 90%;
+        align-self: center;
+    }
+}
+
+/* mobile view (max-width: 430px) */
+@media (max-width: 430px) {
+    .banner {
+        height: 50vh;
+        background-size: cover;
+        background-position: center; 
+    }
+
+    .banner-text {
+        position: absolute;
+        top: 30%;
+        left: 5%;
+        text-align: left;
+        max-width: 90%;
+    }
+
+    .banner-text h1 {
+        font-size: 2rem; 
+        margin-bottom: 15px;
+    }
+
+    .search-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    .profile-section {
+        flex-direction: column;
+        text-align: center; 
+        gap: 20px; 
+    }
+
+    .profile-image-container {
+        width: 90%;
+        height: auto; 
+    }
+
+    .profile-text {
+        max-width: 95%;
+        align-self: center;
+    }
+}
