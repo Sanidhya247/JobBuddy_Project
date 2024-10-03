@@ -1,4 +1,6 @@
-﻿namespace job_buddy_backend.Models
+﻿using JobBuddyBackend.Models;
+
+namespace job_buddy_backend.Models
 {
     //This is the model for user class
     public class User
