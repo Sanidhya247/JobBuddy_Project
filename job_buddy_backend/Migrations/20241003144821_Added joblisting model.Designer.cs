@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using job_buddy_backend.Models.DataContext;
 
@@ -11,9 +12,11 @@ using job_buddy_backend.Models.DataContext;
 namespace job_buddy_backend.Migrations
 {
     [DbContext(typeof(JobBuddyDbContext))]
-    partial class JobBuddyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241003144821_Added joblisting model")]
+    partial class Addedjoblistingmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
