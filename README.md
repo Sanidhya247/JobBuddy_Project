@@ -84,6 +84,17 @@ Now UI application runs on localhost:3000
 ### /api/Auth/register
 
 #### POST
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| fullName | body |  | Yes | string |
+| email | body |  | Yes | string |
+| password | body |  | Yes | string |
+| role | body |  | Yes | string |
+| phoneNumber | body |  | No | string |
+
 ##### Responses
 
 | Code | Description |
@@ -93,6 +104,14 @@ Now UI application runs on localhost:3000
 ### /api/Auth/login
 
 #### POST
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| email | body |  | Yes | string |
+| password | body |  | Yes | string |
+
 ##### Responses
 
 | Code | Description |
@@ -102,6 +121,13 @@ Now UI application runs on localhost:3000
 ### /api/Auth/forgot-password
 
 #### POST
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| email | body |  | Yes | string |
+
 ##### Responses
 
 | Code | Description |
@@ -189,6 +215,12 @@ Now UI application runs on localhost:3000
 ### /api/Configuration/create
 
 #### POST
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| key | body |  | Yes | string |
+| value | body |  | Yes | string |
 ##### Responses
 
 | Code | Description |
