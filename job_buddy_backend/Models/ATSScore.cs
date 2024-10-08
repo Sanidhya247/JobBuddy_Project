@@ -21,7 +21,7 @@ namespace JobBuddyBackend.Models
         public DateTime CheckedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation properties
-        public Resume Resume { get; set; }
-        public JobListing JobListing { get; set; }
+        public Resume Resume { get; set; } 
+        public JobListing JobListing { get; set; } 
     }
 }
