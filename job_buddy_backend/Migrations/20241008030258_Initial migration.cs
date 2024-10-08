@@ -6,11 +6,81 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace job_buddy_backend.Migrations
 {
     /// <inheritdoc />
-    public partial class createdmodelsforthedb : Migration
+    public partial class Initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AppSettings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SettingKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SettingValue = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppSettings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    UserID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Nationality = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LinkedInUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsProfileComplete = table.Column<bool>(type: "bit", nullable: false),
+                    IsEmailVerified = table.Column<bool>(type: "bit", nullable: false),
+                    LastLoginAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EmailConfirmationToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PasswordResetToken = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.UserID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployerProfiles",
+                columns: table => new
+                {
+                    EmployerProfileID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyWebsite = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OfficeAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Province = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployerProfiles", x => x.EmployerProfileID);
+                    table.ForeignKey(
+                        name: "FK_EmployerProfiles_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateTable(
                 name: "JobListings",
                 columns: table => new
@@ -19,14 +89,19 @@ namespace job_buddy_backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EmployerID = table.Column<int>(type: "int", nullable: false),
                     JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShortJobDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     JobDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Province = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SalaryRange = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PayRatePerYear = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    PayRatePerHour = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     JobType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WorkType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExperienceLevel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Industry = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: true)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,11 +112,6 @@ namespace job_buddy_backend.Migrations
                         principalTable: "Users",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_JobListings_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "UserID");
                 });
 
             migrationBuilder.CreateTable(
@@ -55,8 +125,7 @@ namespace job_buddy_backend.Migrations
                     ResumeContent = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ResumeFileUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExperienceSummary = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserID1 = table.Column<int>(type: "int", nullable: true)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,11 +136,6 @@ namespace job_buddy_backend.Migrations
                         principalTable: "Users",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Resumes_Users_UserID1",
-                        column: x => x.UserID1,
-                        principalTable: "Users",
-                        principalColumn: "UserID");
                 });
 
             migrationBuilder.CreateTable(
@@ -83,8 +147,7 @@ namespace job_buddy_backend.Migrations
                     UserID = table.Column<int>(type: "int", nullable: false),
                     Degree = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Institution = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GraduationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserID1 = table.Column<int>(type: "int", nullable: true)
+                    GraduationDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -95,11 +158,6 @@ namespace job_buddy_backend.Migrations
                         principalTable: "Users",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserEducations_Users_UserID1",
-                        column: x => x.UserID1,
-                        principalTable: "Users",
-                        principalColumn: "UserID");
                 });
 
             migrationBuilder.CreateTable(
@@ -110,8 +168,7 @@ namespace job_buddy_backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserID1 = table.Column<int>(type: "int", nullable: true)
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -122,11 +179,6 @@ namespace job_buddy_backend.Migrations
                         principalTable: "Users",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserPhoneNumbers_Users_UserID1",
-                        column: x => x.UserID1,
-                        principalTable: "Users",
-                        principalColumn: "UserID");
                 });
 
             migrationBuilder.CreateTable(
@@ -177,7 +229,8 @@ namespace job_buddy_backend.Migrations
                         name: "FK_Applications_Resumes_ResumeID",
                         column: x => x.ResumeID,
                         principalTable: "Resumes",
-                        principalColumn: "ResumeID");
+                        principalColumn: "ResumeID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Applications_Users_UserID",
                         column: x => x.UserID,
@@ -210,7 +263,8 @@ namespace job_buddy_backend.Migrations
                         name: "FK_ATSScores_Resumes_ResumeID",
                         column: x => x.ResumeID,
                         principalTable: "Resumes",
-                        principalColumn: "ResumeID");
+                        principalColumn: "ResumeID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -249,6 +303,12 @@ namespace job_buddy_backend.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppSettings_SettingKey",
+                table: "AppSettings",
+                column: "SettingKey",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ATSScores_JobID",
                 table: "ATSScores",
                 column: "JobID");
@@ -259,14 +319,14 @@ namespace job_buddy_backend.Migrations
                 column: "ResumeID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EmployerProfiles_UserID",
+                table: "EmployerProfiles",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JobListings_EmployerID",
                 table: "JobListings",
                 column: "EmployerID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JobListings_UserID",
-                table: "JobListings",
-                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobTags_JobID",
@@ -279,11 +339,6 @@ namespace job_buddy_backend.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Resumes_UserID1",
-                table: "Resumes",
-                column: "UserID1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ResumeSkills_ResumeID",
                 table: "ResumeSkills",
                 column: "ResumeID");
@@ -294,19 +349,9 @@ namespace job_buddy_backend.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserEducations_UserID1",
-                table: "UserEducations",
-                column: "UserID1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserPhoneNumbers_UserID",
                 table: "UserPhoneNumbers",
                 column: "UserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserPhoneNumbers_UserID1",
-                table: "UserPhoneNumbers",
-                column: "UserID1");
         }
 
         /// <inheritdoc />
@@ -316,7 +361,13 @@ namespace job_buddy_backend.Migrations
                 name: "Applications");
 
             migrationBuilder.DropTable(
+                name: "AppSettings");
+
+            migrationBuilder.DropTable(
                 name: "ATSScores");
+
+            migrationBuilder.DropTable(
+                name: "EmployerProfiles");
 
             migrationBuilder.DropTable(
                 name: "JobTags");
@@ -335,6 +386,9 @@ namespace job_buddy_backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Resumes");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

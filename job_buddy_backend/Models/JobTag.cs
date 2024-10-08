@@ -14,6 +14,6 @@ namespace JobBuddyBackend.Models
         public string Tag { get; set; } = string.Empty;
 
         // Navigation property
-        public JobListing JobListing { get; set; }
+        public JobListing JobListing { get; set; } = new JobListing();
     }
 }

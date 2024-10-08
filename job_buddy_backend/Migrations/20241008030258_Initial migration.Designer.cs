@@ -12,8 +12,8 @@ using job_buddy_backend.Models.DataContext;
 namespace job_buddy_backend.Migrations
 {
     [DbContext(typeof(JobBuddyDbContext))]
-    [Migration("20241003151948_Created Employer migration")]
-    partial class CreatedEmployermigration
+    [Migration("20241008030258_Initial migration")]
+    partial class Initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,7 +46,7 @@ namespace job_buddy_backend.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Score")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("ATSScoreID");
 
@@ -93,10 +93,10 @@ namespace job_buddy_backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("PayRatePerHour")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<decimal?>("PayRatePerYear")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("Province")
                         .IsRequired()
@@ -109,9 +109,6 @@ namespace job_buddy_backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserID")
-                        .HasColumnType("int");
-
                     b.Property<string>("WorkType")
                         .HasColumnType("nvarchar(max)");
 
@@ -122,8 +119,6 @@ namespace job_buddy_backend.Migrations
                     b.HasKey("JobID");
 
                     b.HasIndex("EmployerID");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("JobListings");
                 });
@@ -301,14 +296,9 @@ namespace job_buddy_backend.Migrations
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserID1")
-                        .HasColumnType("int");
-
                     b.HasKey("ResumeID");
 
                     b.HasIndex("UserID");
-
-                    b.HasIndex("UserID1");
 
                     b.ToTable("Resumes");
                 });
@@ -419,14 +409,9 @@ namespace job_buddy_backend.Migrations
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserID1")
-                        .HasColumnType("int");
-
                     b.HasKey("UserEducationID");
 
                     b.HasIndex("UserID");
-
-                    b.HasIndex("UserID1");
 
                     b.ToTable("UserEducations");
                 });
@@ -449,14 +434,9 @@ namespace job_buddy_backend.Migrations
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserID1")
-                        .HasColumnType("int");
-
                     b.HasKey("UserPhoneNumberID");
 
                     b.HasIndex("UserID");
-
-                    b.HasIndex("UserID1");
 
                     b.ToTable("UserPhoneNumbers");
                 });
@@ -472,7 +452,7 @@ namespace job_buddy_backend.Migrations
                     b.HasOne("job_buddy_backend.Models.Resume", "Resume")
                         .WithMany("ATSScores")
                         .HasForeignKey("ResumeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("JobListing");
@@ -483,14 +463,10 @@ namespace job_buddy_backend.Migrations
             modelBuilder.Entity("JobBuddyBackend.Models.JobListing", b =>
                 {
                     b.HasOne("job_buddy_backend.Models.User", "Employer")
-                        .WithMany()
+                        .WithMany("JobListings")
                         .HasForeignKey("EmployerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("job_buddy_backend.Models.User", null)
-                        .WithMany("JobListings")
-                        .HasForeignKey("UserID");
 
                     b.Navigation("Employer");
                 });
@@ -517,11 +493,11 @@ namespace job_buddy_backend.Migrations
                     b.HasOne("job_buddy_backend.Models.Resume", "Resume")
                         .WithMany("Applications")
                         .HasForeignKey("ResumeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("job_buddy_backend.Models.User", "JobSeeker")
-                        .WithMany()
+                        .WithMany("Applications")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -547,14 +523,10 @@ namespace job_buddy_backend.Migrations
             modelBuilder.Entity("job_buddy_backend.Models.Resume", b =>
                 {
                     b.HasOne("job_buddy_backend.Models.User", "JobSeeker")
-                        .WithMany()
+                        .WithMany("Resumes")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("job_buddy_backend.Models.User", null)
-                        .WithMany("Resumes")
-                        .HasForeignKey("UserID1");
 
                     b.Navigation("JobSeeker");
                 });
@@ -573,14 +545,10 @@ namespace job_buddy_backend.Migrations
             modelBuilder.Entity("job_buddy_backend.Models.UserEducation", b =>
                 {
                     b.HasOne("job_buddy_backend.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Educations")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("job_buddy_backend.Models.User", null)
-                        .WithMany("Educations")
-                        .HasForeignKey("UserID1");
 
                     b.Navigation("User");
                 });
@@ -588,14 +556,10 @@ namespace job_buddy_backend.Migrations
             modelBuilder.Entity("job_buddy_backend.Models.UserPhoneNumber", b =>
                 {
                     b.HasOne("job_buddy_backend.Models.User", "User")
-                        .WithMany()
+                        .WithMany("PhoneNumbers")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("job_buddy_backend.Models.User", null)
-                        .WithMany("PhoneNumbers")
-                        .HasForeignKey("UserID1");
 
                     b.Navigation("User");
                 });
@@ -618,6 +582,8 @@ namespace job_buddy_backend.Migrations
 
             modelBuilder.Entity("job_buddy_backend.Models.User", b =>
                 {
+                    b.Navigation("Applications");
+
                     b.Navigation("Educations");
 
                     b.Navigation("JobListings");

@@ -29,38 +29,71 @@ namespace job_buddy_backend
                 .WriteTo.Console()
                 .CreateLogger();
 
-            builder.Logging.ClearProviders(); // Clear default log providers
-            builder.Logging.AddSerilog(); //Add the serilog settings to app
+            builder.Logging.ClearProviders();
+            builder.Logging.AddSerilog();
 
             var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
 
             // Configure SQL Server
             builder.Services.AddDbContext<JobBuddyDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection"),
+                    sqlOptions => sqlOptions.EnableRetryOnFailure()
+                ));
 
-            // Register the memory cache DI service
-            builder.Services.AddMemoryCache();
+            // Register services
+            RegisterCoreServices(builder.Services);
 
-            // Register services and interfaces
-            builder.Services.AddScoped<IAuthService, AuthService>();
-            builder.Services.AddScoped<IEmailService, EmailService>();
-            builder.Services.AddScoped<IJwtService, JwtService>();
-            builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
+            // Configure JWT authentication
+            ConfigureAuthentication(builder.Services, builder.Configuration);
 
-            // Fetch JWT settings using a temporary service provider before building the app
-            string jwtKey = "";
-            string jwtIssuer = builder.Configuration["JwtSettings:Issuer"];
-            string jwtAudience = builder.Configuration["JwtSettings:Audience"];
-
-            var tempServiceProvider = builder.Services.BuildServiceProvider();
-            using (var scope = tempServiceProvider.CreateScope())
+            // Add CORS
+            builder.Services.AddCors(options =>
             {
-                var configurationService = scope.ServiceProvider.GetRequiredService<IConfigurationService>();
-                jwtKey = await configurationService.GetSettingAsync("JwtKey");
-            }
+                options.AddPolicy("AllowSpecificOrigins", policy =>
+                {
+                    policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
+            // Register FluentValidation and Automapper
+            RegisterValidationsAndMappings(builder.Services);
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            // Build the final app
+            var app = builder.Build();
+
+            // Run database migrations safely
+            await InitializeDatabase(app);
+
+            // Configure HTTP Request Pipeline
+            ConfigurePipeline(app);
+
+            app.Run();
+        }
+
+        // Configure Core Services
+        private static void RegisterCoreServices(IServiceCollection services)
+        {
+            services.AddMemoryCache();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<IConfigurationService, ConfigurationService>();
+        }
+
+        // Configure Authentication and Secure Key Fetching
+        private static void ConfigureAuthentication(IServiceCollection services, IConfiguration configuration)
+        {
+            // Use a placeholder JWT key initially. It will be updated later using the ConfigurationService.
+            var jwtKeyPlaceholder = "TemporaryKeyForMigration";
+            var jwtIssuer = configuration["JwtSettings:Issuer"];
+            var jwtAudience = configuration["JwtSettings:Audience"];
 
             // Configure JWT Authentication
-            builder.Services.AddAuthentication(options =>
+            services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -74,40 +107,49 @@ namespace job_buddy_backend
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
-                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+                    ValidIssuer = jwtIssuer,
+                    ValidAudience = jwtAudience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKeyPlaceholder))
                 };
             });
+        }
 
-            // Add Controllers and FluentValidation
-            builder.Services.AddControllers()
+        // Register Validators and AutoMapper
+        private static void RegisterValidationsAndMappings(IServiceCollection services)
+        {
+            services.AddControllers()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserValidator>());
+            services.AddTransient<IValidator<RegisterUserDto>, RegisterUserValidator>();
+            services.AddTransient<IValidator<LoginUserDto>, LoginUserValidator>();
+            services.AddAutoMapper(typeof(UserProfile));
+        }
 
-            // Add CORS
-            builder.Services.AddCors(options =>
+        // Initialize the Database and Run Migrations
+        private static async Task InitializeDatabase(WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
             {
-                options.AddPolicy(name: "AllowSpecificOrigins",
-                                  policy =>
-                                  {
-                                      policy.WithOrigins(allowedOrigins)
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod();
-                                  });
-            });
+                var dbContext = scope.ServiceProvider.GetRequiredService<JobBuddyDbContext>();
+                var configurationService = scope.ServiceProvider.GetRequiredService<IConfigurationService>();
 
-            // Register Validators and Mappings
-            builder.Services.AddTransient<IValidator<RegisterUserDto>, RegisterUserValidator>();
-            builder.Services.AddTransient<IValidator<LoginUserDto>, LoginUserValidator>();
-            builder.Services.AddAutoMapper(typeof(UserProfile));
+                try
+                {
+                    // Apply pending migrations
+                    await dbContext.Database.MigrateAsync();
 
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+                    // Seed the configuration settings after migration
+                    await SeedConfigurationAsync(scope.ServiceProvider, configurationService);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("An error occurred while initializing the database. Error: {0}", ex.Message);
+                }
+            }
+        }
 
-            // Now build the final app
-            var app = builder.Build();
-
-            // Configure HTTP Request Pipeline
+        // Configure HTTP Request Pipeline
+        private static void ConfigurePipeline(WebApplication app)
+        {
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -121,8 +163,16 @@ namespace job_buddy_backend
             app.UseAuthorization();
 
             app.MapControllers();
+        }
 
-            app.Run();
+        // Seed JWT Key and other configuration from the database
+        private static async Task SeedConfigurationAsync(IServiceProvider serviceProvider, IConfigurationService configurationService)
+        {
+            var jwtKey = await configurationService.GetSettingAsync("JwtKey");
+            var jwtOptions = serviceProvider.GetRequiredService<JwtBearerOptions>();
+
+            // Update JWT key from database configuration
+            jwtOptions.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         }
     }
 }
