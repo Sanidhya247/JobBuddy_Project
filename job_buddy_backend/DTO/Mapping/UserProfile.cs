@@ -24,7 +24,9 @@ namespace job_buddy_backend.DTO.Mapping
                 .ForMember(dest => dest.Address, opt => opt.Condition(src => src.Address != null))
                 .ForMember(dest => dest.DateOfBirth, opt => opt.Condition(src => src.DateOfBirth != null))
                 .ForMember(dest => dest.Nationality, opt => opt.Condition(src => src.Nationality != null))
-                .ForMember(dest => dest.LinkedInUrl, opt => opt.Condition(src => src.LinkedInUrl != null));
+                .ForMember(dest => dest.LinkedInUrl, opt => opt.Condition(src => src.LinkedInUrl != null))
+                .ForMember(dest => dest.PhoneNumbers, opt => opt.Ignore())  
+                .ForMember(dest => dest.Educations, opt => opt.Ignore());
         }
     }
 }
