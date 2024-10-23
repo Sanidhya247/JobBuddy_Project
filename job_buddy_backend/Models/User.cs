@@ -41,6 +41,7 @@ namespace job_buddy_backend.Models
         public ICollection<JobListing> JobListings { get; set; } = new List<JobListing>();
         public ICollection<UserPhoneNumber> PhoneNumbers { get; set; } = new List<UserPhoneNumber>();
         public ICollection<UserEducation> Educations { get; set; } = new List<UserEducation>();
+        public ICollection<Application> Applications { get; set; } = new List<Application>();
 
         // Makes sure navigation properties are initialized
         public User()
@@ -49,6 +50,7 @@ namespace job_buddy_backend.Models
             JobListings = JobListings ?? new List<JobListing>();
             PhoneNumbers = PhoneNumbers ?? new List<UserPhoneNumber>();
             Educations = Educations ?? new List<UserEducation>();
+            Applications = Applications ?? new List<Application>();
         }
 
     }
