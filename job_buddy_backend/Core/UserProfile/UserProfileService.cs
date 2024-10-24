@@ -71,8 +71,33 @@ namespace job_buddy_backend.Core.UserProfile
             if (user == null)
                 throw new System.Exception("User not found");
 
-            var userProfile = _mapper.Map<UserProfileDto>(user);
-            userProfile.ProfileCompletenessPercentage = await CalculateProfileCompletenessAsync(user.UserID);
+            var userProfile = new UserProfileDto
+            {
+                UserID = user.UserID,
+                FullName = user.FullName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumbers.FirstOrDefault()?.PhoneNumber,
+                Address = user.Address,
+                ProfilePictureUrl = user.ProfilePictureUrl,
+                LinkedInUrl = user.LinkedInUrl,
+                DateOfBirth = user.DateOfBirth,
+                Nationality = user.Nationality,
+                Educations = user.Educations.Select(e => new UserEducationDto
+                {
+                    UserEducationID = e.UserEducationID,
+                    Degree = e.Degree,
+                    Institution = e.Institution,
+                    GraduationDate = e.GraduationDate
+                }).ToList(),
+                PhoneNumbers = user.PhoneNumbers.Select(p => new UserPhoneNumberDto
+                {
+                    UserPhoneNumberID = p.UserPhoneNumberID,
+                    PhoneNumber = p.PhoneNumber,
+                    Type = p.Type
+                }).ToList(),
+                ProfileCompletenessPercentage = await CalculateProfileCompletenessAsync(user.UserID)
+            };
+            
 
             return userProfile;
         }
