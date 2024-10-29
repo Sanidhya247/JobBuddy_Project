@@ -2,15 +2,21 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using job_buddy_backend.Core;
 using job_buddy_backend.Core.Interfaces;
+using job_buddy_backend.Core.Interfaces.UserProfile;
+using job_buddy_backend.Core.UserProfile;
 using job_buddy_backend.DTO;
 using job_buddy_backend.DTO.Mapping;
+using job_buddy_backend.DTO.UserProfile;
 using job_buddy_backend.Helpers;
 using job_buddy_backend.Models.DataContext;
 using job_buddy_backend.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
 
@@ -37,8 +43,8 @@ namespace job_buddy_backend
             // Configure SQL Server
             builder.Services.AddDbContext<JobBuddyDbContext>(options =>
                 options.UseSqlServer(
-                    builder.Configuration.GetConnectionString("DefaultConnection"),
-                    sqlOptions => sqlOptions.EnableRetryOnFailure()
+                    builder.Configuration.GetConnectionString("DefaultConnection")
+                    //sqlOptions => sqlOptions.EnableRetryOnFailure()
                 ));
 
             // Register services
@@ -60,7 +66,44 @@ namespace job_buddy_backend
             RegisterValidationsAndMappings(builder.Services);
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Job Buddy API", Version = "v1" });
+
+                // Define the security scheme
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+                        },
+                        new List<string>()
+                    }
+                });
+            });
+            builder.Services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 5242880; // Set the maximum file size to 5MB
+            });
 
             // Build the final app
             var app = builder.Build();
@@ -82,6 +125,9 @@ namespace job_buddy_backend
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IConfigurationService, ConfigurationService>();
+            services.AddScoped<IUserProfileService, UserProfileService>();
+            services.AddScoped<IJobListingService, JobListingService>();
+
         }
 
         // Configure Authentication and Secure Key Fetching
@@ -121,6 +167,7 @@ namespace job_buddy_backend
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserValidator>());
             services.AddTransient<IValidator<RegisterUserDto>, RegisterUserValidator>();
             services.AddTransient<IValidator<LoginUserDto>, LoginUserValidator>();
+            services.AddTransient<IValidator<UpdateUserProfileDto>, UpdateUserProfileValidator>();
             services.AddAutoMapper(typeof(UserProfile));
         }
 
@@ -153,12 +200,15 @@ namespace job_buddy_backend
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Job Buddy API V1");
+                });
             }
 
             app.UseHttpsRedirection();
             app.UseCors("AllowSpecificOrigins");
-
+            app.UseStaticFiles();
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -169,10 +219,17 @@ namespace job_buddy_backend
         private static async Task SeedConfigurationAsync(IServiceProvider serviceProvider, IConfigurationService configurationService)
         {
             var jwtKey = await configurationService.GetSettingAsync("JwtKey");
-            var jwtOptions = serviceProvider.GetRequiredService<JwtBearerOptions>();
 
-            // Update JWT key from database configuration
-            jwtOptions.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+            if (string.IsNullOrEmpty(jwtKey))
+            {
+                throw new InvalidOperationException("JWT key is not configured in the database.");
+            }
+
+            // Manually update the token validation parameters after the app starts
+            var jwtOptions = serviceProvider.GetRequiredService<IOptionsMonitor<JwtBearerOptions>>();
+
+            jwtOptions.Get(JwtBearerDefaults.AuthenticationScheme).TokenValidationParameters.IssuerSigningKey =
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         }
     }
 }
