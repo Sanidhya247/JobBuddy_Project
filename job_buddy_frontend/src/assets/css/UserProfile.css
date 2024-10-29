@@ -1,0 +1,192 @@
+/* Main Profile Container */
+.user-profile {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Cover Photo Section */
+  .cover-photo-wrapper {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .cover-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .cover-upload-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #0366d6;
+    color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .cover-upload-button input {
+    display: none;
+  }
+  
+  /* Profile Header */
+  .profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .profile-picture-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+    border: 4px solid white;
+  }
+  
+  .profile-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-upload-button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #0366d6;
+    color: white;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .profile-upload-button input {
+    display: none;
+  }
+  
+  .profile-info {
+    flex-grow: 1;
+  }
+  
+  .headline {
+    font-size: 16px;
+    color: #586069;
+    margin: 5px 0;
+  }
+  
+  .edit-profile-btn {
+    background-color: #0366d6;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .edit-profile-btn:hover {
+    background-color: #024ea2;
+  }
+  
+  /* Circular Progress Bar */
+  .profile-completeness-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .profile-completeness-wrapper .CircularProgressbar-text {
+    font-size: 18px;
+    fill: #0366d6;
+    font-weight: bold;
+  }
+  
+  /* Card Style for Sections */
+  .detail-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .detail-card h3 {
+    font-size: 18px;
+    color: #0366d6;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e1e4e8;
+    padding-bottom: 5px;
+  }
+  
+  .detail-card p {
+    font-size: 15px;
+    color: #333;
+    margin: 5px 0;
+  }
+  
+  .detail-card strong {
+    font-weight: bold;
+  }
+  
+  /* Progress Bar */
+  .progress-bar {
+    background-color: #e1e4e8;
+    border-radius: 8px;
+    width: 100%;
+    height: 10px;
+    margin-top: 10px;
+  }
+  
+  .progress {
+    background-color: #28a745;
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  /* Section Headers */
+  .section {
+    margin-top: 30px;
+  }
+  
+  .section h3 {
+    color: #0366d6;
+    font-size: 20px;
+    border-bottom: 1px solid #e1e4e8;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .item {
+    margin-bottom: 15px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .item p {
+    margin: 5px 0;
+  }
+  
+  /* Hover effect on buttons */
+  .edit-profile-btn:hover,
+  .cover-upload-button:hover {
+    background-color: #025bb5;
+  }
+  
