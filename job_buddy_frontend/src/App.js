@@ -12,6 +12,7 @@ import PostJob from "./Components/PostJob";
 import Profile from "./Components/Profile"; 
 import JobSearchPage from "./Components/Job_Search_Page";
 import VerifyEmail from './Components/authentication/VerifyEmail';
+import JobApplication from './Components/JobApplication';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/job-apply" element={<JobApplication />} />
       </Routes>
       <Footer />
     </>
