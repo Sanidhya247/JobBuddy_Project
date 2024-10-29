@@ -1,4 +1,5 @@
 ﻿using job_buddy_backend.Models;
+using job_buddy_backend.Models.UserModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

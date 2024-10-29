@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace job_buddy_backend.Models
+namespace job_buddy_backend.Models.UserModel
 {
     public class UserEducation
     {

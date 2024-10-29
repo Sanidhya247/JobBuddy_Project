@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using job_buddy_backend.Core.Interfaces;
 using job_buddy_backend.DTO;
-using job_buddy_backend.Models;
 using Microsoft.Extensions.Logging;
 using job_buddy_backend.Models.DataContext;
+using job_buddy_backend.Models.UserModel;
 
 namespace job_buddy_backend.Core
 {

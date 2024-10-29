@@ -1,6 +1,7 @@
 ﻿using JobBuddyBackend.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using job_buddy_backend.Models.UserModel;
 
 
 namespace job_buddy_backend.Models
