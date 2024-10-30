@@ -10,12 +10,11 @@ const JobApplication = () => {
     lastName: "",
     email: "",
     phone: "",
-    city: "",
-    province: "",
+    dob:"",
+    linkedin:"",
+    startDate:"",
     resume: null,
     coverLetter: "",
-    jobType: "",
-    workType: "",
     termsAccepted: false,
   });
 
@@ -40,10 +39,10 @@ const JobApplication = () => {
     if (!formData.email) newErrors.email = "Email is required.";
     if (!formData.phone) newErrors.phone = "Phone number is required.";
     if (!formData.city) newErrors.city = "City is required.";
-    if (!formData.province) newErrors.province = "Province is required.";
     if (!formData.resume) newErrors.resume = "Resume is required.";
     if (!formData.jobType) newErrors.jobType = "Job type is required.";
     if (!formData.workType) newErrors.workType = "Work type is required.";
+    if (!formData.dob) newErrors.dob = "Date of Birth is required.";
     if (!formData.termsAccepted) newErrors.termsAccepted = "You must accept the terms.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -78,11 +77,11 @@ const JobApplication = () => {
         email: "",
         phone: "",
         city: "",
-        province: "",
+        dob:"",
+        linkedin:"",
+        startDate:"",
         resume: null,
         coverLetter: "",
-        jobType: "",
-        workType: "",
         termsAccepted: false,
       });
     } catch (error) {
@@ -153,6 +152,44 @@ const JobApplication = () => {
         </div>
 
         <div className="form-group text-field-container">
+          <label htmlFor="dob" className="text-field-label">Date of Birth</label>
+          <input
+            type="date"
+            name="dob"
+            value={formData.dob}
+            onChange={handleChange}
+            placeholder="Date of Birth"
+            className={`text-field-input ${errors.dob ? "input-error" : ""}`}
+          />
+          {errors.dob && <span className="error-text">{errors.dob}</span>}
+        </div>
+
+        <div className="form-group text-field-container">
+          <label htmlFor="dob" className="text-field-label">LinkedIn Address (Optional)</label>
+          <input
+            type="text"
+            name="linkedin"
+            value={formData.linkedin}
+            onChange={handleChange}
+            placeholder="LinkedIn Address"
+            className={`text-field-input ${errors.linkedin ? "input-error" : ""}`}
+          />
+        </div>
+
+        <div className="form-group text-field-container">
+          <label htmlFor="startDate" className="text-field-label">Available Start Date</label>
+          <input
+            type="date"
+            name="startDate"
+            value={formData.startDate}
+            onChange={handleChange}
+            placeholder="Available Start Date"
+            className={`text-field-input ${errors.startDate ? "input-error" : ""}`}
+          />
+          {errors.startDate && <span className="error-text">{errors.startDate}</span>}
+        </div>
+
+        <div className="form-group text-field-container">
           <label htmlFor="resume" className="text-field-label">Upload Resume</label>
           <input
             type="file"
@@ -172,38 +209,6 @@ const JobApplication = () => {
             placeholder="Cover Letter"
             className="text-field-input"
           />
-        </div>
-
-        <div className="form-group text-field-container">
-          <label htmlFor="jobType" className="text-field-label">Job Type</label>
-          <select
-            name="jobType"
-            value={formData.jobType}
-            onChange={handleChange}
-            className={`text-field-input ${errors.jobType ? "input-error" : ""}`}
-          >
-            <option value="">Select Job Type</option>
-            <option value="full-time">Full-Time</option>
-            <option value="part-time">Part-Time</option>
-            <option value="contract">Contract</option>
-          </select>
-          {errors.jobType && <span className="error-text">{errors.jobType}</span>}
-        </div>
-
-        <div className="form-group text-field-container">
-          <label htmlFor="workType" className="text-field-label">Work Type</label>
-          <select
-            name="workType"
-            value={formData.workType}
-            onChange={handleChange}
-            className={`text-field-input ${errors.workType ? "input-error" : ""}`}
-          >
-            <option value="">Select Work Type</option>
-            <option value="on-site">On-Site</option>
-            <option value="remote">Remote</option>
-            <option value="hybrid">Hybrid</option>
-          </select>
-          {errors.workType && <span className="error-text">{errors.workType}</span>}
         </div>
 
         <div className="form-group text-field-container">
