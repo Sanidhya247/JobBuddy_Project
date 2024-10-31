@@ -53,7 +53,10 @@ Open the backend project solution in either Visual studio(Preffered) or Visual s
 Go to Appsettings.json file and change the server name to your sql server name (for eg., "localhost","Your-laptopname"check for the server name in your ssms connections)
 ```
 ```bash 
-Run the Sql file "Jobbuddy_Create_Db_Script"
+Open Package manager console in Visual studio from Tools > Nuget Package Manager> Package manager console
+```
+```bash 
+Run "Update-database"
 ```
 ```bash 
 Once JobBuddy DB is created in your sql server, Run the Sql file "Jobbuddy_SQL_Script".
@@ -75,7 +78,7 @@ Npm install
 If your backend url runs on any other port than 7113, you need to configure the backend url in .env file in frontend
 ```
 ```bash 
-Run "Npm run" command 
+Run "Npm start" command 
 ```
 ```bash 
 Now UI application runs on localhost:3000
@@ -86,6 +89,8 @@ https://drive.google.com/file/d/1oZIWdZHSxJO3qT2auFkxFE0SbhnUQ-OT/view?usp=drive
 
 # API Documentation - Swagger
 ## Version: 1.0
+
+##Below are the few api endpoints, for more details on the API documentation please visit [Swagger-API documentation](https://localhost:7113/swagger/index.html)
 
 ### /api/Auth/register
 
