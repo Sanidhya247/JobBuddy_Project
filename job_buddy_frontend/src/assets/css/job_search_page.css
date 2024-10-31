@@ -17,7 +17,7 @@
 .search-bar-wrapper {
     display: flex;
     align-items: center;
-    gap: 10px; /* Space between search bar and "View All Jobs" button */
+    gap: 10px; 
     justify-content: center;
     max-width: 800px;
     margin: 20px auto;
@@ -101,7 +101,7 @@
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     color: #fff;
-    text-align: center; /* Center-align the title */
+    text-align: center; 
 }
 
 .filter-sidebar h3 {
@@ -109,7 +109,7 @@
     font-size: 22px;
     font-weight: bold;
     color: var(--secondary-color);
-    text-align: center; /* Center the title text */
+    text-align: center;
 }
 
 /* Filter Group */
@@ -139,7 +139,6 @@
 }
 
 /* Apply and Clear Buttons */
-/* Apply and Clear Buttons */
 .apply-btn, .clear-btn {
     padding: 12px;
     font-size: 16px;
@@ -157,7 +156,7 @@
 }
 
 .clear-btn {
-    margin: 10px; /* Adds space between the Apply and Clear All buttons */
+    margin: 10px;
 }
 
 .apply-btn:hover, .clear-btn:hover {
@@ -243,7 +242,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10px; /* Increased margin to add more space between job listings and pagination */
+    margin-top: 10px;
     gap: 10px;
 }
 

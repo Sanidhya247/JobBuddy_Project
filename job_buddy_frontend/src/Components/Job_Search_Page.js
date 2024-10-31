@@ -48,8 +48,8 @@ const JobSearchPage = () => {
         params: { title: searchText, page: 1, pageSize }
       });
       setJobs(response.data.data || []);
-      setSearchText(""); // Clear search input
-      setCurrentPage(1); // Reset to the first page
+      setSearchText(""); 
+      setCurrentPage(1); 
       setLoading(false);
     } catch (error) {
       setError("Error fetching jobs. Please try again later.");
