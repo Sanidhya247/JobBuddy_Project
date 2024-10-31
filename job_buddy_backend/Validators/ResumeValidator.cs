@@ -15,9 +15,6 @@ namespace job_buddy_backend.Validators
                 .NotEmpty().WithMessage("Title is required.")
                 .MaximumLength(150).WithMessage("Title cannot exceed 150 characters.");
 
-            RuleFor(x => x.ResumeContent)
-                .NotEmpty().WithMessage("Resume content is required.")
-                .MaximumLength(1000).WithMessage("Resume content cannot exceed 1000 characters.");
         }
     }
 }

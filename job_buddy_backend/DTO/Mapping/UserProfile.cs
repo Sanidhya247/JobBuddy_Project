@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using job_buddy_backend.DTO.UserProfile;
 using job_buddy_backend.Models;
+using job_buddy_backend.Models.UserModel;
 using JobBuddyBackend.Models;
 
 namespace job_buddy_backend.DTO.Mapping

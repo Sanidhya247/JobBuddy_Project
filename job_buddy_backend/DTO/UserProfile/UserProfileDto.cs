@@ -13,7 +13,13 @@
         public string? ProfilePictureUrl { get; set; }
         public bool IsProfileComplete { get; set; }
         public double ProfileCompletenessPercentage { get; set; }
-        public ICollection<UserEducationDto> Educations { get; set; }
-        public ICollection<UserPhoneNumberDto> PhoneNumbers { get; set; }
+        public string Headline { get; set; } = string.Empty;
+        public string About { get; set; } = string.Empty;
+        public string? CoverPhotoUrl { get; set; }
+        public ICollection<UserEducationDto> Educations { get; set; } = new List<UserEducationDto>();
+        public ICollection<UserPhoneNumberDto> PhoneNumbers { get; set; } = new List<UserPhoneNumberDto>();
+        public ICollection<UserExperienceDto> Experiences { get; set; } = new List<UserExperienceDto>();
+        public ICollection<UserCertificationDto> Certifications { get; set; } = new List<UserCertificationDto>();
+        public ICollection<UserProjectDto> Projects { get; set; } = new List<UserProjectDto>();
     }
 }

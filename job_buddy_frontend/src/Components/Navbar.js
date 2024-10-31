@@ -51,9 +51,9 @@ const Navbar = () => {
         <li><Link onClick={toggleMenu} className="nav-link" to="/post">Post Job</Link></li>
       </ul>
       <div className={`navbar-right ${isMenuOpen ? 'active' : ''}`}>
-        {/* <Link to="/profile">
+        { <Link to="/profile">
           <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
-        </Link> */}
+        </Link>}
         {user ? (
           <Button label={"Logout"} className={"btn-submit"} onClick={handleLogout} />
         ) : (

@@ -1,4 +1,5 @@
 ﻿using job_buddy_backend.Helpers;
+using job_buddy_backend.Models.UserModel;
 using JobBuddyBackend.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,12 +14,15 @@ namespace job_buddy_backend.Models.DataContext
         public DbSet<JobListing> JobListings { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<Resume> Resumes { get; set; }
-        public DbSet<ATSScore> ATSScores { get; set; }
+        public DbSet<ATSScore> ATSScores { get; set; }  
         public DbSet<UserPhoneNumber> UserPhoneNumbers { get; set; }
         public DbSet<UserEducation> UserEducations { get; set; }
         public DbSet<JobTag> JobTags { get; set; }
         public DbSet<ResumeSkill> ResumeSkills { get; set; }
         public DbSet<EmployerProfile> EmployerProfiles { get; set; }
+        public DbSet<UserCertification> UserCertifications { get; set; }
+        public DbSet<UserExperience> UserExperiences { get; set; }
+        public DbSet<UserProject> UserProjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
