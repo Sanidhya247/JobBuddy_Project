@@ -29,6 +29,9 @@ function App() {
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/" element={<JobSearchPage />} />
+        <Route path="/job/:jobId" element={<JobDetailsPage />} /> {/* Job Details route */}
+  
       </Routes>
       <Footer />
     </>
