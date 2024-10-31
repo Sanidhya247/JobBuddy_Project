@@ -8,6 +8,7 @@ import AuthContext from "../../context/AuthContext";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
+
 function UserProfile() {
   const { user } = useContext(AuthContext);
   const [profile, setProfile] = useState({});
@@ -117,6 +118,7 @@ function UserProfile() {
             <p><strong>Nationality:</strong> {profile.nationality || "N/A"}</p>
             <p><strong>LinkedIn:</strong> <a href={profile.linkedInUrl}>{profile.linkedInUrl}</a></p>
             <p><strong>Date of Birth:</strong> {profile.dateOfBirth ? new Date(profile.dateOfBirth).toLocaleDateString() : "N/A"}</p>
+            
           </div>
           <div className="detail-card">
             <h3>Education</h3>

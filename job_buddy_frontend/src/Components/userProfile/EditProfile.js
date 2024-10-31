@@ -4,6 +4,7 @@ import Loader from '../commons/Loader';
 import { toast } from 'react-toastify';
 import '../../assets/css/EditProfile.css';
 import apiService from '../../utils/apiService';
+import ResumeUpload from "../ResumeUploder";
 
 function EditProfile({ profile, setProfile, userId, setEditMode }) {
   const [formData, setFormData] = useState({
@@ -120,6 +121,7 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
         Date of Birth:
         <input type="date" name="dateOfBirth" value={formData.dateOfBirth || ''} onChange={handleInputChange} />
       </label>
+      <ResumeUpload/>
 
       {/* Education Section */}
       <div className="toggle-section" onClick={() => toggleSection('education')}>
