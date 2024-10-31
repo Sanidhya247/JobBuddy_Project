@@ -78,9 +78,9 @@ namespace job_buddy_backend.Controllers
         // New: Search jobs by title or company name
         [HttpGet("search")]
         //[Authorize(Roles = "Admin, Employer, Job Seeker")]
-        public async Task<IActionResult> SearchJobs([FromQuery] string? title = null, [FromQuery] string? companyName = null)
+        public async Task<IActionResult> SearchJobs([FromQuery] string? title = null, [FromQuery] string? companyName = null, [FromQuery] int page=1, [FromQuery] int pageSize=10)
         {
-            var jobs = await _jobListingService.SearchJobsAsync(title, companyName);
+            var jobs = await _jobListingService.SearchJobsAsync(title, companyName, page, pageSize);
 
             if (jobs == null || !jobs.Any())
             {
@@ -101,9 +101,11 @@ namespace job_buddy_backend.Controllers
             [FromQuery] string? experienceLevel = null,
             [FromQuery] string? industry = null,
             [FromQuery] decimal? minSalary = null,
-            [FromQuery] decimal? maxSalary = null)
+            [FromQuery] decimal? maxSalary = null,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10)
         {
-            var jobs = await _jobListingService.FilterJobsAsync(province, city, jobType, workType, experienceLevel, industry, minSalary, maxSalary);
+            var jobs = await _jobListingService.FilterJobsAsync(province, city, jobType, workType, experienceLevel, industry, minSalary, maxSalary, page, pageSize);
 
             if (jobs == null || !jobs.Any())
             {
