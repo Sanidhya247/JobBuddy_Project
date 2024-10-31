@@ -1,4 +1,5 @@
-import React from 'react'
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../assets/css/job_search_page.css";
 
 const JobDetailsCard = ({ title,
@@ -7,6 +8,10 @@ const JobDetailsCard = ({ title,
     position,
     salary,
     description }) => {
+        const navigate = useNavigate();
+        const handleNavigation = () => {
+            navigate("/job-apply")
+        }
     return (
         <div className="job-card">
             <div className="company-logo">
@@ -16,7 +21,7 @@ const JobDetailsCard = ({ title,
                 <h3>{title}</h3>
                 <p>{`${location} | ${type} | ${position} | ${salary}`}</p>
                 <p>{description}</p>
-                <button className="apply-now-btn">Quick Apply</button>
+                <button onClick={handleNavigation} className="apply-now-btn">Quick Apply</button>
             </div>
         </div>
 

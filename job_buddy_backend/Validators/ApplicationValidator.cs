@@ -21,6 +21,39 @@ namespace job_buddy_backend.Validators
 
             RuleFor(x => x.CoverLetter)
                 .MaximumLength(500).WithMessage("Cover letter cannot exceed 500 characters.");
+
+            // FirstName validation
+            RuleFor(x => x.FirstName)
+                .NotEmpty().WithMessage("First name is required.")
+                .MaximumLength(50).WithMessage("First name cannot exceed 50 characters.");
+
+            // LastName validation
+            RuleFor(x => x.LastName)
+                .NotEmpty().WithMessage("Last name is required.")
+                .MaximumLength(50).WithMessage("Last name cannot exceed 50 characters.");
+
+            // Email validation
+            RuleFor(x => x.Email)
+                .NotEmpty().WithMessage("Email is required.")
+                .EmailAddress().WithMessage("Invalid email format.");
+
+            // Phone validation (optional)
+            RuleFor(x => x.Phone)
+                .Matches(@"^\+?[1-9]\d{1,14}$").WithMessage("Phone number must be valid.");
+
+            // Date of Birth validation (must be in the past)
+            RuleFor(x => x.Dob)
+                .LessThan(DateTime.Today).WithMessage("Date of Birth must be in the past.");
+
+            // StartDate validation (must not be in the past)
+            RuleFor(x => x.StartDate)
+                .GreaterThanOrEqualTo(DateTime.Today).WithMessage("Start date cannot be in the past.");
+
+            // Linkedin validation (optional but must be a valid URL if provided)
+            RuleFor(x => x.Linkedin)
+                .Must(uri => Uri.IsWellFormedUriString(uri, UriKind.Absolute))
+                .When(x => !string.IsNullOrEmpty(x.Linkedin))
+                .WithMessage("Linkedin URL must be valid.");
         }
-    }
+    }   
 }

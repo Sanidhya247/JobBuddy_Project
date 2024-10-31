@@ -1,266 +1,239 @@
-import React, { useState } from "react";
-import "../assets/css/job_search_page.css";
-import "../assets/css/Pagination.css";
+import React, { useEffect, useState, useCallback } from "react";
+import apiService from "../utils/apiService";
 import JobDetailsCard from "./JobDetailsCard";
-import Pagination from "./commons/Pagination";
-import ResumeUpload from "./ResumeUploder";
-
-const jobListings = [
-  {
-    title: "Marketing Coordinator | Greenfield Co.",
-    location: "Calgary, AB",
-    type: "Full Time",
-    position: "Employee",
-    salary: "$55,000 / year",
-    description:
-      "Assist in the development and execution of marketing campaigns, content creation, and event coordination.",
-  },
-  {
-    title: "Software Engineer | BlueTech",
-    location: "Toronto, ON",
-    type: "Contract",
-    position: "Contract",
-    salary: "$45 / hour",
-    description:
-      "Design, develop, and implement software solutions for clients in various industries, ensuring timely delivery and maintenance.",
-  },
-  {
-    title: "Graphic Designer | Creative Minds",
-    location: "Vancouver, BC",
-    type: "Part Time",
-    position: "Freelancer",
-    salary: "$30 / hour",
-    description:
-      "Create engaging visual designs for both print and digital media, including branding materials and social media content.",
-  },
-  {
-    title: "HR Manager | People Solutions",
-    location: "Edmonton, AB",
-    type: "Full Time",
-    position: "Employee",
-    salary: "$75,000 / year",
-    description:
-      "Oversee recruitment, employee relations, and organizational development, ensuring compliance with labor laws and company policies.",
-  },
-  {
-    title: "Data Analyst | Insight Analytics",
-    location: "Ottawa, ON",
-    type: "Contract",
-    position: "Contract",
-    salary: "$50 / hour",
-    description:
-      "Analyze data to generate insights for business decision-making, create reports, and support data-driven strategies.",
-  },
-  {
-    title: "Accountant | FinTax",
-    location: "Montreal, QC",
-    type: "Full Time",
-    position: "Employee",
-    salary: "$60,000 / year",
-    description:
-      "Manage financial records, prepare tax returns, and provide financial advice to clients, ensuring compliance with regulations.",
-  },
-  {
-    title: "IT Support Specialist | TechSupport Co.",
-    location: "Halifax, NS",
-    type: "Full Time",
-    position: "Employee",
-    salary: "$25 / hour",
-    description:
-      "Provide technical support to users, troubleshoot hardware and software issues, and maintain IT systems.",
-  },
-  {
-    title: "Customer Success Manager | Startup Growth",
-    location: "Waterloo, ON",
-    type: "Full Time",
-    position: "Employee",
-    salary: "$70,000 / year",
-    description:
-      "Manage client relationships, ensure successful product implementation, and maintain high levels of customer satisfaction.",
-  },
-  {
-    title: "UX/UI Designer | Design Studio",
-    location: "Victoria, BC",
-    type: "Freelancer",
-    position: "Freelancer",
-    salary: "$40 / hour",
-    description:
-      "Design user interfaces and experiences for web and mobile applications, focusing on usability and aesthetics.",
-  },
-  {
-    title: "Warehouse Associate | Global Supply",
-    location: "Winnipeg, MB",
-    type: "Part Time",
-    position: "Employee",
-    salary: "$18 / hour",
-    description:
-      "Assist in the day-to-day operations of the warehouse, including inventory management, shipping, and receiving.",
-  },
-  {
-    title: "Social Media Manager | Buzz Media",
-    location: "Toronto, ON",
-    type: "Full Time",
-    position: "Employee",
-    salary: "$50,000 / year",
-    description:
-      "Develop and execute social media strategies to increase brand visibility and engagement across multiple platforms.",
-  },
-  {
-    title: "Junior Web Developer | Code Ninjas",
-    location: "Calgary, AB",
-    type: "Internship",
-    position: "Intern",
-    salary: "$20 / hour",
-    description:
-      "Assist in the development of websites and web applications, collaborate with senior developers, and gain hands-on coding experience.",
-  },
-  {
-    title: "Project Manager | BuildCorp",
-    location: "Edmonton, AB",
-    type: "Full Time",
-    position: "Employee",
-    salary: "$80,000 / year",
-    description:
-      "Lead construction projects, manage timelines, budgets, and ensure compliance with safety standards and regulations.",
-  },
-  {
-    title: "Operations Manager | Swift Logistics",
-    location: "Mississauga, ON",
-    type: "Full Time",
-    position: "Employee",
-    salary: "$90,000 / year",
-    description:
-      "Oversee daily logistics operations, manage supply chain activities, and ensure timely delivery of goods and services.",
-  },
-  {
-    title: "Content Writer | WordSmiths",
-    location: "Quebec City, QC",
-    type: "Freelancer",
-    position: "Freelancer",
-    salary: "$25 / hour",
-    description:
-      "Create engaging content for blogs, articles, and social media, focusing on SEO optimization and brand storytelling.",
-  },
-  {
-    title: "Mechanical Engineer | InnovateTech",
-    location: "Windsor, ON",
-    type: "Full Time",
-    position: "Employee",
-    salary: "$85,000 / year",
-    description:
-      "Design and develop mechanical systems, oversee manufacturing processes, and collaborate with cross-functional teams.",
-  },
-];
+import "../assets/css/job_search_page.css";
 
 const JobSearchPage = () => {
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [searchText, setSearchText] = useState("");
+
+  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const pageSize = 10; // Number of jobs per page
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = jobListings.slice(indexOfFirstItem, indexOfLastItem);
+  // Filter state
+  const [filters, setFilters] = useState({
+    city: "",
+    province: "",
+    jobType: "",
+    workType: "",
+    experienceLevel: "",
+    industry: "",
+    minSalary: "",
+    maxSalary: ""
+  });
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  // Fetch jobs with filters and pagination
+  const fetchJobs = useCallback(async (queryParams = {}) => {
+    setLoading(true);
+    try {
+      const response = await apiService.get("/api/JobListing/filter", {
+        params: { ...queryParams, page: currentPage, pageSize }
+      });
+      setJobs(response.data.data || []);
+      setLoading(false);
+    } catch (error) {
+      setError("Error fetching jobs. Please try again later.");
+      setLoading(false);
+    }
+  }, [currentPage]);
+
+  // Handle search functionality
+  const handleSearch = async () => {
+    setLoading(true);
+    try {
+      const response = await apiService.get("/api/JobListing/search", {
+        params: { title: searchText, page: 1, pageSize }
+      });
+      setJobs(response.data.data || []);
+      setSearchText(""); // Clear search input
+      setCurrentPage(1); // Reset to the first page
+      setLoading(false);
+    } catch (error) {
+      setError("Error fetching jobs. Please try again later.");
+      setLoading(false);
+    }
   };
+
+  // Apply filters when the Apply Filters button is clicked
+  const applyFilters = () => {
+    const queryParams = {
+      ...Object.fromEntries(Object.entries(filters).filter(([_, value]) => value))
+    };
+    setCurrentPage(1); // Reset to the first page
+    fetchJobs(queryParams);
+  };
+
+  // Clear filters and reset to fetch all jobs
+  const clearFilters = () => {
+    setFilters({
+      city: "",
+      province: "",
+      jobType: "",
+      workType: "",
+      experienceLevel: "",
+      industry: "",
+      minSalary: "",
+      maxSalary: ""
+    });
+    setSearchText("");
+    setCurrentPage(1);
+    fetchJobs(); // Fetch all jobs
+  };
+
+  // Handle input changes for filters
+  const handleInputChange = (e) => {
+    setFilters({ ...filters, [e.target.name]: e.target.value });
+  };
+
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  // Pagination handlers
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  // Initial fetch on component load or when page changes
+  useEffect(() => {
+    fetchJobs();
+  }, [fetchJobs]);
+
+  if (loading) return <p>Loading jobs...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
     <div className="main-container">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          gap: "10px",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <div className="search-bar">
-          <div className="search-input">
-            <span className="search-icon">Icon</span>
-            <input type="text" placeholder="Job Title" />
-          </div>
-          <button className="search-button">Search</button>
+    <h2>Job Listings</h2>
+
+    {/* Search Bar */}
+    <div className="search-bar-wrapper">
+      <div className="search-bar">
+        <div className="search-input">
+          <input
+            type="text"
+            placeholder="Job Title"
+            value={searchText}
+            onChange={handleSearchChange}
+          />
         </div>
-        <ResumeUpload />
+        <button className="search-button" onClick={handleSearch}>
+          Search
+        </button>
       </div>
-      <div className="content-container">
-        <div className="filter-sidebar">
-          <h1>Filters</h1>
-          <div className="filter-group">
-            <label>Title</label>
-            <select>
-              <option value="">Title</option>
-              <option value="pharmacy-assistant">Pharmacy Assistant</option>
-              <option value="pharmacist">Pharmacist</option>
-            </select>
-            <label>Company</label>
-            <select>
-              <option value="">Company</option>
-              <option value="company1">Company 1</option>
-              <option value="company2">Company 2</option>
-            </select>
-            <label>Job Type</label>
-            <select>
-              <option value="">Job Type</option>
-              <option value="full-time">Full Time</option>
-              <option value="part-time">Part Time</option>
-            </select>
-            <label>Position</label>
-            <select>
-              <option value="">Position</option>
-              <option value="employee">Employee</option>
-              <option value="manager">Manager</option>
-            </select>
-            <label>Country</label>
-            <select>
-              <option value="Canada">Canada</option>
-              <option value="USA">USA</option>
-            </select>
-            <label>State</label>
-            <select>
-              <option value="">State</option>
-              <option value="Ontario">Ontario</option>
-              <option value="Quebec">Quebec</option>
-            </select>
-            <label>City</label>
-            <select>
-              <option value="">City</option>
-              <option value="Toronto">Toronto</option>
-              <option value="Vancouver">Vancouver</option>
-            </select>
-            <label>Zipcode</label>
-            <select>
-              <option value="">Zipcode</option>
-              <option value="M5V">M5V</option>
-              <option value="V6B">V6B</option>
-            </select>
-            <button className="apply-btn">Apply</button>
-            <button className="clear-btn">Clear All</button>
-          </div>
+      <button className="view-all-button" onClick={clearFilters}>
+        View All Jobs
+      </button>
+    </div>
+
+    {/* Filter and Job List Section */}
+    <div className="content-container">
+      <div className="filter-sidebar">
+        <h3>Filter Jobs</h3>
+        <div className="filter-group">
+          <input
+            type="text"
+            name="city"
+            placeholder="City"
+            value={filters.city}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="province"
+            placeholder="Province"
+            value={filters.province}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="jobType"
+            placeholder="Job Type"
+            value={filters.jobType}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="workType"
+            placeholder="Work Type"
+            value={filters.workType}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="experienceLevel"
+            placeholder="Experience Level"
+            value={filters.experienceLevel}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="industry"
+            placeholder="Industry"
+            value={filters.industry}
+            onChange={handleInputChange}
+          />
+          <input
+            type="number"
+            name="minSalary"
+            placeholder="Min Salary"
+            value={filters.minSalary}
+            onChange={handleInputChange}
+          />
+          <input
+            type="number"
+            name="maxSalary"
+            placeholder="Max Salary"
+            value={filters.maxSalary}
+            onChange={handleInputChange}
+          />
         </div>
-        <div className="job-list">
-          {currentItems.map((jobList) => {
-            return (
-              <JobDetailsCard
-                title={jobList.title}
-                location={jobList.location}
-                type={jobList.type}
-                position={jobList.position}
-                salary={jobList.salary}
-                description={jobList.description}
-              />
-            );
-          })}
-        </div>
+        <button className="apply-btn" onClick={applyFilters}>
+          Apply Filters
+        </button>
+        <button className="clear-btn" onClick={clearFilters}>
+          Clear Filters
+        </button>
       </div>
 
-      <Pagination
-        currentPage={currentPage}
-        totalItems={jobListings.length}
-        itemsPerPage={itemsPerPage}
-        onPageChange={handlePageChange}
-      />
+      {/* Job Listings */}
+      <div className="job-list">
+        {jobs.length > 0 ? (
+          jobs.map((job) => <JobDetailsCard key={job.jobID} job={job} />)
+        ) : (
+          <p>No jobs found matching the criteria.</p>
+        )}
+      </div>
     </div>
+    
+    {/* Pagination Controls - moved to the bottom */}
+    <div className="pagination">
+      <button 
+        onClick={handlePreviousPage} 
+        disabled={currentPage === 1} 
+        className="pagination-button"
+      >
+        Previous
+      </button>
+      <span>Page {currentPage}</span>
+      <button 
+        onClick={handleNextPage} 
+        className="pagination-button"
+      >
+        Next
+      </button>
+    </div>
+  </div>
   );
 };
 

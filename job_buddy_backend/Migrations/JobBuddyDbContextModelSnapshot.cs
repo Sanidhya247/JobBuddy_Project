@@ -322,7 +322,7 @@ namespace job_buddy_backend.Migrations
                     b.ToTable("ResumeSkills");
                 });
 
-            modelBuilder.Entity("job_buddy_backend.Models.User", b =>
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.User", b =>
                 {
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
@@ -330,7 +330,14 @@ namespace job_buddy_backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"));
 
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverPhotoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -347,6 +354,10 @@ namespace job_buddy_backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Headline")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -384,7 +395,39 @@ namespace job_buddy_backend.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("job_buddy_backend.Models.UserEducation", b =>
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.UserCertification", b =>
+                {
+                    b.Property<int>("UserCertificationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserCertificationID"));
+
+                    b.Property<string>("CredentialUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("IssueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IssuedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserCertificationID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("UserCertifications");
+                });
+
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.UserEducation", b =>
                 {
                     b.Property<int>("UserEducationID")
                         .ValueGeneratedOnAdd()
@@ -413,7 +456,46 @@ namespace job_buddy_backend.Migrations
                     b.ToTable("UserEducations");
                 });
 
-            modelBuilder.Entity("job_buddy_backend.Models.UserPhoneNumber", b =>
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.UserExperience", b =>
+                {
+                    b.Property<int>("UserExperienceID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserExperienceID"));
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("JobTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserExperienceID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("UserExperiences");
+                });
+
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.UserPhoneNumber", b =>
                 {
                     b.Property<int>("UserPhoneNumberID")
                         .ValueGeneratedOnAdd()
@@ -438,6 +520,40 @@ namespace job_buddy_backend.Migrations
                     b.ToTable("UserPhoneNumbers");
                 });
 
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.UserProject", b =>
+                {
+                    b.Property<int>("UserProjectID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserProjectID"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserProjectID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("UserProjects");
+                });
+
             modelBuilder.Entity("JobBuddyBackend.Models.ATSScore", b =>
                 {
                     b.HasOne("JobBuddyBackend.Models.JobListing", "JobListing")
@@ -459,7 +575,7 @@ namespace job_buddy_backend.Migrations
 
             modelBuilder.Entity("JobBuddyBackend.Models.JobListing", b =>
                 {
-                    b.HasOne("job_buddy_backend.Models.User", "Employer")
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "Employer")
                         .WithMany("JobListings")
                         .HasForeignKey("EmployerID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -493,7 +609,7 @@ namespace job_buddy_backend.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("job_buddy_backend.Models.User", "JobSeeker")
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "JobSeeker")
                         .WithMany("Applications")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -508,7 +624,7 @@ namespace job_buddy_backend.Migrations
 
             modelBuilder.Entity("job_buddy_backend.Models.EmployerProfile", b =>
                 {
-                    b.HasOne("job_buddy_backend.Models.User", "Employer")
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "Employer")
                         .WithMany()
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -519,7 +635,7 @@ namespace job_buddy_backend.Migrations
 
             modelBuilder.Entity("job_buddy_backend.Models.Resume", b =>
                 {
-                    b.HasOne("job_buddy_backend.Models.User", "JobSeeker")
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "JobSeeker")
                         .WithMany("Resumes")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -539,9 +655,20 @@ namespace job_buddy_backend.Migrations
                     b.Navigation("Resume");
                 });
 
-            modelBuilder.Entity("job_buddy_backend.Models.UserEducation", b =>
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.UserCertification", b =>
                 {
-                    b.HasOne("job_buddy_backend.Models.User", "User")
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "User")
+                        .WithMany("Certifications")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.UserEducation", b =>
+                {
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "User")
                         .WithMany("Educations")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -550,10 +677,32 @@ namespace job_buddy_backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("job_buddy_backend.Models.UserPhoneNumber", b =>
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.UserExperience", b =>
                 {
-                    b.HasOne("job_buddy_backend.Models.User", "User")
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "User")
+                        .WithMany("Experiences")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.UserPhoneNumber", b =>
+                {
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "User")
                         .WithMany("PhoneNumbers")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.UserProject", b =>
+                {
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "User")
+                        .WithMany("Projects")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -577,15 +726,21 @@ namespace job_buddy_backend.Migrations
                     b.Navigation("ResumeSkills");
                 });
 
-            modelBuilder.Entity("job_buddy_backend.Models.User", b =>
+            modelBuilder.Entity("job_buddy_backend.Models.UserModel.User", b =>
                 {
                     b.Navigation("Applications");
 
+                    b.Navigation("Certifications");
+
                     b.Navigation("Educations");
+
+                    b.Navigation("Experiences");
 
                     b.Navigation("JobListings");
 
                     b.Navigation("PhoneNumbers");
+
+                    b.Navigation("Projects");
 
                     b.Navigation("Resumes");
                 });

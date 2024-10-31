@@ -1,6 +1,6 @@
 ﻿using job_buddy_backend.Core.Interfaces;
 using job_buddy_backend.Helpers;
-using job_buddy_backend.Models;
+using job_buddy_backend.Models.UserModel;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
