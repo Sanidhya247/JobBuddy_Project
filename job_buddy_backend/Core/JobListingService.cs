@@ -63,7 +63,7 @@ namespace job_buddy_backend.Core
             return true;
         }
 
-        public async Task<IEnumerable<JobListingDto>> SearchJobsAsync(string? title, string? companyName)
+        public async Task<IEnumerable<JobListingDto>> SearchJobsAsync(string? title, string? companyName, int page, int pageSize)
         {
             var query = _context.JobListings.AsQueryable();
 
@@ -76,12 +76,15 @@ namespace job_buddy_backend.Core
             {
                 query = query.Where(j => j.Employer.FullName.Contains(companyName));
             }
+            // Apply pagination
+            query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
 
             var jobs = await query.ToListAsync();
             return _mapper.Map<IEnumerable<JobListingDto>>(jobs);
         }
 
-        public async Task<IEnumerable<JobListingDto>> FilterJobsAsync(string? province, string? city, string? jobType, string? workType, string? experienceLevel, string? industry, decimal? minSalary, decimal? maxSalary)
+        public async Task<IEnumerable<JobListingDto>> FilterJobsAsync(string? province, string? city, string? jobType, string? workType, string? experienceLevel, string? industry, decimal? minSalary, decimal? maxSalary, int page, int pageSize)
         {
             var query = _context.JobListings.AsQueryable();
 
@@ -126,6 +129,10 @@ namespace job_buddy_backend.Core
                 query = query.Where(j => (j.PayRatePerYear.HasValue && j.PayRatePerYear <= maxSalary) ||
                                          (j.PayRatePerHour.HasValue && j.PayRatePerHour * 2080 <= maxSalary));
             }
+
+            // Apply pagination
+            query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
 
             var jobs = await query.ToListAsync();
             return _mapper.Map<IEnumerable<JobListingDto>>(jobs);
