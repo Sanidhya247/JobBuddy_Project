@@ -1,8 +1,8 @@
 import React from 'react';
 import "../assets/css/About_us.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faShieldAlt, faFileAlt, faSmile, faUser, faBuilding, faList } from "@fortawesome/free-solid-svg-icons"; // Import additional icons
-import aboutUsPage from '../assets/imgs/About_us.png'; // Image import
+import { faSearch, faShieldAlt, faFileAlt, faSmile, faUser, faBuilding, faList } from "@fortawesome/free-solid-svg-icons"; 
+import aboutUsPage from '../assets/imgs/About_us.png'; 
 
 const About = () => {
   return (

@@ -1,272 +1,259 @@
 :root {
     --primary-color: #19322a; 
-    }
-    body{
-        
-        font-family: Arial, sans-serif ,Garamond ;
-    }
-    
-    .aboutpage_section {
-        background-image: url('../imgs/about_Us_Banner.jpg');
-        /* https://www.google.com/search?sca_esv=04a744430a52c168&rlz=1C1RXQR_enCA1125CA1126&sxsrf=ADLYWII3Pp5KOIQKrfXn6IBBv8BBQnFwqA:1728961912664&q=about+us+page+images&udm=2&fbs=AEQNm0Aa4sjWe7Rqy32pFwRj0UkWd8nbOJfsBGGB5IQQO6L3J03RPjGV0MznOJ6Likin94qcHocyJKwCAY-xJrP2wTDRcznSnsW3hhhfn3BzcpvBM5iqqpEmdm9IUBLlFd7NSq37hQYPE18EIzQUYsMAMxqKXVcujBdHF3v0nYQJlfGA-uhk7LwG8J1cku011_6WLVPHFx3vP8DtamIxfhqwOolT8oJT0g&sa=X&ved=2ahUKEwiVvYmFtY-JAxW2jokEHeVXOSIQtKgLegQIFhAB&biw=1536&bih=695&dpr=1.25#vhid=ruSUmSfLXx9DqM&vssid=mosaic */
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        height: 50vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
-    
-    .aboutpage_section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); 
-    }
-    
-    .aboutcontent {
-        position: relative;
-        text-align: center;
-        color: #fff;
-    }
-    
-    /* Welcome to Jobb Section */
+}
+
+body {
+    font-family: Arial, sans-serif, Garamond;
+}
+
+.aboutpage_section {
+    background-image: url('../imgs/about_Us_Banner.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.aboutpage_section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.aboutcontent {
+    position: relative;
+    text-align: center;
+    color: #fff;
+}
+
+/* Welcome to Jobb Section */
+.content_section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap; 
+}
+
+.image-container {
+    flex: 1;
+    padding-right: 40px; 
+}
+
+.responsive-image {
+    width: 100%;
+    height: 350px; 
+    object-fit: cover; 
+    border-radius: 10px;
+}
+
+.text-container {
+    flex: 1.5;
+    padding-left: 40px;
+}
+
+.text-container h2 {
+    font-size: 32px;
+    margin-bottom: 10%;
+}
+
+.text-container p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 5%;
+    color: #333;
+}
+
+/* Our Services Section */
+.section-service {
+    padding: 30px;
+    background-color: rgb(247, 246, 246);
+}
+
+.services-section {
+    max-width: 1200px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.services-section h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+}
+
+.service-box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; 
+    transition: transform 0.3s ease;
+}
+
+.service-box h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.service-box p {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+}
+
+.service-box .fa-icon {
+    font-size: 50px; 
+    color: var(--primary-color);
+    margin-bottom: 20px; 
+}
+
+.stats-section {
+    position: relative; 
+    background-image: url('../imgs/aboutus.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 60px 0;
+    text-align: center;
+    height: 400px; 
+}
+
+.stats-overlay {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1; 
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative; 
+    z-index: 2; 
+}
+
+.stat-box {
+    color: #fff;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.stat-box h3 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.stat-box p {
+    font-size: 18px;
+}
+
+/* Our Team Section */
+.team-section {
+    max-width: 1200px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.team-section h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.team-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.team-member {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.team-member img {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.team-member h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.team-member p {
+    font-size: 18px;
+    color: #666;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
     .content_section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1200px;
-        margin: 40px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        flex-wrap: wrap; 
+        flex-direction: column;
+        padding: 10px;
     }
     
-    .image-container {
-        flex: 1;
-        padding-right: 40px; 
+    .image-container, .text-container {
+        padding: 10px 0;
     }
-    
-    .responsive-image {
-        width: 100%;
-        height: 350px; 
-        object-fit: cover; 
-        border-radius: 10px;
-    }
-    
-    .text-container {
-        flex: 1.5;
-        padding-left: 40px;
-    }
-    .text-container h2 {
-        font-size: 32px;
-        margin-bottom: 10%;
-    }
-    
-    .text-container p {
-        font-size: 18px;
-        line-height: 1.6;
-        margin-bottom: 5%;
-        color: #333;
-    }
-    
-    
-    /* Our Services Section */
-    .section-service{
-        padding: 30px;
-        background-color: rgb(247, 246, 246);
-    }
-    .services-section {
-        max-width: 1200px;
-        margin: 50px auto;
-        text-align: center;
-    }
-    
-    .services-section h2 {
-        font-size: 36px;
-        margin-bottom: 40px;
-    }
-    
+
     .services-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 20px;
+        grid-template-columns: 1fr;
     }
-    
-    .service-box {
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center; 
-        transition: transform 0.3s ease;
-    }
-    
-    .service-box h3 {
-        font-size: 24px;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-    
-    .service-box p {
-        font-size: 16px;
-        color: #666;
-        text-align: center;
-    }
-    
-    /* Add styles for FontAwesome icons */
-    .service-box .fa-icon {
-        font-size: 50px; 
-        color: var(--primary-color);
-        margin-bottom: 20px; 
-    }
-    .fa-icon {
-        font-size: 40px; 
-        color: white;
-        margin-bottom: 20px; 
-    }
-    
-    .stats-section {
-        position: relative; 
-        background-image: url('../imgs/aboutus.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        padding: 60px 0;
-        text-align: center;
-        height: 400px; 
-    }
-    
-    .stats-overlay {
-        position: absolute; 
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%; 
-        background-color: rgba(0, 0, 0, 0.9);
-        z-index: 1; 
-    }
-    
-    .stats-container {
-        display: flex;
-        justify-content: space-around;
-        max-width: 1200px;
-        margin: 0 auto;
-        position: relative; 
-        z-index: 2; 
-    }
-    
-    .stat-box {
-        color: #fff;
-        text-align: center;
-        margin-top: 50px;
-    }
-    
-    .stat-box h3 {
-        font-size: 36px;
-        margin-bottom: 10px;
-    }
-    
-    .stat-box p {
-        font-size: 18px;
-    }
-    /* Our Team Section */
-    .team-section {
-        max-width: 1200px;
-        margin: 50px auto;
-        text-align: center;
-    }
-    
-    .team-section h2 {
-        font-size: 36px;
-        margin-bottom: 40px;
-    }
-    
+
     .team-container {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
+        grid-template-columns: 1fr 1fr;
     }
-    
-    .team-member {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        text-align: center;
-    }
-    
-    .team-member img {
-        width: 100%;
-        height: 200px;
-        border-radius: 10px;
-        margin-bottom: 15px;
-    }
-    
-    .team-member h3 {
-        font-size: 22px;
-        margin-bottom: 5px;
-    }
-    
-    .team-member p {
-        font-size: 18px;
-        color: #666;
-    }
-    
-    /* General styles for the stats-section */
-    .stats-section {
-        position: relative;
-        background-color: #f7f7f7;
-        padding: 50px 0;
-    }
-    
-    .stats-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.3);
-        z-index: 1;
-    }
-    
+
     .stats-container {
-        display: flex;
-        justify-content: space-around;
+        flex-direction: column;
         align-items: center;
-        z-index: 2;
-        position: relative;
-        max-width: 1200px;
-        margin: 0 auto;
     }
-    
-    .stat-box {
-        width: 25%;
-        text-align: center;
-        color: #333;
+}
+
+@media (max-width: 480px) {
+    .text-container h2 {
+        font-size: 28px;
     }
-    
-    .stat-box h3 {
-        font-size: 36px;
-        margin-bottom: 10px;
-        color: white;
+
+    .text-container p, .stat-box p {
+        font-size: 16px;
     }
-    
-    .stat-box p {
-        font-size: 18px;
-        color: white;
-        margin: 0;
+
+    .team-container {
+        grid-template-columns: 1fr;
     }
-    
-    .fa-icon {
-        font-size: 50px;
-        margin-bottom: 10px;
+
+    .stats-container {
+        flex-direction: column;
     }
-    
+}
