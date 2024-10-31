@@ -12,6 +12,7 @@ import JobSearchPage from "./components/Job_Search_Page";
 import VerifyEmail from './components/authentication/VerifyEmail';
 import UserProfile from './components/userProfile/UserProfile';
 import Navbar from './components/Navbar';
+import JobDetailsPage from './components/JobDetailsPage';
 
 
 function App() {
