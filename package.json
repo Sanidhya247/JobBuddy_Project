@@ -1,0 +1,11 @@
+{
+  "name": "jobbuddy_project",
+  "version": "1.0.0",
+  "description": "The “Job Buddy” is a modern web application that enhances the experience for job seekers and employers. \r The application aims to create a communication-friendly environment and provides interaction tools for \r employers and Job seekers. Key features of the Job Buddy project involves a dedicated space for all Job postings \r and filtering Jobs with Location, Salary range, Date posted etc., an Employer section for posting jobs and tracking \r the applications with options to reject or select and schedule interviews. Features which make the project \r outstanding from other available Job application portals are Job seeker can create or tailor their resume with our \r AI-integrated tools and check the ATS score for specific job descriptions. Job Buddy also provides a feature to \r connect with the Employer directly and discuss job-related skills and stand out from other applicants.\r ## Authors",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

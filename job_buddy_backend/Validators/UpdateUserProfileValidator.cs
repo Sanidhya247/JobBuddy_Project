@@ -39,9 +39,6 @@ namespace job_buddy_backend.Validators
                 .Matches(@"^\d{10}$").WithMessage("Phone number must be 10 digits.")
                 .When(x => !string.IsNullOrEmpty(x.PhoneNumber));
 
-            RuleFor(x => x.Nationality)
-                .NotEmpty().WithMessage("Nationality is required.")
-                .When(x => x.Nationality != null);
         }
     }
 }
