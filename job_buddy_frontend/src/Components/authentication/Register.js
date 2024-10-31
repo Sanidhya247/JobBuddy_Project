@@ -37,11 +37,13 @@ const Register = () => {
     } else if (formData.password.length < 6) {
       formErrors.password = "Password must be at least 6 characters.";
     } else if (!/[A-Z]/.test(formData.password)) {
-      formErrors.password = "Password must contain at least one uppercase letter.";
+      formErrors.password =
+        "Password must contain at least one uppercase letter.";
     } else if (!/[0-9]/.test(formData.password)) {
       formErrors.password = "Password must contain at least one number.";
     } else if (!/[!@#$%^&*]/.test(formData.password)) {
-      formErrors.password = "Password must contain at least one special character.";
+      formErrors.password =
+        "Password must contain at least one special character.";
     }
     if (formData.password !== formData.confirmPassword) {
       formErrors.confirmPassword = "Passwords do not match.";
@@ -56,13 +58,15 @@ const Register = () => {
     if (validateForm()) {
       try {
         await register(formData);
-        toast.success("Registration successful! Please check your email to confirm your account.");
+        toast.success(
+          "Registration successful! Please check your email to confirm your account."
+        );
         navigate("/verify-email");
       } catch (err) {
         console.log(err?.message);
         const errorMessage = err?.message || "Registration failed.";
         setErrors({ server: errorMessage });
-        setError(errorMessage); 
+        setError(errorMessage);
         toast.error(errorMessage);
       }
     }
@@ -74,6 +78,19 @@ const Register = () => {
       {errors.server && <div className="error">{errors.server}</div>}
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group">
+          <label>Role</label>
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            className={errors.role ? "error-input" : ""}
+          >
+            <option name='role' value="Job Seeker">Job Seeker</option>
+            <option name='role' value="Employer">Employer</option>
+          </select>
+          {errors.role && <span className="error-text">{errors.role}</span>}
+        </div>
+        <div className="form-group">
           <label>Full Name</label>
           <input
             type="text"
@@ -82,7 +99,9 @@ const Register = () => {
             onChange={handleChange}
             className={errors.fullName ? "error-input" : ""}
           />
-          {errors.fullName && <span className="error-text">{errors.fullName}</span>}
+          {errors.fullName && (
+            <span className="error-text">{errors.fullName}</span>
+          )}
         </div>
 
         <div className="form-group">
@@ -106,7 +125,9 @@ const Register = () => {
             onChange={handleChange}
             className={errors.password ? "error-input" : ""}
           />
-          {errors.password && <span className="error-text">{errors.password}</span>}
+          {errors.password && (
+            <span className="error-text">{errors.password}</span>
+          )}
         </div>
 
         <div className="form-group">
@@ -118,7 +139,9 @@ const Register = () => {
             onChange={handleChange}
             className={errors.confirmPassword ? "error-input" : ""}
           />
-          {errors.confirmPassword && <span className="error-text">{errors.confirmPassword}</span>}
+          {errors.confirmPassword && (
+            <span className="error-text">{errors.confirmPassword}</span>
+          )}
         </div>
 
         <div className="form-group">
@@ -130,8 +153,15 @@ const Register = () => {
             onChange={handleChange}
           />
         </div>
-        <button type="submit" className="auth-button">Sign Up</button>
-        <p>Already have an account? <Link to="/login" className="switch-auth-link">Log In</Link></p>
+        <button type="submit" className="auth-button">
+          Sign Up
+        </button>
+        <p>
+          Already have an account?{" "}
+          <Link to="/login" className="switch-auth-link">
+            Log In
+          </Link>
+        </p>
       </form>
     </div>
   );

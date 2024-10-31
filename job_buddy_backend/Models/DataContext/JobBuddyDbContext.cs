@@ -14,7 +14,7 @@ namespace job_buddy_backend.Models.DataContext
         public DbSet<JobListing> JobListings { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<Resume> Resumes { get; set; }
-        public DbSet<ATSScore> ATSScores { get; set; }
+        public DbSet<ATSScore> ATSScores { get; set; }  
         public DbSet<UserPhoneNumber> UserPhoneNumbers { get; set; }
         public DbSet<UserEducation> UserEducations { get; set; }
         public DbSet<JobTag> JobTags { get; set; }
