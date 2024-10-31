@@ -126,6 +126,10 @@ namespace job_buddy_backend
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IConfigurationService, ConfigurationService>();
             services.AddScoped<IUserProfileService, UserProfileService>();
+            services.AddScoped<IResumeService, ResumeService>();
+            services.AddHttpClient<LocationService>();
+            services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<IConfigurationService, ConfigurationService>();
         }
 
         // Configure Authentication and Secure Key Fetching
