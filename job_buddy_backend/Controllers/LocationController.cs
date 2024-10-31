@@ -37,7 +37,7 @@ namespace job_buddy_backend.Controllers
             }
         }
 
-        // GET: api/location/states/{countryCode}
+        
         [HttpGet("states/{countryCode}")]
         public async Task<IActionResult> GetStates(string countryCode)
         {
@@ -53,7 +53,7 @@ namespace job_buddy_backend.Controllers
             }
         }
 
-        // GET: api/location/cities/{stateName}
+        
         [HttpGet("cities/{stateName}")]
         public async Task<IActionResult> GetCities(string stateName)
         {
@@ -69,7 +69,7 @@ namespace job_buddy_backend.Controllers
             }
         }
 
-        // GET: api/location/zipcode/{cityName}
+        
         [HttpGet("zipcode/{cityName}")]
         public async Task<IActionResult> GetZipCodes(string cityName)
         {
