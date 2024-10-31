@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaChevronDown, FaChevronUp, FaPlus } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp, FaPlus, FaTrash } from 'react-icons/fa';
 import Loader from '../commons/Loader';
 import { toast } from 'react-toastify';
 import '../../assets/css/EditProfile.css';
@@ -7,19 +7,30 @@ import apiService from '../../utils/apiService';
 
 function EditProfile({ profile, setProfile, userId, setEditMode }) {
   const [formData, setFormData] = useState({
-    ...profile,
+    userId: profile.userID,
+    fullName: profile.fullName || '',
+    email: profile.email || '',
+    address: profile.address || '',
+    phoneNumber: profile.phoneNumber || '',
+    dateOfBirth: profile.dateOfBirth ? profile.dateOfBirth.split("T")[0] : '',
+    nationality: profile.nationality || '',
+    linkedInUrl: profile.linkedInUrl || '',
+    profilePictureUrl: profile.profilePictureUrl || '',
+    coverPhotoUrl: profile.coverPhotoUrl || '',
+    headline: profile.headline || '',
+    about: profile.about || '',
     educations: profile.educations || [{}],
-    experience: profile.experience || [{}],
-    projects: profile.projects || [{}],
+    experiences: profile.experiences || [{}],
     certifications: profile.certifications || [{}],
+    projects: profile.projects || [{}],
   });
-  const [loading, setLoading] = useState(false);
 
+  const [loading, setLoading] = useState(false);
   const [expandSections, setExpandSections] = useState({
     education: true,
-    experience: false,
-    projects: false,
-    certifications: false,
+    experience: true,
+    projects: true,
+    certifications: true,
   });
 
   const toggleSection = (section) => {
@@ -49,14 +60,27 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
       ...formData,
       [section]: [...formData[section], {}],
     });
+    setExpandSections((prev) => ({
+      ...prev,
+      [section]: true, // Ensure the new section is expanded
+    }));
+  };
+
+  const removeEntry = (section, index) => {
+    const updatedSection = formData[section].filter((_, idx) => idx !== index);
+    setFormData({ ...formData, [section]: updatedSection });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      await apiService.put(`/api/UserProfile/${userId}/update-profile`, formData);
-      setProfile(formData);
+      const response = await apiService.put(`/api/UserProfile/${userId}/update-profile`, formData);
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        ...formData,
+        profileCompletenessPercentage: response.data.profileCompletenessPercentage,
+      }));
       setEditMode(false);
       toast.success('Profile updated successfully!');
     } catch (error) {
@@ -67,9 +91,7 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
     }
   };
 
-  if (loading) {
-    return <Loader />;
-  }
+  if (loading) return <Loader />;
 
   return (
     <form className="edit-profile-form" onSubmit={handleSubmit}>
@@ -83,8 +105,20 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
         <input type="email" name="email" value={formData.email || ''} onChange={handleInputChange} disabled />
       </label>
       <label>
+        Headline:
+        <input type="text" name="headline" value={formData.headline || ''} onChange={handleInputChange} />
+      </label>
+      <label>
+        About:
+        <textarea name="about" value={formData.about || ''} onChange={handleInputChange} />
+      </label>
+      <label>
         Address:
         <input type="text" name="address" value={formData.address || ''} onChange={handleInputChange} />
+      </label>
+      <label>
+        Date of Birth:
+        <input type="date" name="dateOfBirth" value={formData.dateOfBirth || ''} onChange={handleInputChange} />
       </label>
 
       {/* Education Section */}
@@ -114,10 +148,13 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
               Graduation Date:
               <input
                 type="date"
-                value={education.graduationDate || ''}
+                value={education.graduationDate ? education.graduationDate.split("T")[0] : ''}
                 onChange={(e) => handleSectionChange('educations', index, 'graduationDate', e.target.value)}
               />
             </label>
+            <button type="button" className="remove-btn" onClick={() => removeEntry('educations', index)}>
+              <FaTrash /> Remove
+            </button>
           </div>
         ))}
       <button type="button" className="add-btn" onClick={() => addNewEntry('educations')}>
@@ -129,14 +166,14 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
         <h3>Experience {expandSections.experience ? <FaChevronUp /> : <FaChevronDown />}</h3>
       </div>
       {expandSections.experience &&
-        formData.experience.map((experience, index) => (
+        formData.experiences.map((experience, index) => (
           <div key={index} className="experience-entry">
             <label>
               Job Title:
               <input
                 type="text"
                 value={experience.jobTitle || ''}
-                onChange={(e) => handleSectionChange('experience', index, 'jobTitle', e.target.value)}
+                onChange={(e) => handleSectionChange('experiences', index, 'jobTitle', e.target.value)}
               />
             </label>
             <label>
@@ -144,7 +181,7 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
               <input
                 type="text"
                 value={experience.company || ''}
-                onChange={(e) => handleSectionChange('experience', index, 'company', e.target.value)}
+                onChange={(e) => handleSectionChange('experiences', index, 'company', e.target.value)}
               />
             </label>
             <label>
@@ -152,7 +189,7 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
               <input
                 type="date"
                 value={experience.startDate || ''}
-                onChange={(e) => handleSectionChange('experience', index, 'startDate', e.target.value)}
+                onChange={(e) => handleSectionChange('experiences', index, 'startDate', e.target.value)}
               />
             </label>
             <label>
@@ -160,12 +197,15 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
               <input
                 type="date"
                 value={experience.endDate || ''}
-                onChange={(e) => handleSectionChange('experience', index, 'endDate', e.target.value)}
+                onChange={(e) => handleSectionChange('experiences', index, 'endDate', e.target.value)}
               />
             </label>
+            <button type="button" className="remove-btn" onClick={() => removeEntry('experiences', index)}>
+              <FaTrash /> Remove
+            </button>
           </div>
         ))}
-      <button type="button" className="add-btn" onClick={() => addNewEntry('experience')}>
+      <button type="button" className="add-btn" onClick={() => addNewEntry('experiences')}>
         <FaPlus /> Add Experience
       </button>
 
@@ -177,11 +217,11 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
         formData.projects.map((project, index) => (
           <div key={index} className="project-entry">
             <label>
-              Project Name:
+              Project Title:
               <input
                 type="text"
-                value={project.projectName || ''}
-                onChange={(e) => handleSectionChange('projects', index, 'projectName', e.target.value)}
+                value={project.projectTitle || ''}
+                onChange={(e) => handleSectionChange('projects', index, 'projectTitle', e.target.value)}
               />
             </label>
             <label>
@@ -191,6 +231,9 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
                 onChange={(e) => handleSectionChange('projects', index, 'description', e.target.value)}
               />
             </label>
+            <button type="button" className="remove-btn" onClick={() => removeEntry('projects', index)}>
+              <FaTrash /> Remove
+            </button>
           </div>
         ))}
       <button type="button" className="add-btn" onClick={() => addNewEntry('projects')}>
@@ -205,11 +248,11 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
         formData.certifications.map((certification, index) => (
           <div key={index} className="certification-entry">
             <label>
-              Certification Name:
+              Certification Title:
               <input
                 type="text"
-                value={certification.certificationName || ''}
-                onChange={(e) => handleSectionChange('certifications', index, 'certificationName', e.target.value)}
+                value={certification.title || ''}
+                onChange={(e) => handleSectionChange('certifications', index, 'title', e.target.value)}
               />
             </label>
             <label>
@@ -224,10 +267,13 @@ function EditProfile({ profile, setProfile, userId, setEditMode }) {
               Date Issued:
               <input
                 type="date"
-                value={certification.dateIssued || ''}
-                onChange={(e) => handleSectionChange('certifications', index, 'dateIssued', e.target.value)}
+                value={certification.issueDate || ''}
+                onChange={(e) => handleSectionChange('certifications', index, 'issueDate', e.target.value)}
               />
             </label>
+            <button type="button" className="remove-btn" onClick={() => removeEntry('certifications', index)}>
+              <FaTrash /> Remove
+            </button>
           </div>
         ))}
       <button type="button" className="add-btn" onClick={() => addNewEntry('certifications')}>

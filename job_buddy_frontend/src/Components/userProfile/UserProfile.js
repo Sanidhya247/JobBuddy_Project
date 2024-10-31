@@ -104,7 +104,7 @@ function UserProfile() {
         </div>
       </div>
       {editMode ? (
-        <EditProfile profile={profile} setProfile={setProfile} userId={user.id} setEditMode={setEditMode} />
+        <EditProfile profile={profile} setProfile={setProfile} userId={user.userID} setEditMode={setEditMode} />
       ) : (
         <div className="profile-details">
           <div className="detail-card">
@@ -121,8 +121,8 @@ function UserProfile() {
           <div className="detail-card">
             <h3>Education</h3>
             {profile.educations && profile.educations.length > 0 ? (
-              profile.educations.map((edu) => (
-                <div key={edu.userEducationID}>
+              profile.educations.map((edu, idx) => (
+                <div key={idx} className="item">
                   <p><strong>Degree:</strong> {edu.degree}</p>
                   <p><strong>Institution:</strong> {edu.institution}</p>
                   <p><strong>Graduation Date:</strong> {new Date(edu.graduationDate).toLocaleDateString()}</p>
@@ -136,7 +136,7 @@ function UserProfile() {
             <h3>Experience</h3>
             {profile.experiences && profile.experiences.length > 0 ? (
               profile.experiences.map((exp) => (
-                <div key={exp.userExperienceID}>
+                <div key={exp.userExperienceID} className="item">
                   <p><strong>Job Title:</strong> {exp.jobTitle}</p>
                   <p><strong>Company:</strong> {exp.company}</p>
                   <p><strong>Start Date:</strong> {new Date(exp.startDate).toLocaleDateString()}</p>
@@ -151,7 +151,7 @@ function UserProfile() {
             <h3>Projects</h3>
             {profile.projects && profile.projects.length > 0 ? (
               profile.projects.map((proj) => (
-                <div key={proj.userProjectID}>
+                <div key={proj.userProjectID} className="item">
                   <p><strong>Title:</strong> {proj.projectTitle}</p>
                   <p><strong>Description:</strong> {proj.description}</p>
                 </div>
@@ -164,7 +164,7 @@ function UserProfile() {
             <h3>Certifications</h3>
             {profile.certifications && profile.certifications.length > 0 ? (
               profile.certifications.map((cert) => (
-                <div key={cert.userCertificationID}>
+                <div key={cert.userCertificationID} className="item">
                   <p><strong>Title:</strong> {cert.title}</p>
                   <p><strong>Issued By:</strong> {cert.issuedBy}</p>
                 </div>
