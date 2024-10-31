@@ -13,8 +13,7 @@ import VerifyEmail from './components/authentication/VerifyEmail';
 import UserProfile from './components/userProfile/UserProfile';
 import Navbar from './components/Navbar';
 import JobDetailsPage from './components/JobDetailsPage';
-import Profile from "./components/Profile"; 
-import JobApplication from './Components/JobApplication';
+import JobApplication from './components/JobApplication';
 
 
 function App() {
@@ -34,7 +33,6 @@ function App() {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/" element={<JobSearchPage />} />
         <Route path="/job/:jobId" element={<JobDetailsPage />} /> {/* Job Details route */}
-  
         <Route path="/job-apply" element={<JobApplication />} />
       </Routes>
       <Footer />

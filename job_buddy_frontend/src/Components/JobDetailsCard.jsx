@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/job_search_page.css";
-import { useNavigate } from 'react-router-dom';
 
 const JobDetailsCard = ({ title,
     location,
