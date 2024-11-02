@@ -59,7 +59,10 @@ Open Package manager console in Visual studio from Tools > Nuget Package Manager
 Run "Update-database"
 ```
 ```bash 
-Once JobBuddy DB is created in your sql server, Run the Sql file "Jobbuddy_SQL_Script".
+JobBuddy DB is created in your sql server.
+```
+```bash 
+Or you can skip the above two steps and directly run the "JobbuddySqlScriptSprint2" file shared via submission folder in the SSMS to create the JobBuddyDb along with data needed to run application.
 ```
 ```bash 
 Now! Job buddy database with tables are created in your sql server.
