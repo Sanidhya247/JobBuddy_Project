@@ -24,7 +24,9 @@ namespace job_buddy_backend.Core
 
         public async Task<JobListingDto> GetJobByIdAsync(int jobId)
         {
-            var job = await _context.JobListings.FindAsync(jobId);
+            var job = await _context.JobListings
+                                        .Include(j => j.Employer)  // Include employer details
+                                            .FirstOrDefaultAsync(j => j.JobID == jobId);
             return job == null ? null : _mapper.Map<JobListingDto>(job);
         }
 

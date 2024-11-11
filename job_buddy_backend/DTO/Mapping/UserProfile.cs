@@ -12,7 +12,12 @@ namespace job_buddy_backend.DTO.Mapping
             CreateMap<RegisterUserDto, User>();
             CreateMap<User, RegisterUserDto>();
             CreateMap<LoginUserDto, User>();
-            CreateMap<JobListing, JobListingDto>().ReverseMap();
+            CreateMap<JobListing, JobListingDto>()
+                .ForMember(dest => dest.EmployerID, opt => opt.MapFrom(src => src.Employer.UserID))
+                .ForMember(dest => dest.EmployerName, opt => opt.MapFrom(src => src.Employer.FullName))
+                .ForMember(dest => dest.EmployerEmail, opt => opt.MapFrom(src => src.Employer.Email))
+                .ForMember(dest => dest.EmployerPhone, opt => opt.MapFrom(src => src.Employer.PhoneNumbers.FirstOrDefault().PhoneNumber))
+                .ReverseMap();
 
 
             CreateMap<EmployerProfile, EmployerProfileDto>().ReverseMap();
