@@ -26,6 +26,13 @@ namespace job_buddy_backend.Controllers
             return Ok(response);
         }
 
+        [HttpGet("getChats/{userID}")]
+        public async Task<IActionResult> GetChats(int userID)
+        {
+            var response = await _chatService.GetChatsAsync(userID);
+            return Ok(response);
+        }
+
         [HttpGet("messages/{chatId}")]
         public async Task<IActionResult> GetMessages(int chatId)
         {
@@ -58,6 +65,13 @@ namespace job_buddy_backend.Controllers
         public async Task<IActionResult> GetUnreadCounts()
         {
             var response = await _chatService.GetUnreadCountsAsync();
+            return Ok(response);
+        }
+
+        [HttpGet("check/{userID}/{employerID}")]
+        public async Task<IActionResult> CheckConnectionStatus(int userID, int employerID)
+        {
+            var response = await _chatService.CheckConnectionStatusAsync(userID, employerID);
             return Ok(response);
         }
     }

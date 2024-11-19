@@ -11,5 +11,7 @@ namespace job_buddy_backend.Core.Interfaces.Chat
         Task<ApiResponse<List<ChatDto>>> GetChatsAsync();
         Task<ApiResponse<List<MessageDto>>> GetMessagesAsync(int chatId);
         Task<ApiResponse<int>> GetUnreadCountsAsync();
+        Task<ApiResponse<bool>> CheckConnectionStatusAsync(int userID, int employerID);
+        Task<ApiResponse<List<ChatDto>>> GetChatsAsync(int userID);
     }
 }
