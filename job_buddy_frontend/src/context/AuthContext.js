@@ -79,6 +79,7 @@ export const AuthProvider = ({ children }) => {
       if (data.success) {
         setToken(data.data.token);
         localStorage.setItem("authToken", data.data.token);
+        localStorage.setItem("user", JSON.stringify(data.data.user));
         const decodedToken = JSON.parse(atob(data.data.token.split('.')[1]));
         console.log("user profile", data.data.user);
         setUser({user: data.data.user, id: decodedToken.UserID,
