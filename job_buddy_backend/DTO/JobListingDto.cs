@@ -19,6 +19,7 @@
         public string EmployerName { get; set; } = string.Empty;
         public string EmployerEmail { get; set; } = string.Empty;
         public string EmployerPhone { get; set; } = string.Empty;
+        public bool IsApproved { get; set; }
     }
 }
 

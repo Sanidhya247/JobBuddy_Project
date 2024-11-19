@@ -24,7 +24,7 @@ namespace job_buddy_backend.Controllers
         }
 
         [HttpGet("{jobId}")]
-        //[Authorize(Roles = "Employer, Job Seeker, Admin")]
+
         public async Task<IActionResult> GetJobById(int jobId)
         {
             var job = await _jobListingService.GetJobByIdAsync(jobId);
@@ -36,7 +36,7 @@ namespace job_buddy_backend.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin, Employer, Job Seeker")]
+
         public async Task<IActionResult> GetAllJobs()
         {
             var jobs = await _jobListingService.GetAllJobsAsync();
@@ -44,7 +44,6 @@ namespace job_buddy_backend.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Employer")]
         public async Task<IActionResult> CreateJob([FromBody] JobListingDto jobListingDto)
         {
             var job = await _jobListingService.CreateJobAsync(jobListingDto);
@@ -52,7 +51,6 @@ namespace job_buddy_backend.Controllers
         }
 
         [HttpPut("{jobId}")]
-       // [Authorize(Roles = "Employer")]
         public async Task<IActionResult> UpdateJob(int jobId, [FromBody] JobListingDto jobListingDto)
         {
             var job = await _jobListingService.UpdateJobAsync(jobId, jobListingDto);
@@ -64,7 +62,6 @@ namespace job_buddy_backend.Controllers
         }
 
         [HttpDelete("{jobId}")]
-        //[Authorize(Roles = "Employer, Admin")]
         public async Task<IActionResult> DeleteJob(int jobId)
         {
             var deleted = await _jobListingService.DeleteJobAsync(jobId);
@@ -75,9 +72,9 @@ namespace job_buddy_backend.Controllers
             return Ok(ApiResponse<string>.SuccessResponse("Job deleted successfully."));
         }
 
-        // New: Search jobs by title or company name
+        //search 
         [HttpGet("search")]
-        //[Authorize(Roles = "Admin, Employer, Job Seeker")]
+        
         public async Task<IActionResult> SearchJobs([FromQuery] string? title = null, [FromQuery] string? companyName = null, [FromQuery] int page=1, [FromQuery] int pageSize=10)
         {
             var jobs = await _jobListingService.SearchJobsAsync(title, companyName, page, pageSize);
@@ -90,9 +87,9 @@ namespace job_buddy_backend.Controllers
             return Ok(ApiResponse<IEnumerable<JobListingDto>>.SuccessResponse(jobs, "Jobs found."));
         }
 
-        // New: Filter jobs by various criteria
+        // New: Filter 
         [HttpGet("filter")]
-        //[Authorize(Roles = "Admin, Employer, Job Seeker")]
+        
         public async Task<IActionResult> FilterJobs(
             [FromQuery] string? province = null,
             [FromQuery] string? city = null,

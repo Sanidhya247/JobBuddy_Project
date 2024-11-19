@@ -19,6 +19,9 @@ import AuthContext from './context/AuthContext';
 import FloatingChatButton from './components/chat/FloatingChatButton';
 import ChatPage from './components/chat/ChatPage';
 import FriendRequestsPage from './components/chat/FriendRequestsPage';
+import AdminDashboard from './components/AdminDashboard';
+import AdminActions from './components/AdminActions';
+
 
 
 function App() {
@@ -38,11 +41,13 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/" element={<JobSearchPage />} />
-        <Route path="/job/:jobId" element={<JobDetailsPage />} /> {/* Job Details route */}
+        <Route path="/job/:jobId" element={<JobDetailsPage />} />
         <Route path="/job-apply" element={<JobApplication />} />
         <Route path="/chat" element={<ChatPage/>} />
         <Route path="/chat/:chatID?" element={<ChatPage />} />
         <Route path="/connections" element={<FriendRequestsPage/>} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-actions" element={<AdminActions />} />
       </Routes>
       {user && <FloatingChatButton />}
       <Footer />

@@ -49,6 +49,7 @@ namespace job_buddy_backend.Core.UserProfile
                 About = user.About,
                 DateOfBirth = user.DateOfBirth,
                 Nationality = user.Nationality,
+                IsActive = user.IsActive,
                 Educations = user.Educations.Select(e => new UserEducationDto
                 {
                     UserEducationID = e.UserEducationID,
@@ -122,6 +123,7 @@ namespace job_buddy_backend.Core.UserProfile
                 About = user.About,
                 DateOfBirth = user.DateOfBirth,
                 Nationality = user.Nationality,
+                IsActive = user.IsActive,
                 Educations = user.Educations.Select(e => new UserEducationDto
                 {
                     UserEducationID = e.UserEducationID,
@@ -189,6 +191,7 @@ namespace job_buddy_backend.Core.UserProfile
             user.DateOfBirth = updateDto.DateOfBirth ?? user.DateOfBirth;
             user.Nationality = updateDto.Nationality ?? user.Nationality;
             user.LinkedInUrl = updateDto.LinkedInUrl ?? user.LinkedInUrl;
+            
 
             // Update Phone Numbers
             if (updateDto.PhoneNumbers != null && updateDto.PhoneNumbers.Any())
@@ -340,7 +343,7 @@ namespace job_buddy_backend.Core.UserProfile
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserID == userId);
             if (user == null) throw new System.Exception("User not found.");
 
-            // Delete existing profile picture if it exists
+            
             if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
             {
                 var oldFilePath = Path.Combine("wwwroot", user.ProfilePictureUrl.TrimStart('/'));
@@ -370,7 +373,7 @@ namespace job_buddy_backend.Core.UserProfile
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserID == userId);
             if (user == null) throw new System.Exception("User not found.");
 
-            // Delete existing cover photo if it exists
+            // Delete existing cover photo
             if (!string.IsNullOrEmpty(user.CoverPhotoUrl))
             {
                 var oldFilePath = Path.Combine("wwwroot", user.CoverPhotoUrl.TrimStart('/'));

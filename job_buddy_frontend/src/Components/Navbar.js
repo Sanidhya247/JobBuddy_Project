@@ -51,6 +51,7 @@ const Navbar = () => {
         <li><Link onClick={toggleMenu} className="nav-link" to="/about">About</Link></li>
         <li><Link onClick={toggleMenu} className="nav-link" to="/contact">Contact</Link></li>
         <li><Link onClick={toggleMenu} className="nav-link" to="/post">Post Job</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/admin-dashboard">Admin Dashboard</Link></li>
       </ul>
       <div className={`navbar-right ${isMenuOpen ? 'active' : ''}`}>
         { user ? (<Link to="/profile">
