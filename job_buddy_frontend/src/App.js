@@ -14,6 +14,9 @@ import UserProfile from './components/userProfile/UserProfile';
 import Navbar from './components/Navbar';
 import JobDetailsPage from './components/JobDetailsPage';
 import JobApplication from './components/JobApplication';
+import AdminDashboard from './components/AdminDashboard';
+import AdminActions from './components/AdminActions';
+
 
 
 function App() {
@@ -32,8 +35,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/" element={<JobSearchPage />} />
-        <Route path="/job/:jobId" element={<JobDetailsPage />} /> {/* Job Details route */}
+        <Route path="/job/:jobId" element={<JobDetailsPage />} />
         <Route path="/job-apply" element={<JobApplication />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-actions" element={<AdminActions />} />
       </Routes>
       <Footer />
     </>
