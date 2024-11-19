@@ -39,6 +39,7 @@ namespace job_buddy_backend.Models.UserModel
         public string Headline { get; set; } = string.Empty;
         public string About { get; set; } = string.Empty;
         public string? CoverPhotoUrl { get; set; }
+        public bool IsPremium { get; set; } = false;
         //Navigation properties
         public ICollection<Resume> Resumes { get; set; } = new List<Resume>();
         public ICollection<JobListing> JobListings { get; set; } = new List<JobListing>();
