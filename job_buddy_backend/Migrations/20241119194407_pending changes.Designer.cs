@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using job_buddy_backend.Models.DataContext;
 
@@ -11,9 +12,11 @@ using job_buddy_backend.Models.DataContext;
 namespace job_buddy_backend.Migrations
 {
     [DbContext(typeof(JobBuddyDbContext))]
-    partial class JobBuddyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241119194407_pending changes")]
+    partial class pendingchanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -333,38 +336,6 @@ namespace job_buddy_backend.Migrations
                     b.HasIndex("SenderID");
 
                     b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("job_buddy_backend.Models.ContactUs", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("SubmittedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ContactUsRequests");
                 });
 
             modelBuilder.Entity("job_buddy_backend.Models.EmployerProfile", b =>

@@ -140,6 +140,7 @@ namespace job_buddy_backend
             services.AddScoped<IConnectionService, ConnectionService>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<AdminService>();
+            services.AddScoped<ContactUsService>();
 
         }
 
