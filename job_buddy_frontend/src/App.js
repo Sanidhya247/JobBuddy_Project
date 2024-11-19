@@ -14,9 +14,15 @@ import UserProfile from './components/userProfile/UserProfile';
 import Navbar from './components/Navbar';
 import JobDetailsPage from './components/JobDetailsPage';
 import JobApplication from './components/JobApplication';
+import { useContext } from 'react';
+import AuthContext from './context/AuthContext';
+import FloatingChatButton from './components/chat/FloatingChatButton';
+import ChatPage from './components/chat/ChatPage';
+import FriendRequestsPage from './components/chat/FriendRequestsPage';
 
 
 function App() {
+  const { user } = useContext(AuthContext);
   return (
     <>
       <Navbar />
@@ -34,7 +40,11 @@ function App() {
         <Route path="/" element={<JobSearchPage />} />
         <Route path="/job/:jobId" element={<JobDetailsPage />} /> {/* Job Details route */}
         <Route path="/job-apply" element={<JobApplication />} />
+        <Route path="/chat" element={<ChatPage/>} />
+        <Route path="/chat/:chatID?" element={<ChatPage />} />
+        <Route path="/connections" element={<FriendRequestsPage/>} />
       </Routes>
+      {user && <FloatingChatButton />}
       <Footer />
     </>
   );

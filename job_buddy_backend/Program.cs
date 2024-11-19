@@ -1,7 +1,9 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using job_buddy_backend.Core;
+using job_buddy_backend.Core.ChatService;
 using job_buddy_backend.Core.Interfaces;
+using job_buddy_backend.Core.Interfaces.Chat;
 using job_buddy_backend.Core.Interfaces.UserProfile;
 using job_buddy_backend.Core.UserProfile;
 using job_buddy_backend.DTO;
@@ -46,6 +48,7 @@ namespace job_buddy_backend
                     builder.Configuration.GetConnectionString("DefaultConnection")
                     //sqlOptions => sqlOptions.EnableRetryOnFailure()
                 ));
+            builder.Services.AddSignalR();
 
             // Register services
             RegisterCoreServices(builder.Services);
@@ -131,6 +134,8 @@ namespace job_buddy_backend
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IConfigurationService, ConfigurationService>();
             services.AddScoped<IJobListingService, JobListingService>();
+            services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IConnectionService, ConnectionService>();
 
         }
 

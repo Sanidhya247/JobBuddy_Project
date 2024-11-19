@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using job_buddy_backend.Models.DataContext;
 
@@ -11,9 +12,11 @@ using job_buddy_backend.Models.DataContext;
 namespace job_buddy_backend.Migrations
 {
     [DbContext(typeof(JobBuddyDbContext))]
-    partial class JobBuddyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241111020356_Added chat & connections")]
+    partial class Addedchatconnections
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,7 +250,7 @@ namespace job_buddy_backend.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("JobID")
+                    b.Property<int>("JobID")
                         .HasColumnType("int");
 
                     b.Property<int>("JobSeekerID")
@@ -274,9 +277,6 @@ namespace job_buddy_backend.Migrations
 
                     b.Property<DateTime?>("AcceptedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("JobID")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("RequestedAt")
                         .HasColumnType("datetime2");
@@ -755,7 +755,8 @@ namespace job_buddy_backend.Migrations
                     b.HasOne("JobBuddyBackend.Models.JobListing", "Job")
                         .WithMany()
                         .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("job_buddy_backend.Models.UserModel.User", "JobSeeker")
                         .WithMany()
