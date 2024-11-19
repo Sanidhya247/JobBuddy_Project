@@ -46,14 +46,16 @@ const Navbar = () => {
       <ul className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
         <li><Link onClick={toggleMenu} className="nav-link" to="/">Home</Link></li>
         <li><Link onClick={toggleMenu} className="nav-link" to="/Job">Jobs</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/chat">Messages</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/connections">Connections</Link></li>
         <li><Link onClick={toggleMenu} className="nav-link" to="/about">About</Link></li>
         <li><Link onClick={toggleMenu} className="nav-link" to="/contact">Contact</Link></li>
         <li><Link onClick={toggleMenu} className="nav-link" to="/post">Post Job</Link></li>
       </ul>
       <div className={`navbar-right ${isMenuOpen ? 'active' : ''}`}>
-        { <Link to="/profile">
+        { user ? (<Link to="/profile">
           <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
-        </Link>}
+        </Link>) : null}
         {user ? (
           <Button label={"Logout"} className={"btn-submit"} onClick={handleLogout} />
         ) : (

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import apiService from "../utils/apiService";
 import JobDetailsCard from "./JobDetailsCard";
 import "../assets/css/job_search_page.css";
+import Loader from './commons/Loader';
 
 const JobSearchPage = () => {
   const [jobs, setJobs] = useState([]);
@@ -109,7 +110,7 @@ const JobSearchPage = () => {
     fetchJobs();
   }, [fetchJobs]);
 
-  if (loading) return <p>Loading jobs...</p>;
+  if (loading) return <Loader/>;
   if (error) return <p>{error}</p>;
 
   return (
