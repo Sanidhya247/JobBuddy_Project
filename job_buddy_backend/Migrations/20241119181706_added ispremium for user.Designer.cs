@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using job_buddy_backend.Models.DataContext;
 
@@ -11,9 +12,11 @@ using job_buddy_backend.Models.DataContext;
 namespace job_buddy_backend.Migrations
 {
     [DbContext(typeof(JobBuddyDbContext))]
-    partial class JobBuddyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241119181706_added ispremium for user")]
+    partial class addedispremiumforuser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,9 +80,6 @@ namespace job_buddy_backend.Migrations
 
                     b.Property<string>("Industry")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("bit");
 
                     b.Property<string>("JobDescription")
                         .IsRequired()
@@ -485,9 +485,6 @@ namespace job_buddy_backend.Migrations
                     b.Property<string>("Headline")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsEmailVerified")
                         .HasColumnType("bit");
