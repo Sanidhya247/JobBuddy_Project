@@ -25,12 +25,22 @@ namespace job_buddy_backend.Core.ChatService
         {
             try
             {
+                var existingChat = await _context.Chats
+                    .FirstOrDefaultAsync(c =>
+                        c.JobSeekerID == chatDto.JobSeekerID &&
+                        c.EmployerID == chatDto.EmployerID &&
+                        c.IsActive);
+
+                if (existingChat != null)
+                {
+                    return ApiResponse<int>.SuccessResponse(existingChat.ChatID, "Existing chat found.");
+                }
+
                 var chat = _mapper.Map<Chat>(chatDto);
                 chat.IsActive = true;
 
                 _context.Chats.Add(chat);
                 await _context.SaveChangesAsync();
-                _logger.LogInformation($"Chat created for JobID: {chatDto.JobID}");
 
                 return ApiResponse<int>.SuccessResponse(chat.ChatID, "Chat created successfully.");
             }
@@ -40,6 +50,7 @@ namespace job_buddy_backend.Core.ChatService
                 return ApiResponse<int>.FailureResponse("Failed to create chat.");
             }
         }
+
 
         public async Task<ApiResponse<string>> SendMessageAsync(MessageDto messageDto)
         {
@@ -67,7 +78,7 @@ namespace job_buddy_backend.Core.ChatService
             {
                 var chat = await _context.Chats
                     .Include(c => c.Messages)
-                    .FirstOrDefaultAsync(c => c.JobID == jobId && c.JobSeekerID == jobSeekerId && c.EmployerID == employerId);
+                    .FirstOrDefaultAsync(c => c.JobID == jobId || (c.JobSeekerID == jobSeekerId && c.EmployerID == employerId));
 
                 if (chat != null)
                 {
@@ -100,6 +111,48 @@ namespace job_buddy_backend.Core.ChatService
             return ApiResponse<List<ChatDto>>.SuccessResponse(chatDtos, "Chats retrieved successfully.");
         }
 
+        public async Task<ApiResponse<List<ChatDto>>> GetChatsAsync(int userID)
+        {
+            try
+            {
+                var chats = await _context.Chats
+                    .Include(c => c.JobSeeker) 
+                    .Include(c => c.Employer)
+                    .Include(c => c.Messages.OrderByDescending(m => m.SentAt))
+                    .Where(c => c.JobSeekerID == userID || c.EmployerID == userID)
+                    .ToListAsync();
+
+                var chatDtos = new List<ChatDto>();
+
+                foreach (var chat in chats)
+                {
+                    //var isConnected = await _context.Connections
+                    //    .AnyAsync(conn =>
+                    //        (conn.RequestorID == chat.JobSeekerID && conn.RequesteeID == chat.EmployerID ||
+                    //         conn.RequestorID == chat.EmployerID && conn.RequesteeID == chat.JobSeekerID) &&
+                    //        conn.Status != ConnectionStatus.Blocked);
+
+                    chatDtos.Add(new ChatDto
+                    {
+                        ChatID = chat.ChatID,
+                        UserName = chat.JobSeekerID == userID ? chat.Employer.FullName : chat.JobSeeker.FullName,
+                        LastMessage = chat.Messages.Any() ? chat.Messages.First().Content : "No messages yet",
+                        LastMessageTime = chat.Messages.Any() ? chat.Messages.First().SentAt : (DateTime?)null,
+                        IsActive = chat.IsActive 
+                    });
+                }
+
+                return ApiResponse<List<ChatDto>>.SuccessResponse(chatDtos, "Chats retrieved successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching chats");
+                return ApiResponse<List<ChatDto>>.FailureResponse("Failed to fetch chats.");
+            }
+        }
+
+
+
         public async Task<ApiResponse<List<MessageDto>>> GetMessagesAsync(int chatId)
         {
             var messages = await _context.Messages
@@ -120,5 +173,16 @@ namespace job_buddy_backend.Core.ChatService
 
             return ApiResponse<int>.SuccessResponse(unreadCount, "Unread count retrieved successfully.");
         }
+
+        public async Task<ApiResponse<bool>> CheckConnectionStatusAsync(int userID, int employerID)
+        {
+            var isConnected = await _context.Connections
+                .AnyAsync(c => (c.RequestorID == userID && c.RequesteeID == employerID) ||
+                               (c.RequestorID == employerID && c.RequesteeID == userID) &&
+                               c.Status == ConnectionStatus.Accepted);
+
+            return ApiResponse<bool>.SuccessResponse(isConnected, "Connection status retrieved successfully.");
+        }
+
     }
 }

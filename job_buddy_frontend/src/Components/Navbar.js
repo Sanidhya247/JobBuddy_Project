@@ -51,47 +51,21 @@ const Navbar = () => {
         <span></span>
         <span></span>
       </div>
-
-      <ul className={`navbar-links ${isMenuOpen ? "active" : ""}`}>
-        <li>
-          <Link onClick={toggleMenu} className="nav-link" to="/">
-            Home
-          </Link>
-        </li>
-
-        <li className={`${
-            role === "Employer" ? "display-hide" : "display-block"
-          }`}>
-          <Link onClick={toggleMenu} className="nav-link" to="/Job">
-            Jobs
-          </Link>
-        </li>
-        <li>
-          <Link onClick={toggleMenu} className="nav-link" to="/about">
-            About
-          </Link>
-        </li>
-        <li>
-          <Link onClick={toggleMenu} className="nav-link" to="/contact">
-            Contact
-          </Link>
-        </li>
-        <li
-          className={`${
-            role === "Employer" ? "display-block" : "display-hide"
-          }`}
-        >
-          <Link onClick={toggleMenu} className="nav-link" to="/post">
-            Post Job
-          </Link>
-        </li>
+      
+      <ul className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/">Home</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/Job">Jobs</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/chat">Messages</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/connections">Connections</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/about">About</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/contact">Contact</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/post">Post Job</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/admin-dashboard">Admin Dashboard</Link></li>
       </ul>
-      <div className={`navbar-right ${isMenuOpen ? "active" : ""}`}>
-        {
-          <Link to="/profile">
-            <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
-          </Link>
-        }
+      <div className={`navbar-right ${isMenuOpen ? 'active' : ''}`}>
+        { user ? (<Link to="/profile">
+          <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
+        </Link>) : null}
         {user ? (
           <Button
             label={"Logout"}

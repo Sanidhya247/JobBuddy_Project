@@ -19,7 +19,6 @@ namespace job_buddy_backend.Controllers
             _context = context;
         }
 
-        // GET: api/Applications
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Application>>> GetApplications()
         {
@@ -30,7 +29,6 @@ namespace job_buddy_backend.Controllers
                                  .ToListAsync();
         }
 
-        // GET: api/Applications/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Application>> GetApplication(int id)
         {
@@ -48,7 +46,6 @@ namespace job_buddy_backend.Controllers
             return application;
         }
 
-        // POST: api/Applications
         [HttpPost]
         public async Task<ActionResult<Application>> CreateApplication(Application application)
         {
@@ -58,7 +55,6 @@ namespace job_buddy_backend.Controllers
             return CreatedAtAction(nameof(GetApplication), new { id = application.ApplicationID }, application);
         }
 
-        // PUT: api/Applications/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateApplication(int id, Application application)
         {
@@ -88,7 +84,6 @@ namespace job_buddy_backend.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Applications/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteApplication(int id)
         {

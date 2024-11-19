@@ -8,7 +8,9 @@
         public ConnectionStatus Status { get; set; } = ConnectionStatus.Pending;
         public DateTime RequestedAt { get; set; } = DateTime.UtcNow;
         public DateTime? AcceptedAt { get; set; }
+        public int? JobID { get; set; }  
     }
+
 
     public enum ConnectionStatus
     {

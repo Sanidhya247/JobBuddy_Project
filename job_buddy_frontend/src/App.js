@@ -1,23 +1,31 @@
 import "./App.css";
 import Footer from "./Components/Footer";
 import "../src/style.css";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
-import Home from "./Components/Home";
-import Contact from "./Components/Contact";
-import About from "./Components/About";
-import Login from "./Components/authentication/Login";
-import Register from "./Components/authentication/Register";
-import PostJob from "./Components/PostJob";
-import JobSearchPage from "./Components/Job_Search_Page";
-import VerifyEmail from "./Components/authentication/VerifyEmail";
-import UserProfile from "./Components/userProfile/UserProfile";
-import Navbar from "./Components/Navbar";
-import JobDetailsPage from "./Components/JobDetailsPage";
-import JobApplication from "./Components/JobApplication";
+import { Routes, Route } from "react-router-dom"; 
+import Home from './components/Home';
+import Contact from './components/Contact';
+import About from './components/About';
+import Login from "./components/authentication/Login";
+import Register from "./components/authentication/Register";
+import PostJob from "./components/PostJob"; 
+import JobSearchPage from "./components/Job_Search_Page";
+import VerifyEmail from './components/authentication/VerifyEmail';
+import UserProfile from './components/userProfile/UserProfile';
+import Navbar from './components/Navbar';
+import JobDetailsPage from './components/JobDetailsPage';
+import JobApplication from './components/JobApplication';
+import { useContext } from 'react';
+import AuthContext from './context/AuthContext';
+import FloatingChatButton from './components/chat/FloatingChatButton';
+import ChatPage from './components/chat/ChatPage';
+import FriendRequestsPage from './components/chat/FriendRequestsPage';
+import AdminDashboard from './components/AdminDashboard';
+import AdminActions from './components/AdminActions';
+
+
 
 function App() {
-  const user = JSON.parse(localStorage.getItem("user")) || {};
-  console.log(user);
+  const { user } = useContext(AuthContext);
   return (
     <>
       <Navbar />
@@ -51,19 +59,15 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/" element={<JobSearchPage />} />
-        {/* Job Details route */}
-        <Route path="/job/:jobId" element={<JobDetailsPage />} />{" "}
-        <Route
-          path="/job-apply"
-          element={
-            user.role === "Employer" ? (
-              <Navigate to="/" replace />
-            ) : (
-              <JobApplication />
-            )
-          }
-        />
+        <Route path="/job/:jobId" element={<JobDetailsPage />} />
+        <Route path="/job-apply" element={<JobApplication />} />
+        <Route path="/chat" element={<ChatPage/>} />
+        <Route path="/chat/:chatID?" element={<ChatPage />} />
+        <Route path="/connections" element={<FriendRequestsPage/>} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-actions" element={<AdminActions />} />
       </Routes>
+      {user && <FloatingChatButton />}
       <Footer />
     </>
   );

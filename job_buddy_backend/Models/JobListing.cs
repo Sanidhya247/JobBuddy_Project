@@ -10,6 +10,7 @@ namespace JobBuddyBackend.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int JobID { get; set; }
+
         public int EmployerID { get; set; }
 
         public string JobTitle { get; set; } = string.Empty;
@@ -31,6 +32,7 @@ namespace JobBuddyBackend.Models
         public string? Industry { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public bool IsApproved { get; set; }
 
         public User Employer { get; set; } = new User();
         public ICollection<Application> Applications { get; set; } = new List<Application>();

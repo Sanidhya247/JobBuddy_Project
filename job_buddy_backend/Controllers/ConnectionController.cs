@@ -60,5 +60,13 @@ namespace job_buddy_backend.Controllers
             var response = await _connectionService.GetPendingFriendRequestsAsync();
             return Ok(response);
         }
+
+        [HttpGet("check/{requestorId}/{requesteeId}")]
+        public async Task<IActionResult> CheckConnectionStatus(int requestorId, int requesteeId)
+        {
+            var response = await _connectionService.CheckConnectionStatusAsync(requestorId, requesteeId);
+            return Ok(response);
+        }
+
     }
 }

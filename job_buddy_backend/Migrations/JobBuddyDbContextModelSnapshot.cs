@@ -78,6 +78,9 @@ namespace job_buddy_backend.Migrations
                     b.Property<string>("Industry")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
                     b.Property<string>("JobDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -247,7 +250,7 @@ namespace job_buddy_backend.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("JobID")
+                    b.Property<int?>("JobID")
                         .HasColumnType("int");
 
                     b.Property<int>("JobSeekerID")
@@ -274,6 +277,9 @@ namespace job_buddy_backend.Migrations
 
                     b.Property<DateTime?>("AcceptedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("JobID")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("RequestedAt")
                         .HasColumnType("datetime2");
@@ -327,6 +333,38 @@ namespace job_buddy_backend.Migrations
                     b.HasIndex("SenderID");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("job_buddy_backend.Models.ContactUs", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContactUsRequests");
                 });
 
             modelBuilder.Entity("job_buddy_backend.Models.EmployerProfile", b =>
@@ -480,7 +518,13 @@ namespace job_buddy_backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPremium")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsProfileComplete")
@@ -752,8 +796,7 @@ namespace job_buddy_backend.Migrations
                     b.HasOne("JobBuddyBackend.Models.JobListing", "Job")
                         .WithMany()
                         .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("job_buddy_backend.Models.UserModel.User", "JobSeeker")
                         .WithMany()

@@ -130,5 +130,23 @@ namespace job_buddy_backend.Core.ChatService
             var friendRequestDtos = _mapper.Map<List<ConnectionResponseDto>>(friendRequests);
             return ApiResponse<List<ConnectionResponseDto>>.SuccessResponse(friendRequestDtos, "Pending friend requests retrieved successfully.");
         }
+
+        public async Task<ApiResponse<bool>> CheckConnectionStatusAsync(int requestorId, int requesteeId)
+        {
+            try
+            {
+                var connectionExists = await _context.Connections
+                    .AnyAsync(c => (c.RequestorID == requestorId && c.RequesteeID == requesteeId ||
+                                    c.RequestorID == requesteeId && c.RequesteeID == requestorId) &&
+                                   c.Status == ConnectionStatus.Accepted);
+                return ApiResponse<bool>.SuccessResponse(connectionExists, "Connection status checked successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error checking connection status");
+                return ApiResponse<bool>.FailureResponse("Failed to check connection status.");
+            }
+        }
+
     }
 }
