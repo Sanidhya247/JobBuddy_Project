@@ -131,8 +131,10 @@ namespace job_buddy_backend
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IConfigurationService, ConfigurationService>();
             services.AddScoped<IJobListingService, JobListingService>();
+            services.AddScoped<AdminService>();
 
         }
+
 
         // Configure Authentication and Secure Key Fetching
         private static void ConfigureAuthentication(IServiceCollection services, IConfiguration configuration)

@@ -15,6 +15,7 @@
         public decimal? PayRatePerHour { get; set; }
         public string? JobType { get; set; }
         public string? WorkType { get; set; }
+        public bool IsApproved { get; set; }
     }
 }
 

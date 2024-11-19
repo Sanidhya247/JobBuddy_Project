@@ -37,6 +37,7 @@ namespace job_buddy_backend.Core
         public async Task<JobListingDto> CreateJobAsync(JobListingDto jobListingDto)
         {
             var job = _mapper.Map<JobListing>(jobListingDto);
+            job.IsApproved = false;
             _context.JobListings.Add(job);
             await _context.SaveChangesAsync();
             return _mapper.Map<JobListingDto>(job);
@@ -130,7 +131,7 @@ namespace job_buddy_backend.Core
                                          (j.PayRatePerHour.HasValue && j.PayRatePerHour * 2080 <= maxSalary));
             }
 
-            // Apply pagination
+            // pagination
             query = query.Skip((page - 1) * pageSize).Take(pageSize);
 
 
