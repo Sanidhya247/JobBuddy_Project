@@ -52,3 +52,14 @@
   font-weight: 500;
 }
 
+/* High Contrast Mode */
+.high-contrast .job-details-container {
+  background-color: #000000;
+  color: #ffffff;
+  border: 2px solid #ffff00;
+}
+
+.high-contrast .job-details-container .section-title {
+  color: #ffff00;
+  border-bottom: 2px solid #ffff00;
+}

@@ -14,6 +14,7 @@ import UserProfile from './components/userProfile/UserProfile';
 import Navbar from './components/Navbar';
 import JobDetailsPage from './components/JobDetailsPage';
 import JobApplication from './components/JobApplication';
+import AccessibilityPanel from './components/AccessibilityPanel';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/job/:jobId" element={<JobDetailsPage />} /> {/* Job Details route */}
         <Route path="/job-apply" element={<JobApplication />} />
       </Routes>
+      <AccessibilityPanel />
       <Footer />
     </>
   );

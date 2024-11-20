@@ -224,3 +224,50 @@ h2 {
         align-self: center;
     }
 }
+/* High Contrast Mode */
+.high-contrast body {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.high-contrast .banner-text h1, 
+.high-contrast h2, 
+.high-contrast .profile-text h3 {
+    color: #ffff00;
+}
+
+.high-contrast .search-btn, 
+.high-contrast .create-btn {
+    background-color: #000000;
+    color: #ffff00;
+    border: 2px solid #ffff00;
+}
+.ats-check-btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 200px;
+    text-align: center;
+    margin-top: 20px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    align-self: center;
+}
+
+.ats-check-btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--primary-color);
+}
+.ats-check-btn-fullwidth {
+    width: 100%;
+    max-width: 400px; /* Adjust as needed for better alignment */
+    margin: 20px auto;
+    text-align: center;
+    display: block;
+}
+

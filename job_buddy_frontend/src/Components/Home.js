@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
+import AtsScoringComponent from './AtsScoringComponent';
 import '../assets/css/Home.css';
-import profileImage from '../assets/imgs/buildProfile.jpg'
+import profileImage from '../assets/imgs/buildProfile.jpg';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');  // Set the app element for accessibility
 
 const Home = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div>
             <div className="banner">
@@ -20,17 +34,28 @@ const Home = () => {
                 </div>
 
                 <div className="profile-text">
-                    <h3>Build Your Profile</h3>
+                    <h3>Check Your ATS Score</h3>
                     <p>
-                        JobBuddy is an online career resource and platform created to help job seekers find the perfect job. 
-                        They don’t just match employees and employers but also provide tools for users to make professional 
-                        profiles and improve their job applications. With features like keeping users updated about suitable 
-                        positions and assisting in their professional development, JobBuddy streamlines and speeds up the 
-                        process of job hunting.
+                        JobBuddy is not just a job search platform but also an extensive tool that helps job seekers improve their job applications.
+                        Our ATS Score feature allows you to see how well your resume matches a specific job description.
+                        This way, you can optimize your resume to improve your chances of getting noticed by recruiters.
                     </p>
-                    <button className="create-btn">Create</button>
+                    <button className="create-btn" onClick={openModal}>Check ATS Score</button>
                 </div>
             </div>
+
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                contentLabel="ATS Scoring Modal"
+                className="ats-modal"
+                overlayClassName="ats-modal-overlay"
+            >
+                <div className="ats-modal-content">
+                    <button onClick={closeModal} className="close-modal-btn">Close</button>
+                    <AtsScoringComponent />
+                </div>
+            </Modal>
         </div>
     );
 };

@@ -119,4 +119,16 @@
       display: block;
     }
   }
-  
+  /* High Contrast Mode */
+.high-contrast .navbar {
+  background-color: #000000;
+  border-bottom: 2px solid #ffff00;
+}
+
+.high-contrast .navbar-links a {
+  color: #ffff00;
+}
+
+.high-contrast .navbar-links a:hover {
+  color: #ffcc00;
+}

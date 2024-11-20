@@ -131,7 +131,9 @@ namespace job_buddy_backend
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IConfigurationService, ConfigurationService>();
             services.AddScoped<IJobListingService, JobListingService>();
+            services.AddScoped<AtsScoringService>();
 
+            services.AddControllers();
         }
 
         // Configure Authentication and Secure Key Fetching

@@ -450,4 +450,19 @@
   .resume-upload-container:hover .upload-resume-text {
     color: var(--primary-color);
   }
-  
+  /* High Contrast Mode */
+.high-contrast .main-container,
+.high-contrast .filter-sidebar {
+    background-color: #000000;
+    color: #ffff00;
+    border: 2px solid #ffff00;
+}
+
+.high-contrast .search-button,
+.high-contrast .view-all-button,
+.high-contrast .apply-btn, 
+.high-contrast .clear-btn {
+    background-color: #000000;
+    color: #ffff00;
+    border: 2px solid #ffff00;
+}

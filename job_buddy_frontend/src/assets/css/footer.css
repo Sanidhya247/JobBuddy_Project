@@ -83,3 +83,19 @@
     margin: 15px 0;
   }
 }
+/* High Contrast Mode */
+.high-contrast .footer {
+  background-color: #000000;
+  color: #ffff00;
+  border-top: 2px solid #ffff00;
+}
+
+.high-contrast .footer-content h3, 
+.high-contrast .footer-content p {
+  color: #ffff00;
+}
+
+.high-contrast .nav-link,
+.high-contrast .social-icons a {
+  color: #ffff00;
+}

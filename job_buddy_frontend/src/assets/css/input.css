@@ -80,3 +80,14 @@
 .radio-buttons input[type="radio"] {
   margin-right: 8px;
 }
+/* High Contrast Mode */
+.high-contrast .text-field-input {
+  background-color: #333333;
+  color: #ffffff;
+  border: 2px solid #ffff00;
+}
+
+.high-contrast .form-group-checkbox label,
+.high-contrast .radio-buttons label {
+  color: #ffff00;
+}
