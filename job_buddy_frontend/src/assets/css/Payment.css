@@ -1,3 +1,7 @@
+:root {
+    --primary-color: #254336;
+    --secondary-color: #d1d1bd;
+  }
 .payment-form {
     max-width: 500px;
     margin: 50px auto;
@@ -24,12 +28,18 @@
     width: 100%;
     padding: 12px;
     font-size: 16px;
-    color: #ffffff;
-    background-color: #007bff;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+.pay-button:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
 }
 
 .pay-button:disabled {
@@ -44,7 +54,7 @@
 }
 
 .payment-status.success {
-    color: #28a745;
+    color: var(--primary-color);
 }
 
 .payment-status.error {

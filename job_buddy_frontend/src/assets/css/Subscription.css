@@ -1,3 +1,8 @@
+:root {
+  --primary-color: #254336;
+  --secondary-color: #d1d1bd;
+}
+
 .subscription-container {
     padding: 40px 20px;
     text-align: center;
@@ -62,8 +67,8 @@
   .buy-now-button {
     display: inline-block;
     padding: 12px 20px;
-    background-color: #007bff;
-    color: white;
+    background-color:var(--primary-color);
+    color: var(--secondary-color);
     font-size: 1.1rem;
     font-weight: bold;
     text-decoration: none;
@@ -72,6 +77,8 @@
   }
   
   .buy-now-button:hover {
-    background-color: #0056b3;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
   }
   

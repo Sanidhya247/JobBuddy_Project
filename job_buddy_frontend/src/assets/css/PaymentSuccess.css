@@ -1,3 +1,8 @@
+:root {
+    --primary-color: #254336;
+    --secondary-color: #d1d1bd;
+  }
+
 .payment-success {
     text-align: center;
     padding: 50px 20px;
@@ -6,7 +11,7 @@
 
 .payment-success h1 {
     font-size: 32px;
-    color: #28a745;
+    color: var(--primary-color);
 }
 
 .payment-success p {
@@ -16,8 +21,8 @@
 
 .go-to-profile-btn {
     padding: 12px 20px;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -26,5 +31,7 @@
 }
 
 .go-to-profile-btn:hover {
-    background-color: #0056b3;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
 }
