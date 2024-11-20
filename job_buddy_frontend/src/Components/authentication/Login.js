@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import "./Auth.css";
 import { toast } from "react-toastify";
+import loginimage from '../../assets/imgs/login.png';
 
 const Login = () => {
   const { login, setError } = useContext(AuthContext);
@@ -56,6 +57,7 @@ const Login = () => {
   };
 
   return (
+    <div className="auth-page">
     <div className="auth-container">
       <h2>Sign In</h2>
       {localError && <p className="error">{localError}</p>}
@@ -97,6 +99,10 @@ const Login = () => {
           <p>Don’t have an account? <Link to="/register" className="switch-auth-link">Sign Up</Link></p>
         </div>
       </form>
+    </div>
+    <div className="auth-image">
+    <img src={loginimage} alt="login" />
+  </div>
     </div>
   );
 };

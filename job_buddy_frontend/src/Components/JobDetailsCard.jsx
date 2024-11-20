@@ -20,9 +20,10 @@ const JobDetailsCard = ({ job}) => {
                 <p>{job.shortJobDescription}</p>
                 <p>Location: {job.city}, {job.province}</p>
                 <p>Salary: {job.salaryRange || "Not specified"}</p>
-                <button onClick={handleNavigation} className="apply-now-btn">Quick Apply</button>
+                
               </div>
-              <button className="view-details-btn" onClick={handleViewDetails}>
+              <button onClick={handleNavigation} className="apply-now-btn">Quick Apply</button>
+              <button className="apply-now-btn" onClick={handleViewDetails}>
                 View Details
               </button>
             </div>

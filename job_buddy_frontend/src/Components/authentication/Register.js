@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import "./Auth.css";
+import signUpImage from '../../assets/imgs/sign_up.png';
+
 import { toast } from "react-toastify";
 
 const Register = () => {
@@ -73,6 +75,10 @@ const Register = () => {
   };
 
   return (
+<div className="auth-page">
+  <div className="auth-image">
+    <img src={signUpImage} alt="Sign Up" />
+  </div>
     <div className="auth-container">
       <h2>Create Account</h2>
       {errors.server && <div className="error">{errors.server}</div>}
@@ -163,6 +169,7 @@ const Register = () => {
           </Link>
         </p>
       </form>
+    </div>
     </div>
   );
 };

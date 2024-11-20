@@ -26,7 +26,6 @@ const JobSearchPage = () => {
     maxSalary: ""
   });
 
-  // Fetch jobs with filters and pagination
   const fetchJobs = useCallback(async (queryParams = {}) => {
     setLoading(true);
     try {
@@ -58,12 +57,12 @@ const JobSearchPage = () => {
     }
   };
 
-  // Apply filters when the Apply Filters button is clicked
+  // Apply filters
   const applyFilters = () => {
     const queryParams = {
       ...Object.fromEntries(Object.entries(filters).filter(([_, value]) => value))
     };
-    setCurrentPage(1); // Reset to the first page
+    setCurrentPage(1);
     fetchJobs(queryParams);
   };
 
@@ -84,17 +83,15 @@ const JobSearchPage = () => {
     fetchJobs(); // Fetch all jobs
   };
 
-  // Handle input changes for filters
+
   const handleInputChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
 
-  // Handle search input change
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
   };
 
-  // Pagination handlers
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
@@ -105,7 +102,6 @@ const JobSearchPage = () => {
     }
   };
 
-  // Initial fetch on component load or when page changes
   useEffect(() => {
     fetchJobs();
   }, [fetchJobs]);
@@ -201,7 +197,7 @@ const JobSearchPage = () => {
         </div>
         <button className="apply-btn" onClick={applyFilters}>
           Apply Filters
-        </button>
+        </button><br></br>
         <button className="clear-btn" onClick={clearFilters}>
           Clear Filters
         </button>

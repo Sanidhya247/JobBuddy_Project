@@ -1,3 +1,8 @@
+:root {
+  --primary-color: #254336;
+  --secondary-color: #d1d1bd;
+}
+
 .job-details-container {
   max-width: 800px;
   margin: 40px auto;
@@ -33,7 +38,7 @@
   font-weight: 600;
   margin-top: 25px;
   margin-bottom: 10px;
-  color: #254336;
+  color: var(--primary-color);
   border-bottom: 2px solid #D1D1BD;
   padding-bottom: 5px;
 }
