@@ -155,3 +155,37 @@
     border-radius: 5px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+  /* Highlight premium users */
+.premium-border {
+    border: 4px solid gold;
+    border-radius: 50%;
+    padding: 3px;
+  }
+  .premium-user-badge {
+    padding: 8px 15px;
+    background-color: gold;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    cursor: not-allowed;
+    margin-left: auto;
+}
+
+.subscribe-button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    text-decoration: none;
+    margin-left: auto;
+}
+
+.subscribe-button:hover {
+    background-color: #0056b3;
+}

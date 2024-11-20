@@ -28,9 +28,9 @@ function FriendRequestsPage() {
       const response = await apiService.get('/api/connection/user/friend-requests');
       const userRequests = await Promise.all(
         response.data.data
-          .filter(request => request.requestorID === user.userID)
+          .filter(request => request.requesteeID === user.userID)
           .map(async (request) => {
-            const profileResponse = await apiService.get(`/api/userprofile/${request.requesteeID}`);
+            const profileResponse = await apiService.get(`/api/userprofile/${request.requestorID}`);
             return { ...request, userProfile: profileResponse.data.data };
           })
       );

@@ -66,6 +66,40 @@
   margin-bottom: 20px;
 }
 
+.password-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+
+.password-container input {
+  flex: 1;
+  padding-right: 40px; 
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--input-border-color);
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: var(--input-focus-border);
+}
+
+.error-input {
+  border-color: var(--error-color);
+  background-color: #ffe6e6;
+  box-shadow: 0 0 5px var(--error-color);
+}
+
+
 /* Auth button styles */
 .auth-button {
   background-color: var(--button-bg-color);

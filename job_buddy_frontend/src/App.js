@@ -19,6 +19,9 @@ import AuthContext from './context/AuthContext';
 import FloatingChatButton from './components/chat/FloatingChatButton';
 import ChatPage from './components/chat/ChatPage';
 import FriendRequestsPage from './components/chat/FriendRequestsPage';
+import PaymentPage from './components/payment/PaymentForm';
+import Subscription from './components/payment/Subscription';
+import PaymentSuccess from './components/payment/PaymentSuccess';
 
 
 function App() {
@@ -43,6 +46,9 @@ function App() {
         <Route path="/chat" element={<ChatPage/>} />
         <Route path="/chat/:chatID?" element={<ChatPage />} />
         <Route path="/connections" element={<FriendRequestsPage/>} />
+        <Route path="/subscription" element={<Subscription/>} />
+        <Route path="/payment/:amount" element={<PaymentPage />} />
+        <Route path="/Payment-success/:userID?" element = {<PaymentSuccess/>} />
       </Routes>
       {user && <FloatingChatButton />}
       <Footer />
