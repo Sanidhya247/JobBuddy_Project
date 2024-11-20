@@ -10,29 +10,30 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [localError, setLocalError] = useState(""); 
-  const [fieldErrors, setFieldErrors] = useState({}); 
+  const [showPassword, setShowPassword] = useState(false); // To toggle password visibility
+  const [localError, setLocalError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
 
   // Form submission handler
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
 
-    const errors = validateInputs(); // Validate inputs
+    const errors = validateInputs();
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       return;
     }
 
     try {
-      await login({ email, password }); // Call the login function from context
+      await login({ email, password });
       toast.success("Login Successful! Welcome to JobBuddy.");
       setTimeout(() => {
-        navigate("/"); 
-      }, 1000); 
+        navigate("/");
+      }, 1000);
     } catch (err) {
       const errorMessage = err.message || "Invalid email or password. Please try again.";
       setLocalError(errorMessage);
-      setError(errorMessage); 
+      setError(errorMessage);
       setFieldErrors({});
       toast.error(errorMessage);
     }
@@ -72,13 +73,22 @@ const Login = () => {
         </div>
         <div className="form-group">
           <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className={fieldErrors.password ? "error-input" : ""} 
-          />
+          <div className="password-container">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className={fieldErrors.password ? "error-input" : ""}
+            />
+            <span
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+              title={showPassword ? "Hide Password" : "Show Password"}
+            >
+              {showPassword ? "👁️‍🗨️" : "👁️"}
+            </span>
+          </div>
           {fieldErrors.password && <span className="error-text">{fieldErrors.password}</span>}
         </div>
         <button type="submit" className="auth-button">Sign In</button>
@@ -87,7 +97,6 @@ const Login = () => {
           <p>Don’t have an account? <Link to="/register" className="switch-auth-link">Sign Up</Link></p>
         </div>
       </form>
-
     </div>
   );
 };

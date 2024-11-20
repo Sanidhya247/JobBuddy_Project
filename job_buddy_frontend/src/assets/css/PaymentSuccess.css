@@ -1,0 +1,30 @@
+.payment-success {
+    text-align: center;
+    padding: 50px 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.payment-success h1 {
+    font-size: 32px;
+    color: #28a745;
+}
+
+.payment-success p {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.go-to-profile-btn {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.go-to-profile-btn:hover {
+    background-color: #0056b3;
+}

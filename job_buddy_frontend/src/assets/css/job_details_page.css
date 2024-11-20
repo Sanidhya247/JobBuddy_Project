@@ -102,3 +102,20 @@
 .fas {
   font-size: 16px;
 }
+
+.friend-request-sent-button {
+  background-color: #ffc107; 
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.friend-request-sent-button i {
+  font-size: 16px;
+}

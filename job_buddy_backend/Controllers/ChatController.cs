@@ -41,7 +41,7 @@ namespace job_buddy_backend.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateChat([FromBody] ChatDto chatDto)
+        public async Task<IActionResult> CreateChat([FromBody] CreateChatDto chatDto)
         {
             var response = await _chatService.CreateChatAsync(chatDto);
             return Ok(response);
