@@ -11,6 +11,6 @@ namespace job_buddy_backend.Core.Interfaces.Chat
         Task<ApiResponse<string>> RemoveConnectionAsync(int connectionId);
         Task<ApiResponse<List<ConnectionResponseDto>>> GetConnectionsForUserAsync(int userId);
         Task<ApiResponse<List<ConnectionResponseDto>>> GetPendingFriendRequestsAsync();
-        Task<ApiResponse<bool>> CheckConnectionStatusAsync(int requestorId, int requesteeId);
+        Task<ApiResponse<ConnectionStatusResponseDto>> CheckConnectionStatusAsync(int requestorId, int requesteeId);
     }
 }
