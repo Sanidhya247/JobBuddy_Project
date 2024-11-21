@@ -133,7 +133,7 @@ const Home = () => {
         </div>
       </Modal>
 
-      {/* Profile Section - Build Your Profile */}
+      {/* Profile Section - Build Your Profile
       <div className="profile-section">
         <div className="profile-image-container">
           <div className="background-div"></div>
@@ -156,7 +156,7 @@ const Home = () => {
           </p>
           <button className="create-btn">Create</button>
         </div>
-      </div>
+      </div> */}
 
       {/* Numbers Section */}
       <div className="numbers-container">

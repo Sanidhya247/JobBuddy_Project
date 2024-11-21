@@ -2,19 +2,20 @@ import React, { useEffect, useState, useContext } from "react";
 import apiService from "../utils/apiService";
 import { toast } from "react-toastify";
 import "../assets/css/job_application_page.css";
-import { useLocation, useParams } from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import SpeechInput from "./SpeechInput";
 import { text } from "@fortawesome/fontawesome-svg-core";
 
 const JobApplication = () => {
   const location = useLocation();
-  // const { jobId } = location.state || {};
-  // const { user } = useContext(AuthContext);
-  // const userID = user?.userID;
-  const [user, setUser] = useState({});
+   const { jobId } = location.state || {};
+  const { user } = useContext(AuthContext);
+  const userID = user?.userID;
+  const navigate = useNavigate();
+  // //const [user, setUser] = useState({});
 
-  const { jobId } = useParams();
+  // const { jobId } = useParams();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -30,19 +31,19 @@ const JobApplication = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [hasApplied, setHasApplied] = useState(false);
-  const [userID, setUserID] = useState("");
+  //const [userID, setUserID] = useState("");
 
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user")));
-    setUserID(JSON.parse(localStorage.getItem("user"))?.userID);
-    console.log(JSON.parse(localStorage.getItem("user"))?.userID);
+  // useEffect(() => {
+  //   // setUser(JSON.parse(localStorage.getItem("user")));
+  //   // setUserID(JSON.parse(localStorage.getItem("user"))?.userID);
+  //   // console.log(JSON.parse(localStorage.getItem("user"))?.userID);
 
-    setFormData({
-      ...formData,
-      jobId: jobId,
-      userId: user.userId || JSON.parse(localStorage.getItem("user")).userID,
-    });
-  }, []);
+  //   setFormData({
+  //     ...formData,
+  //     jobId: jobId,
+  //     userId: user.userId || JSON.parse(localStorage.getItem("user")).userID,
+  //   });
+  // }, []);
 
   useEffect(() => {
     const role = localStorage.getItem("role");
@@ -93,7 +94,7 @@ const JobApplication = () => {
 
     fetchUserProfile();
     fetchJobDetails();
-  }, [jobId]);
+  }, [userID, jobId]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -147,16 +148,7 @@ const JobApplication = () => {
           toast.success("Application submitted successfully!");
           setHasApplied(true);
           setLoading(false);
-          setFormData({
-            firstName: "",
-            lastName: "",
-            email: "",
-            dob: "",
-            phone: "",
-            linkedin: "",
-            resume: null,
-            coverLetter: "",
-          });
+          navigate("/job");
           return;
         }
       }
