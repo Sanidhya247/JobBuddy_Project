@@ -1,4 +1,6 @@
 ﻿using job_buddy_backend.Helpers;
+using job_buddy_backend.Models.ChatModel;
+using job_buddy_backend.Models.UserModel;
 using JobBuddyBackend.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +21,13 @@ namespace job_buddy_backend.Models.DataContext
         public DbSet<JobTag> JobTags { get; set; }
         public DbSet<ResumeSkill> ResumeSkills { get; set; }
         public DbSet<EmployerProfile> EmployerProfiles { get; set; }
-
+        public DbSet<UserCertification> UserCertifications { get; set; }
+        public DbSet<UserExperience> UserExperiences { get; set; }
+        public DbSet<UserProject> UserProjects { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Connection> Connections { get; set; }
+        public DbSet<ContactUs> ContactUsRequests { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -58,13 +66,13 @@ namespace job_buddy_backend.Models.DataContext
                 .HasMany(r => r.Applications)
                 .WithOne(a => a.Resume)
                 .HasForeignKey(a => a.ResumeID)
-                .OnDelete(DeleteBehavior.Restrict); 
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Resume>()
                 .HasMany(r => r.ATSScores)
                 .WithOne(s => s.Resume)
                 .HasForeignKey(s => s.ResumeID)
-                .OnDelete(DeleteBehavior.Restrict); 
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Resume>()
                 .HasMany(r => r.ResumeSkills)
@@ -83,7 +91,7 @@ namespace job_buddy_backend.Models.DataContext
                 .HasOne(a => a.JobSeeker)
                 .WithMany(u => u.Applications)
                 .HasForeignKey(a => a.UserID)
-                .OnDelete(DeleteBehavior.NoAction); 
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Application>()
                 .HasOne(a => a.Resume)
@@ -100,7 +108,7 @@ namespace job_buddy_backend.Models.DataContext
                 .HasOne(a => a.Resume)
                 .WithMany(r => r.ATSScores)
                 .HasForeignKey(a => a.ResumeID)
-                .OnDelete(DeleteBehavior.Restrict); 
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ATSScore>()
                 .HasOne(a => a.JobListing)
@@ -142,6 +150,54 @@ namespace job_buddy_backend.Models.DataContext
                 .WithMany()
                 .HasForeignKey(ep => ep.UserID)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Chat Configuration
+            modelBuilder.Entity<Chat>()
+                .HasOne(c => c.Job)
+                .WithMany()
+                .HasForeignKey(c => c.JobID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Chat>()
+                .HasOne(c => c.JobSeeker)
+                .WithMany()
+                .HasForeignKey(c => c.JobSeekerID)
+                .OnDelete(DeleteBehavior.Restrict); // Restrict cascading delete to avoid multiple paths
+
+            modelBuilder.Entity<Chat>()
+                .HasOne(c => c.Employer)
+                .WithMany()
+                .HasForeignKey(c => c.EmployerID)
+                .OnDelete(DeleteBehavior.Restrict); // Restrict cascading delete to avoid multiple paths
+
+            // Message Configuration
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Chat)
+                .WithMany(c => c.Messages)
+                .HasForeignKey(m => m.ChatID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany()
+                .HasForeignKey(m => m.SenderID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Connection Configuration
+            modelBuilder.Entity<Connection>()
+                .HasKey(c => c.ConnectionID);
+
+            modelBuilder.Entity<Connection>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(c => c.RequestorID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Connection>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(c => c.RequesteeID)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

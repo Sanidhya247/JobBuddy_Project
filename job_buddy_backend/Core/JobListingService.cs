@@ -24,7 +24,9 @@ namespace job_buddy_backend.Core
 
         public async Task<JobListingDto> GetJobByIdAsync(int jobId)
         {
-            var job = await _context.JobListings.FindAsync(jobId);
+            var job = await _context.JobListings
+                                        .Include(j => j.Employer)  // Include employer details
+                                            .FirstOrDefaultAsync(j => j.JobID == jobId);
             return job == null ? null : _mapper.Map<JobListingDto>(job);
         }
 
@@ -37,6 +39,7 @@ namespace job_buddy_backend.Core
         public async Task<JobListingDto> CreateJobAsync(JobListingDto jobListingDto)
         {
             var job = _mapper.Map<JobListing>(jobListingDto);
+            job.IsApproved = false;
             _context.JobListings.Add(job);
             await _context.SaveChangesAsync();
             return _mapper.Map<JobListingDto>(job);
@@ -63,7 +66,7 @@ namespace job_buddy_backend.Core
             return true;
         }
 
-        public async Task<IEnumerable<JobListingDto>> SearchJobsAsync(string? title, string? companyName)
+        public async Task<IEnumerable<JobListingDto>> SearchJobsAsync(string? title, string? companyName, int page, int pageSize)
         {
             var query = _context.JobListings.AsQueryable();
 
@@ -76,12 +79,15 @@ namespace job_buddy_backend.Core
             {
                 query = query.Where(j => j.Employer.FullName.Contains(companyName));
             }
+            // Apply pagination
+            query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
 
             var jobs = await query.ToListAsync();
             return _mapper.Map<IEnumerable<JobListingDto>>(jobs);
         }
 
-        public async Task<IEnumerable<JobListingDto>> FilterJobsAsync(string? province, string? city, string? jobType, string? workType, string? experienceLevel, string? industry, decimal? minSalary, decimal? maxSalary)
+        public async Task<IEnumerable<JobListingDto>> FilterJobsAsync(string? province, string? city, string? jobType, string? workType, string? experienceLevel, string? industry, decimal? minSalary, decimal? maxSalary, int page, int pageSize)
         {
             var query = _context.JobListings.AsQueryable();
 
@@ -126,6 +132,10 @@ namespace job_buddy_backend.Core
                 query = query.Where(j => (j.PayRatePerYear.HasValue && j.PayRatePerYear <= maxSalary) ||
                                          (j.PayRatePerHour.HasValue && j.PayRatePerHour * 2080 <= maxSalary));
             }
+
+            // pagination
+            query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
 
             var jobs = await query.ToListAsync();
             return _mapper.Map<IEnumerable<JobListingDto>>(jobs);

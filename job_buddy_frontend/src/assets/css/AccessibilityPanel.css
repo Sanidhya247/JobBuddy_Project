@@ -1,0 +1,91 @@
+.accessibility-dock {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #007bff;
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.accessibility-slider {
+    position: fixed;
+    right: -300px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: right 0.3s ease-in-out;
+    width: 300px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+.accessibility-slider.show {
+    right: 50px;
+}
+
+.accessibility-button {
+    cursor: pointer;
+    display: block;
+    margin-bottom: 10px;
+    background: #007bff;
+    color: #ffffff;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.high-contrast {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.high-contrast a {
+    color: #ffff00;
+}
+
+.high-contrast button {
+    background-color: #ffff00;
+    color: #000000;
+}
+
+.grayscale {
+    filter: grayscale(100%);
+}
+
+.dyslexia-font {
+    font-family: 'OpenDyslexic', Arial, sans-serif;
+}
+
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic@1.0/OpenDyslexic-Regular.otf') format('opentype');
+}
+/* High Contrast Styles */
+.high-contrast .accessibility-dock {
+    background: #000000;
+    color: #ffff00;
+}
+
+.high-contrast .accessibility-slider {
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #ffff00;
+}
+
+.high-contrast .accessibility-button {
+    background: #000000;
+    color: #ffff00;
+    border: 2px solid #ffff00;
+}

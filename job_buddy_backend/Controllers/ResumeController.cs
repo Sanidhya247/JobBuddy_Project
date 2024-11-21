@@ -45,6 +45,13 @@ namespace job_buddy_backend.Controllers
                     Directory.CreateDirectory(uploadPath);
                 }
 
+                // Check if file with the same name already exists for the user
+                var existingResumes = await _resumeService.GetResumesByUserIdAsync(resumeDto.UserID);
+                if (existingResumes.Any(r => Path.GetFileName(r.ResumeFileUrl) == resumeFile.FileName))
+                {
+                    return BadRequest(ApiResponse<string>.FailureResponse("A resume with the same file name already exists. Please rename your file and try again."));
+                }
+
                 // Generate a unique file name
                 string fileName = $"{Guid.NewGuid()}_{Path.GetFileName(resumeFile.FileName)}";
                 string filePath = Path.Combine(uploadPath, fileName);

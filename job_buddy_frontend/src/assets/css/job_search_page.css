@@ -13,7 +13,6 @@
   
 /* Search bar */
 
-/* Wrapper to hold search bar and "View All Jobs" button */
 .search-bar-wrapper {
     display: flex;
     align-items: center;
@@ -55,7 +54,7 @@
 
 /* Button styles */
 .search-button {
-    padding: 12px 20px;
+    padding: 20px 20px;
     border: none;
     background-color: var(--primary-color);
     color: white;
@@ -73,7 +72,7 @@
 
 /* View All Jobs button */
 .view-all-button {
-    padding: 12px 20px;
+    padding: 20px 20px;
     border: none;
     background-color: var(--primary-color);
     color: white;
@@ -276,6 +275,7 @@
     font-size: 16px;
     color: var(--primary-color);
   }
+
   
 
 /* Tablet View (834px) */
@@ -368,7 +368,7 @@
   
     .job-card {
       display: flex;
-      flex-direction: column;
+      /* flex-direction: column; */
       align-items: center;
       padding: 15px;
       background-color: #fff;
@@ -450,4 +450,231 @@
   .resume-upload-container:hover .upload-resume-text {
     color: var(--primary-color);
   }
-  
+  /* High Contrast Mode */
+.high-contrast .main-container,
+.high-contrast .filter-sidebar {
+    background-color: #000000;
+    color: #ffff00;
+    border: 2px solid #ffff00;
+}
+
+.high-contrast .search-button,
+.high-contrast .view-all-button,
+.high-contrast .apply-btn, 
+.high-contrast .clear-btn {
+    background-color: #000000;
+    color: #ffff00;
+    border: 2px solid #ffff00;
+}
+  .search-bar {
+    max-width: 500px;
+  }
+
+  .search-input input {
+    font-size: 14px;
+  }
+
+  .search-button {
+    padding: 20px 20  px;
+    font-size: 14px;
+  }
+  .main-container {
+    padding: 10px;
+  }
+
+  .content-container {
+    /* flex-direction: column; */
+    align-items: center;
+  }
+
+  .filter-sidebar {
+    /* width: 100%; */
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+  }
+
+  .job-list {
+    width: 100%;
+  }
+
+  .job-card {
+    /*flex-direction: column;*/ 
+    align-items: center; 
+    padding: 15px;
+    gap: 10px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .company-logo {
+    width: 60px; 
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .company-details {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  /* Update text sizes for the company details */
+  .company-details h3 {
+    font-size: 16px;
+    margin: 0;
+    color: #304e40;
+    font-weight: bold;
+  }
+
+  .company-details p {
+    font-size: 13px; 
+    margin: 5px 0;
+    color: #666;
+  }
+
+  /* Button styles */
+  .apply-now-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    width: auto;
+    margin-top: 10px;
+    background-color: #304e40;
+    color: #fff;
+    border-radius: 25px; 
+    transition: background-color 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .apply-now-btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+  }
+
+
+/* Mobile View (430px) */
+@media (max-width: 430px) {
+  .search-bar-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-bar {
+    width: 100%; 
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .search-input {
+    padding: 8px 10px;
+  }
+
+  .search-input input {
+    font-size: 14px;
+  }
+
+  .search-button {
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  .view-all-button {
+    width: 100%; 
+    font-size: 14px;
+    margin-top: 10px; 
+  }
+  .job-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+    text-align: center;
+  }
+
+  .company-logo {
+    font-size: 40px;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .company-details h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #304e40;
+    line-height: 1.2;
+  }
+
+  .company-details p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 14px;
+  }
+
+  .apply-now-btn {
+    padding: 10px 20px;
+    background-color: #304e40;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+
+  .apply-now-btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+  }
+}
+
+.resume-upload-container {
+  background-color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 50px;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.resume-upload-container:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.upload-resume-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+.resume-upload-container:hover .upload-resume-text {
+  color: var(--primary-color);
+}

@@ -1,0 +1,65 @@
+:root {
+    --primary-color: #254336;
+    --secondary-color: #d1d1bd;
+  }
+
+.profile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    color: red;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.modal-profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 15px auto;
+    display: block;
+}
+
+.modal-content h2 {
+    margin-top: 10px;
+    font-size: 22px;
+    color: #333;
+}
+
+.modal-content p {
+    margin: 8px 0;
+    color: #555;
+}
+
+.modal-content a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+.modal-content a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,35 @@
+.d-flex{
+    display: flex;
+}
+
+.bg-red{
+    /* background-color: red; */
+}
+
+.voice-input-button,
+.btn-stop-listening {
+  position: absolute;
+  top: 60%;
+  transform: translateY(-50%);
+  right: 10px;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 5px; 
+}
+
+.voice-input-button {
+  right: 40px; /* Microphone button is placed slightly left of the stop button */
+}
+
+.btn-stop-listening {
+  right: 10px;
+}
+
+.voice-input-button:hover {
+  color: #007bff;
+}
+
+.bg-red {
+  color: red;
+}

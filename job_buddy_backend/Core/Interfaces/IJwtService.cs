@@ -1,4 +1,4 @@
-﻿using job_buddy_backend.Models;
+﻿using job_buddy_backend.Models.UserModel;
 
 namespace job_buddy_backend.Core.Interfaces
 {

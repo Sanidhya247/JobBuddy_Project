@@ -1,0 +1,146 @@
+:root {
+    --primary-color: #254336;
+    --secondary-color: #d1d1bd;
+  }
+  
+.admin-actions {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-actions h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+td {
+    text-align: left;
+    padding: 12px;
+}
+
+td[colspan] {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+}
+
+
+th {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+button:disabled {
+    background-color: var(--secondary-color);
+    cursor: not-allowed;
+}
+
+/* Tablet View (834px) */
+@media (max-width: 834px) {
+    .admin-actions {
+        padding: 15px;
+    }
+
+    .admin-actions h2 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    table {
+        font-size: 0.9rem;
+        margin-top: 15px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Mobile View (430px) */
+@media (max-width: 430px) {
+    .admin-actions {
+        padding: 10px;
+    }
+
+    .admin-actions h2 {
+        font-size: 1.1rem;
+        padding-bottom: 8px;
+    }
+
+    table {
+        font-size: 0.8rem;
+    }
+
+    th, td {
+        font-size: 0.7rem;
+        padding: 6px;
+    }
+
+    button {
+        padding: 5px 8px;
+        font-size: 0.7rem;
+    }
+
+    td[colspan] {
+        font-size: 0.7rem;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}

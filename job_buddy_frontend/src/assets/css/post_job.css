@@ -24,3 +24,15 @@
 .job-application-header {
   text-align: center;
 }
+/* High Contrast Mode */
+.high-contrast .form-group label {
+  color: #ffff00;
+}
+
+.high-contrast .form-group input {
+  border: 2px solid #ffff00;
+}
+
+.high-contrast .job-application-header {
+  color: #ffff00;
+}

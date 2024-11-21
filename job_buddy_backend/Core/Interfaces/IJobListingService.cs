@@ -11,7 +11,7 @@ namespace job_buddy_backend.Core.Interfaces
         Task<JobListingDto> CreateJobAsync(JobListingDto jobListingDto);
         Task<JobListingDto> UpdateJobAsync(int jobId, JobListingDto jobListingDto);
         Task<bool> DeleteJobAsync(int jobId);
-        Task<IEnumerable<JobListingDto>> SearchJobsAsync(string? title, string? companyName);  // Search jobs
-        Task<IEnumerable<JobListingDto>> FilterJobsAsync(string? province, string? city, string? jobType, string? workType, string? experienceLevel, string? industry, decimal? minSalary, decimal? maxSalary);  // Filter jobs
+        Task<IEnumerable<JobListingDto>> SearchJobsAsync(string? title, string? companyName, int page, int pageSize);  // Search jobs
+        Task<IEnumerable<JobListingDto>> FilterJobsAsync(string? province, string? city, string? jobType, string? workType, string? experienceLevel, string? industry, decimal? minSalary, decimal? maxSalary, int page, int pageSize);  // Filter jobs
     }
 }

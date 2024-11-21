@@ -10,6 +10,7 @@ namespace job_buddy_backend.Core.Interfaces.UserProfile
         Task<bool> UpdateUserProfileAsync(int userId, UpdateUserProfileDto updateDto);
         Task<double> CalculateProfileCompletenessAsync(int userId);
         Task<string> UploadProfilePictureAsync(int userId, IFormFile file);
+        Task<string> UploadCoverPhotoAsync(int userId, IFormFile file);
         Task<bool> RemoveProfilePictureAsync(int userId);
         Task<List<UserProfileDto>> GetAllUserProfilesAsync();
     }

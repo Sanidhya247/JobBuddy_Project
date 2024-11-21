@@ -1,0 +1,37 @@
+:root {
+    --primary-color: #254336;
+    --secondary-color: #d1d1bd;
+  }
+
+.payment-success {
+    text-align: center;
+    padding: 50px 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.payment-success h1 {
+    font-size: 32px;
+    color: var(--primary-color);
+}
+
+.payment-success p {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.go-to-profile-btn {
+    padding: 12px 20px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.go-to-profile-btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}

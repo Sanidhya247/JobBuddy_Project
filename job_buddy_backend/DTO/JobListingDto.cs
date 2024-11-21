@@ -15,6 +15,11 @@
         public decimal? PayRatePerHour { get; set; }
         public string? JobType { get; set; }
         public string? WorkType { get; set; }
+        public int EmployerID { get; set; }
+        public string EmployerName { get; set; } = string.Empty;
+        public string EmployerEmail { get; set; } = string.Empty;
+        public string EmployerPhone { get; set; } = string.Empty;
+        public bool IsApproved { get; set; }
     }
 }
 
