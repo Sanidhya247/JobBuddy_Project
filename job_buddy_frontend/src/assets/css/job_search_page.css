@@ -368,7 +368,7 @@
   
     .job-card {
       display: flex;
-      flex-direction: column;
+      /* flex-direction: column; */
       align-items: center;
       padding: 15px;
       background-color: #fff;
@@ -483,12 +483,12 @@
   }
 
   .content-container {
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
   }
 
   .filter-sidebar {
-    width: 100%;
+    /* width: 100%; */
     margin-bottom: 20px;
     padding: 15px;
     background-color: var(--primary-color);
@@ -500,7 +500,7 @@
   }
 
   .job-card {
-    flex-direction: column; 
+    /*flex-direction: column;*/ 
     align-items: center; 
     padding: 15px;
     gap: 10px;
