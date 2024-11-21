@@ -1,7 +1,7 @@
 import "./App.css";
-import Footer from "./Components/Footer";
+import Footer from "./components/Footer";
 import "../src/style.css";
-import { Routes, Route, useLocation } from "react-router-dom"; 
+import { Routes, Route, useLocation, Navigate } from "react-router-dom"; 
 import Home from './components/Home';
 import Contact from './components/Contact';
 import About from './components/About';
@@ -41,7 +41,7 @@ function App() {
         <Route
           path="/job"
           element={
-            user.role === "Employer" ? (
+            user?.role === "Employer" ? (
               <Navigate to="/" replace />
             ) : (
               <JobSearchPage />
@@ -53,7 +53,7 @@ function App() {
         <Route
           path="/post"
           element={
-            user.role === "Job Seeker" ? (
+            user?.role === "Job Seeker" ? (
               <Navigate to="/" replace />
             ) : (
               <PostJob />

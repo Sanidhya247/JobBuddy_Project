@@ -2,14 +2,19 @@ import React, { useEffect, useState, useContext } from "react";
 import apiService from "../utils/apiService";
 import { toast } from "react-toastify";
 import "../assets/css/job_application_page.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import SpeechInput from "./SpeechInput";
+import { text } from "@fortawesome/fontawesome-svg-core";
 
 const JobApplication = () => {
   const location = useLocation();
-  const { jobId } = location.state || {};
-  const { user } = useContext(AuthContext); 
-  const userID = user?.userID;
+  // const { jobId } = location.state || {};
+  // const { user } = useContext(AuthContext);
+  // const userID = user?.userID;
+  const [user, setUser] = useState({});
+
+  const { jobId } = useParams();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -25,18 +30,31 @@ const JobApplication = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [hasApplied, setHasApplied] = useState(false);
+  const [userID, setUserID] = useState("");
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+    setUserID(JSON.parse(localStorage.getItem("user"))?.userID);
+    console.log(JSON.parse(localStorage.getItem("user"))?.userID);
+
+    setFormData({
+      ...formData,
+      jobId: jobId,
+      userId: user.userId || JSON.parse(localStorage.getItem("user")).userID,
+    });
+  }, []);
 
   useEffect(() => {
     const role = localStorage.getItem("role");
     if (role !== "Job Seeker") {
-      toast.error("Employers cannot apply for jobs.");
+      toast?.error("Employers cannot apply for jobs.");
       return;
     }
 
-    if (!userID || !jobId) {
-      toast.error("Missing job or user information.");
-      return;
-    }
+    // if (!userID || !jobId) {
+    //   toast.error("Missing job or user information.");
+    //   return;
+    // }
 
     const fetchJobDetails = async () => {
       try {
@@ -49,15 +67,15 @@ const JobApplication = () => {
 
     const fetchUserProfile = async () => {
       try {
+        // const userID = user?.userID || JSON.parse(localStorage.getItem("user")?.userID);
+
         const response = await apiService.get(`/api/UserProfile/${userID}`);
         const profile = response.data.data;
-    
         if (!profile || !profile.fullName) {
           throw new Error("Profile or full name is missing.");
         }
-    
         const [firstName, lastName = ""] = profile.fullName.split(" ", 2);
-    
+
         setFormData((prev) => ({
           ...prev,
           firstName: firstName || "",
@@ -72,11 +90,10 @@ const JobApplication = () => {
         toast.error("Failed to fetch user profile details.");
       }
     };
-    
 
     fetchUserProfile();
     fetchJobDetails();
-  }, [userID, jobId]);
+  }, [jobId]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -100,8 +117,13 @@ const JobApplication = () => {
     setLoading(true);
 
     try {
-      const existingResumesResponse = await apiService.get(`/api/resume/${userID}`);
-      if (existingResumesResponse.data.success && existingResumesResponse.data.data) {
+      const existingResumesResponse = await apiService.get(
+        `/api/resume/${userID}`
+      );
+      if (
+        existingResumesResponse.data.success &&
+        existingResumesResponse.data.data
+      ) {
         const existingResumes = existingResumesResponse.data.data;
         const existingResume = existingResumes.find(
           (resume) => resume.title === jobTitle
@@ -109,15 +131,15 @@ const JobApplication = () => {
 
         if (existingResume) {
           const applicationData = {
-            jobId: jobId,
-            userId: userID,
+            jobID: jobId,
+            userID: userID,
             firstName: formData.firstName,
             lastName: formData.lastName,
             email: formData.email,
             dob: formData.dob,
             phone: formData.phone,
             linkedin: formData.linkedin,
-            resumeId: existingResume.resumeID,
+            resumeID: existingResume.resumeID,
             coverLetter: formData.coverLetter,
           };
 
@@ -125,6 +147,16 @@ const JobApplication = () => {
           toast.success("Application submitted successfully!");
           setHasApplied(true);
           setLoading(false);
+          setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            dob: "",
+            phone: "",
+            linkedin: "",
+            resume: null,
+            coverLetter: "",
+          });
           return;
         }
       }
@@ -135,8 +167,11 @@ const JobApplication = () => {
       resumeData.append("title", jobTitle);
       resumeData.append("userID", userID);
 
-      const resumeResponse = await apiService.post("/api/resume/upload", resumeData);
-      const resumeId = resumeResponse.data.data.resumeID; 
+      const resumeResponse = await apiService.post(
+        "/api/resume/upload",
+        resumeData
+      );
+      const resumeId = resumeResponse.data.data.resumeID;
 
       const applicationData = {
         jobId: jobId,
@@ -172,47 +207,134 @@ const JobApplication = () => {
   };
 
   return (
-    <div class="job_application">
+    <div className="job_application">
       <h2>Job Application Form</h2>
-    <form onSubmit={handleSubmit} className="job-application-form">
-      
-      <div className="form-group text-field-container">
-        <label htmlFor="firstName" className="text-field-label">First Name</label>
-        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className="text-field-input" />
-      </div>
-      <div className="form-group text-field-container">
-        <label htmlFor="lastName" className="text-field-label">Last Name</label>
-        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className="text-field-input" />
-      </div>
-      <div className="form-group text-field-container">
-        <label htmlFor="email" className="text-field-label">Email</label>
-        <input type="email" name="email" value={formData.email} readOnly className="text-field-input" />
-      </div>
-      <div className="form-group text-field-container">
-        <label htmlFor="dob" className="text-field-label">Date of Birth</label>
-        <input type="date" name="dob" value={formData.dob} readOnly className="text-field-input" />
-      </div>
-      <div className="form-group text-field-container">
-        <label htmlFor="phone" className="text-field-label">Phone</label>
-        <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="text-field-input" />
-      </div>
-      <div className="form-group text-field-container">
-        <label htmlFor="linkedin" className="text-field-label">LinkedIn Address (Optional)</label>
-        <input type="text" name="linkedin" value={formData.linkedin} onChange={handleChange} className="text-field-input" />
-      </div>
-      <div className="form-group text-field-container">
-        <label htmlFor="resume" className="text-field-label">Upload Resume</label>
-        <input type="file" name="resume" onChange={handleChange} className="text-field-input" />
-        {errors.resume && <span className="error-text">{errors.resume}</span>}
-      </div>
-      <div className="form-group text-field-container">
-        <label htmlFor="coverLetter" className="text-field-label">Cover Letter (Optional)</label>
-        <textarea name="coverLetter" value={formData.coverLetter} onChange={handleChange} className="text-field-input" />
-      </div>
-      <button type="submit" className="btn-submit full-width" disabled={loading || hasApplied}>
-        {loading ? "Submitting..." : hasApplied ? "Already Applied" : "Submit Application"}
-      </button>
-    </form>
+      <form onSubmit={handleSubmit} className="job-application-form">
+        <div className="form-group text-field-container">
+          <label htmlFor="firstName" className="text-field-label">
+            First Name
+          </label>
+          {/* <input
+            type="text"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            className="text-field-input"
+          /> */}
+          <SpeechInput
+          type="text"
+            // label="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            className="text-field-input"
+          />
+        </div>
+        <div className="form-group text-field-container">
+          <label htmlFor="lastName" className="text-field-label">
+            Last Name
+          </label>
+          <SpeechInput
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            className="text-field-input"
+          />
+        </div>
+        <div className="form-group text-field-container">
+          <label htmlFor="email" className="text-field-label">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            // readOnly
+            className="text-field-input"
+          />
+          {/* <SpeechInput 
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            // readOnly
+            className="text-field-input"
+          /> */}
+        </div>
+        <div className="form-group text-field-container">
+          <label htmlFor="dob" className="text-field-label">
+            Date of Birth
+          </label>
+          <input
+            type="date"
+            name="dob"
+            value={formData.dob}
+            // readOnly
+            onChange={handleChange}
+            className="text-field-input"
+          />
+        </div>
+        <div className="form-group text-field-container">
+          <label htmlFor="phone" className="text-field-label">
+            Phone
+          </label>
+          <SpeechInput
+           type="text"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className="text-field-input"
+          />
+        </div>
+        <div className="form-group text-field-container">
+          <label htmlFor="linkedin" className="text-field-label">
+            LinkedIn Address (Optional)
+          </label>
+          <input
+            type="text"
+            name="linkedin"
+            value={formData.linkedin}
+            onChange={handleChange}
+            className="text-field-input"
+          />
+        </div>
+        <div className="form-group text-field-container">
+          <label htmlFor="resume" className="text-field-label">
+            Upload Resume
+          </label>
+          <input
+            type="file"
+            name="resume"
+            onChange={handleChange}
+            className="text-field-input"
+          />
+          {errors.resume && <span className="error-text">{errors.resume}</span>}
+        </div>
+        <div className="form-group text-field-container">
+          <label htmlFor="coverLetter" className="text-field-label">
+            Cover Letter (Optional)
+          </label>
+          <textarea
+            name="coverLetter"
+            value={formData.coverLetter}
+            onChange={handleChange}
+            className="text-field-input"
+          />
+        </div>
+        <button
+          type="submit"
+          className="btn-submit full-width"
+          disabled={loading || hasApplied}
+        >
+          {loading
+            ? "Submitting..."
+            : hasApplied
+            ? "Already Applied"
+            : "Submit Application"}
+        </button>
+      </form>
     </div>
   );
 };
