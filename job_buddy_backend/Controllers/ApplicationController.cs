@@ -5,22 +5,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using job_buddy_backend.Models.DataContext;
+using Microsoft.AspNetCore.Authorization;
+using job_buddy_backend.DTO;
 
 namespace job_buddy_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class ApplicationsController : ControllerBase
     {
         private readonly JobBuddyDbContext _context;
-
-        public ApplicationsController(JobBuddyDbContext context)
+        private readonly ILogger<ApplicationsController> _logger;
+        public ApplicationsController(JobBuddyDbContext context, ILogger<ApplicationsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
-        // GET: api/Applications
         [HttpGet]
+        [Authorize(Roles = "Employer, Job Seeker, Admin")]
         public async Task<ActionResult<IEnumerable<Application>>> GetApplications()
         {
             return await _context.Applications
@@ -31,35 +35,75 @@ namespace job_buddy_backend.Controllers
         }
 
         // GET: api/Applications/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Application>> GetApplication(int id)
+        [HttpGet("{userId}/{jobId}")]
+        [Authorize(Roles = "Employer, Job Seeker, Admin")]
+        public async Task<IActionResult> GetApplication(int userId, int jobId)
         {
-            var application = await _context.Applications
-                                            .Include(a => a.JobListing)
-                                            .Include(a => a.JobSeeker)
-                                            .Include(a => a.Resume)
-                                            .FirstOrDefaultAsync(a => a.ApplicationID == id);
-
-            if (application == null)
+            try
             {
-                return NotFound();
-            }
+                var application = await _context.Applications
+                    .Include(a => a.JobListing)
+                    .Include(a => a.JobSeeker)
+                    .Include(a => a.Resume)
+                    .FirstOrDefaultAsync(a => a.JobID == jobId && a.UserID == userId);
 
-            return application;
+                if (application == null)
+                {
+                    return Ok(ApiResponse<Application>.FailureResponse("Application not found."));
+                }
+
+                return Ok(ApiResponse<Application>.SuccessResponse(application, "Application fetched successfully."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while fetching the application.");
+                return StatusCode(500, ApiResponse<string>.FailureResponse("An error occurred while fetching the application."));
+            }
         }
+
 
         // POST: api/Applications
         [HttpPost]
+        [Authorize(Roles = "Job Seeker")]
         public async Task<ActionResult<Application>> CreateApplication(Application application)
         {
+            var user = await _context.Users.FindAsync(application.UserID);
+            if (user == null)
+            {
+                return BadRequest("Invalid User ID.");
+            }
+
+            var jobListing = await _context.JobListings.FindAsync(application.JobID);
+            if (jobListing == null)
+            {
+                return BadRequest("Invalid Job ID.");
+            }
+
+         
+            var resume = await _context.Resumes.FindAsync(application.ResumeID);
+            if (resume == null)
+            {
+                return BadRequest("Invalid Resume ID.");
+            }
+
+            application.JobSeeker = user;
+            application.JobListing = jobListing;
+            application.Resume = resume;
+
             _context.Applications.Add(application);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetApplication), new { id = application.ApplicationID }, application);
+           
+
+            return Ok(ApiResponse<Application>.SuccessResponse(application, "Application submitted successfully."));
+
+            
         }
+
 
         // PUT: api/Applications/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Job Seeker")]
         public async Task<IActionResult> UpdateApplication(int id, Application application)
         {
             if (id != application.ApplicationID)
@@ -88,8 +132,8 @@ namespace job_buddy_backend.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Applications/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Employer, Job Seeker, Admin")]
         public async Task<IActionResult> DeleteApplication(int id)
         {
             var application = await _context.Applications.FindAsync(id);
