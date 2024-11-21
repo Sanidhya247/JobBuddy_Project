@@ -177,6 +177,11 @@ namespace job_buddy_backend
         {
             services.AddControllers()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserValidator>());
+                //.AddJsonOptions(options =>
+                //{
+                //    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+                //    options.JsonSerializerOptions.WriteIndented = true;
+                //}); 
             services.AddTransient<IValidator<RegisterUserDto>, RegisterUserValidator>();
             services.AddTransient<IValidator<LoginUserDto>, LoginUserValidator>();
             services.AddTransient<IValidator<UpdateUserProfileDto>, UpdateUserProfileValidator>();
