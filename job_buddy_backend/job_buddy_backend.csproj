@@ -37,6 +37,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\cover-photos\" />
     <Folder Include="wwwroot\profile-pictures\" />
+    <Folder Include="wwwroot\uploads\resumes\" />
   </ItemGroup>
 
 </Project>

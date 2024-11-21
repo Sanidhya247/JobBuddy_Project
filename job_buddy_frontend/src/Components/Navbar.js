@@ -4,7 +4,7 @@ import logo from '../assets/imgs/logos/logo-transparent.svg';
 import Button from "./commons/Button";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-// reference : https://www.npmjs.com/package/@fortawesome/free-regular-svg-icons
+// FontAwesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 
@@ -12,13 +12,6 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext); // Access user and logout information from AuthContext
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [display , setDisplay] = useState();
-
-  
-
-  useEffect(() => {
-    setDisplay(!!user);
-  }, [user]);
 
   const handleLogout = () => {
     logout(); 
@@ -50,14 +43,18 @@ const Navbar = () => {
         <li><Link onClick={toggleMenu} className="nav-link" to="/connections">Connections</Link></li>
         <li><Link onClick={toggleMenu} className="nav-link" to="/about">About</Link></li>
         <li><Link onClick={toggleMenu} className="nav-link" to="/contact">Contact</Link></li>
-        <li><Link onClick={toggleMenu} className="nav-link" to="/post">Post Job</Link></li>
-        <li><Link onClick={toggleMenu} className="nav-link" to="/admin-dashboard">Admin Dashboard</Link></li>
+        {user?.role === "Employer" && (
+          <li><Link onClick={toggleMenu} className="nav-link" to="/post">Post Job</Link></li>
+        )}
       </ul>
+
       <div className={`navbar-right ${isMenuOpen ? 'active' : ''}`}>
-        { user ? (<Link to="/profile">
-          <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
-        </Link>) : null}
-        {user ? (
+        { user ? (
+          <Link to="/profile">
+            <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
+          </Link>
+        ) : null }
+        { user ? (
           <Button label={"Logout"} className={"btn-submit"} onClick={handleLogout} />
         ) : (
           <Link to="/login">

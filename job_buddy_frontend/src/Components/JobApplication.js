@@ -1,49 +1,89 @@
-import React, { useState } from "react";
-import "../style.css";
-import "../assets/css/post_job.css";
-import Input from "./commons/Input";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import apiService from "../utils/apiService";
+import { toast } from "react-toastify";
+import "../assets/css/job_search_page.css";
+import { useLocation } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const JobApplication = () => {
+  const location = useLocation();
+  const { jobId } = location.state || {};
+  const { user } = useContext(AuthContext); 
+  const userID = user?.userID;
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
+    dob: "",
     phone: "",
-    dob:"",
-    linkedin:"",
-    startDate:"",
+    linkedin: "",
     resume: null,
     coverLetter: "",
-    termsAccepted: false,
   });
-
-  const [errors, setErrors] = useState({});
+  const [jobTitle, setJobTitle] = useState("");
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errors, setErrors] = useState({});
+  const [hasApplied, setHasApplied] = useState(false);
+
+  useEffect(() => {
+    // check user and role are valid 
+    const role = localStorage.getItem("role");
+    if (role !== "Job Seeker") {
+      toast.error("Employers cannot apply for jobs.");
+      return;
+    }
+
+    if (!userID || !jobId) {
+      toast.error("Missing job or user information.");
+      return;
+    }
+
+    // Fetch job details to get job title
+    const fetchJobDetails = async () => {
+      try {
+        const response = await apiService.get(`/api/JobListing/${jobId}`);
+        setJobTitle(response.data.data.jobTitle);
+      } catch (error) {
+        toast.error("Failed to fetch job details.");
+      }
+    };
+
+    // Fetch user profile data from API to prefill form
+    const fetchUserProfile = async () => {
+      try {
+        const response = await apiService.get(`/api/UserProfile/${userID}`);
+        const profile = response.data.data;
+        const [firstName, lastName] = profile.fullName.split(" ", 2);
+        setFormData((prev) => ({
+          ...prev,
+          firstName: firstName || "",
+          lastName: lastName || "",
+          email: profile.email,
+          dob: profile.dateOfBirth.split("T")[0],
+          phone: profile.phoneNumber,
+          linkedin: profile.linkedInUrl,
+        }));
+      } catch (error) {
+        toast.error("Failed to fetch user profile details.");
+      }
+    };
+
+    fetchUserProfile();
+    fetchJobDetails();
+  }, [userID, jobId]);
 
   const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
+    const { name, value, files } = e.target;
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? checked : files ? files[0] : value,
+      [name]: files ? files[0] : value,
     });
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear error on change
   };
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.firstName) newErrors.firstName = "First name is required.";
-    if (!formData.lastName) newErrors.lastName = "Last name is required.";
-    if (!formData.email) newErrors.email = "Email is required.";
-    if (!formData.phone) newErrors.phone = "Phone number is required.";
-    if (!formData.city) newErrors.city = "City is required.";
     if (!formData.resume) newErrors.resume = "Resume is required.";
-    if (!formData.jobType) newErrors.jobType = "Job type is required.";
-    if (!formData.workType) newErrors.workType = "Work type is required.";
-    if (!formData.dob) newErrors.dob = "Date of Birth is required.";
-    if (!formData.termsAccepted) newErrors.termsAccepted = "You must accept the terms.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -53,185 +93,120 @@ const JobApplication = () => {
     if (!validateForm()) return;
 
     setLoading(true);
-    setErrorMessage("");
-    setSuccessMessage("");
-
-    const formDataObj = new FormData();
-    Object.keys(formData).forEach((key) => formDataObj.append(key, formData[key]));
 
     try {
-      const response = await fetch("https://localhost:7113/api/JobApplication", {
-        method: "POST",
-        body: formDataObj,
-      });
+      // Check if a resume with the same title already exists for the user
+      const existingResumesResponse = await apiService.get(`/api/resume/${userID}`);
+      if (existingResumesResponse.data.success && existingResumesResponse.data.data) {
+        const existingResumes = existingResumesResponse.data.data;
+        const existingResume = existingResumes.find(
+          (resume) => resume.title === jobTitle
+        );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to submit application.");
+        if (existingResume) {
+          // Resume with the same title exists, use existing resume ID for application
+          const applicationData = {
+            jobId: jobId,
+            userId: userID,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            dob: formData.dob,
+            phone: formData.phone,
+            linkedin: formData.linkedin,
+            resumeId: existingResume.resumeID,
+            coverLetter: formData.coverLetter,
+          };
+
+          await apiService.post("/api/applications", applicationData);
+          toast.success("Application submitted successfully!");
+          setHasApplied(true);
+          setLoading(false);
+          return;
+        }
       }
 
-      setSuccessMessage("Application submitted successfully!");
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        city: "",
-        dob:"",
-        linkedin:"",
-        startDate:"",
-        resume: null,
-        coverLetter: "",
-        termsAccepted: false,
-      });
+      // Upload the resume
+      const resumeData = new FormData();
+      resumeData.append("resumeFile", formData.resume);
+      resumeData.append("title", jobTitle);
+      resumeData.append("userID", userID);
+
+      const resumeResponse = await apiService.post("/api/resume/upload", resumeData);
+      const resumeId = resumeResponse.data.data.resumeID; 
+
+      const applicationData = {
+        jobId: jobId,
+        userId: userID,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        dob: formData.dob,
+        phone: formData.phone,
+        linkedin: formData.linkedin,
+        resumeId: resumeId,
+        coverLetter: formData.coverLetter,
+      };
+
+      await apiService.post("/api/applications", applicationData);
+      toast.success("Application submitted successfully!");
+      setHasApplied(true);
     } catch (error) {
-      setErrorMessage(error.message);
+      if (error.response && error.response.data && error.response.data.errors) {
+        const apiErrors = error.response.data.errors;
+        if (apiErrors.Linkedin) {
+          toast.error("LinkedIn URL must be valid.");
+        }
+        if (apiErrors.ResumeID) {
+          toast.error("Resume ID must be a positive number.");
+        }
+      } else {
+        toast.error("Failed to submit application.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="container">
-      <div className="job-application-header">
-        <h2>Apply for a Job</h2>
-        <p>Please fill out the form below to apply for the position.</p>
+    <form onSubmit={handleSubmit} className="job-application-form">
+      <div className="form-group text-field-container">
+        <label htmlFor="firstName" className="text-field-label">First Name</label>
+        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className="text-field-input" />
       </div>
-
-      <form onSubmit={handleSubmit}>
-        <div className="form-group text-field-container">
-          <label htmlFor="firstName" className="text-field-label">First Name</label>
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            placeholder="First Name"
-            className={`text-field-input ${errors.firstName ? "input-error" : ""}`}
-          />
-          {errors.firstName && <span className="error-text">{errors.firstName}</span>}
-        </div>
-
-        <div className="form-group text-field-container">
-          <label htmlFor="lastName" className="text-field-label">Last Name</label>
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            placeholder="Last Name"
-            className={`text-field-input ${errors.lastName ? "input-error" : ""}`}
-          />
-          {errors.lastName && <span className="error-text">{errors.lastName}</span>}
-        </div>
-
-        <div className="form-group text-field-container">
-          <label htmlFor="email" className="text-field-label">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Email"
-            className={`text-field-input ${errors.email ? "input-error" : ""}`}
-          />
-          {errors.email && <span className="error-text">{errors.email}</span>}
-        </div>
-
-        <div className="form-group text-field-container">
-          <label htmlFor="phone" className="text-field-label">Phone</label>
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="Phone Number"
-            className={`text-field-input ${errors.phone ? "input-error" : ""}`}
-          />
-          {errors.phone && <span className="error-text">{errors.phone}</span>}
-        </div>
-
-        <div className="form-group text-field-container">
-          <label htmlFor="dob" className="text-field-label">Date of Birth</label>
-          <input
-            type="date"
-            name="dob"
-            value={formData.dob}
-            onChange={handleChange}
-            placeholder="Date of Birth"
-            className={`text-field-input ${errors.dob ? "input-error" : ""}`}
-          />
-          {errors.dob && <span className="error-text">{errors.dob}</span>}
-        </div>
-
-        <div className="form-group text-field-container">
-          <label htmlFor="dob" className="text-field-label">LinkedIn Address (Optional)</label>
-          <input
-            type="text"
-            name="linkedin"
-            value={formData.linkedin}
-            onChange={handleChange}
-            placeholder="LinkedIn Address"
-            className={`text-field-input ${errors.linkedin ? "input-error" : ""}`}
-          />
-        </div>
-
-        <div className="form-group text-field-container">
-          <label htmlFor="startDate" className="text-field-label">Available Start Date</label>
-          <input
-            type="date"
-            name="startDate"
-            value={formData.startDate}
-            onChange={handleChange}
-            placeholder="Available Start Date"
-            className={`text-field-input ${errors.startDate ? "input-error" : ""}`}
-          />
-          {errors.startDate && <span className="error-text">{errors.startDate}</span>}
-        </div>
-
-        <div className="form-group text-field-container">
-          <label htmlFor="resume" className="text-field-label">Upload Resume</label>
-          <input
-            type="file"
-            name="resume"
-            onChange={handleChange}
-            className={`text-field-input ${errors.resume ? "input-error" : ""}`}
-          />
-          {errors.resume && <span className="error-text">{errors.resume}</span>}
-        </div>
-
-        <div className="form-group text-field-container">
-          <label htmlFor="coverLetter" className="text-field-label">Cover Letter (Optional)</label>
-          <textarea
-            name="coverLetter"
-            value={formData.coverLetter}
-            onChange={handleChange}
-            placeholder="Cover Letter"
-            className="text-field-input"
-          />
-        </div>
-
-        <div className="form-group text-field-container">
-          <label htmlFor="termsAccepted">
-            <input
-              type="checkbox"
-              name="termsAccepted"
-              checked={formData.termsAccepted}
-              onChange={handleChange}
-            />
-            Accept <Link to="#">Terms of Use</Link> and <Link to="#">Privacy Policy</Link>
-          </label>
-          {errors.termsAccepted && <span className="error-text">{errors.termsAccepted}</span>}
-        </div>
-
-        <button type="submit" className="btn-submit full-width" disabled={loading}>
-          {loading ? "Submitting..." : "Submit Application"}
-        </button>
-      </form>
-
-      {successMessage && <p className="success-message">{successMessage}</p>}
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-    </div>
+      <div className="form-group text-field-container">
+        <label htmlFor="lastName" className="text-field-label">Last Name</label>
+        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className="text-field-input" />
+      </div>
+      <div className="form-group text-field-container">
+        <label htmlFor="email" className="text-field-label">Email</label>
+        <input type="email" name="email" value={formData.email} readOnly className="text-field-input" />
+      </div>
+      <div className="form-group text-field-container">
+        <label htmlFor="dob" className="text-field-label">Date of Birth</label>
+        <input type="date" name="dob" value={formData.dob} readOnly className="text-field-input" />
+      </div>
+      <div className="form-group text-field-container">
+        <label htmlFor="phone" className="text-field-label">Phone</label>
+        <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="text-field-input" />
+      </div>
+      <div className="form-group text-field-container">
+        <label htmlFor="linkedin" className="text-field-label">LinkedIn Address (Optional)</label>
+        <input type="text" name="linkedin" value={formData.linkedin} onChange={handleChange} className="text-field-input" />
+      </div>
+      <div className="form-group text-field-container">
+        <label htmlFor="resume" className="text-field-label">Upload Resume</label>
+        <input type="file" name="resume" onChange={handleChange} className="text-field-input" />
+        {errors.resume && <span className="error-text">{errors.resume}</span>}
+      </div>
+      <div className="form-group text-field-container">
+        <label htmlFor="coverLetter" className="text-field-label">Cover Letter (Optional)</label>
+        <textarea name="coverLetter" value={formData.coverLetter} onChange={handleChange} className="text-field-input" />
+      </div>
+      <button type="submit" className="btn-submit full-width" disabled={loading || hasApplied}>
+        {loading ? "Submitting..." : hasApplied ? "Already Applied" : "Submit Application"}
+      </button>
+    </form>
   );
 };
 
