@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import apiService from "../utils/apiService";
 import { toast } from "react-toastify";
-import "../assets/css/job_search_page.css";
+// import "../assets/css/job_search_page.css";
 import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
@@ -54,20 +54,28 @@ const JobApplication = () => {
       try {
         const response = await apiService.get(`/api/UserProfile/${userID}`);
         const profile = response.data.data;
-        const [firstName, lastName] = profile.fullName.split(" ", 2);
+    
+        if (!profile || !profile.fullName) {
+          throw new Error("Profile or full name is missing.");
+        }
+    
+        const [firstName, lastName = ""] = profile.fullName.split(" ", 2);
+    
         setFormData((prev) => ({
           ...prev,
           firstName: firstName || "",
           lastName: lastName || "",
           email: profile.email,
-          dob: profile.dateOfBirth.split("T")[0],
-          phone: profile.phoneNumber,
-          linkedin: profile.linkedInUrl,
+          dob: profile.dateOfBirth?.split("T")[0] || "",
+          phone: profile.phoneNumber || "",
+          linkedin: profile.linkedInUrl || "",
         }));
       } catch (error) {
+        console.error("Error fetching user profile:", error);
         toast.error("Failed to fetch user profile details.");
       }
     };
+    
 
     fetchUserProfile();
     fetchJobDetails();
