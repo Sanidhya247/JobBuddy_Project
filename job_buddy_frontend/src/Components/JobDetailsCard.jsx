@@ -5,7 +5,7 @@ import "../assets/css/job_search_page.css";
 const JobDetailsCard = ({ job}) => {
         const navigate = useNavigate();
         const handleNavigation = () => {
-            navigate("/job-apply")
+            navigate(`/apply/${job.jobID}`);
         }
         const handleViewDetails = () => {
             navigate(`/job/${job.jobID}`); // Navigate to the details page with the job ID

@@ -3,6 +3,7 @@ import "../style.css";
 import "../assets/css/post_job.css";
 import Input from "./commons/Input";
 import { Link } from "react-router-dom";
+import SpeechInput from "./SpeechInput";
 
 const PostJob = () => {
   const [formData, setFormData] = useState({
@@ -106,7 +107,16 @@ const PostJob = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-group text-field-container">
           <label htmlFor="jobTitle" className="text-field-label">Job Title</label>
-          <input
+          {/* <input
+            type="text"
+            name="jobTitle"
+            value={formData.jobTitle}
+            onChange={handleChange}
+            placeholder="Job Title"
+            className={`text-field-input ${errors.jobTitle ? "input-error" : ""}`}
+          /> */}
+
+          <SpeechInput 
             type="text"
             name="jobTitle"
             value={formData.jobTitle}
