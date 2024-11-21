@@ -4,6 +4,7 @@ using job_buddy_backend.Helpers;
 using job_buddy_backend.Models;
 using Stripe;
 
+/*Payment stripe references - https://docs.stripe.com/api/payment_intents/create?lang=dotnet */
 namespace job_buddy_backend.Core.Payment
 {
     public class PaymentService : IPaymentService

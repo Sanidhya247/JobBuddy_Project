@@ -7,6 +7,10 @@ import "../../assets/css/Payment.css";
 import AuthContext from '../../context/AuthContext';
 import Loader from '../commons/Loader';
 
+/*Referenc - stripe - https://docs.stripe.com/sdks/stripejs-react */
+/*Reference - Stripe ui elements - https://www.youtube.com/watch?v=e-whXipfRvg */
+
+
 // Load Stripe
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
