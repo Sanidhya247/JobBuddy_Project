@@ -27,7 +27,7 @@ namespace job_buddy_backend.Models.DataContext
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Connection> Connections { get; set; }
-
+        public DbSet<ContactUs> ContactUsRequests { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

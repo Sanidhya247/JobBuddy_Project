@@ -1,3 +1,8 @@
+:root {
+    --primary-color: #254336;
+    --secondary-color: #d1d1bd;
+  }
+  
 .admin-dashboard {
     padding: 20px;
     background-color: #f9f9f9;
@@ -70,13 +75,82 @@ th, td {
 
 button {
     padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+/* Tablet View (834px) */
+@media (max-width: 834px) {
+    .stats-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stat-card, .chart {
+        width: 80%;
+        min-width: unset; 
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .stat-card h3, .chart h3 {
+        font-size: 1rem;
+    }
+
+    button {
+        padding: 8px 15px; 
+        font-size: 0.9rem;
+    }
+
+    table th, table td {
+        font-size: 0.9rem;
+        padding: 8px; 
+    }
+}
+
+/* Mobile View (430px) */
+@media (max-width: 430px) {
+    .admin-dashboard {
+        padding: 10px; 
+    }
+
+    h1 {
+        font-size: 1.5rem; 
+    }
+
+    .stats-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .stat-card, .chart {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .stat-card h3, .chart h3 {
+        font-size: 0.9rem; 
+    }
+
+    button {
+        padding: 6px 12px;
+        font-size: 0.8rem; 
+    }
+
+    table th, table td {
+        font-size: 0.8rem;
+        padding: 5px; 
+    }
 }

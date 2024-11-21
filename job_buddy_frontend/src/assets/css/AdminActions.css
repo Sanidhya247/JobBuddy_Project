@@ -1,3 +1,8 @@
+:root {
+    --primary-color: #254336;
+    --secondary-color: #d1d1bd;
+  }
+  
 .admin-actions {
     margin-top: 40px;
     padding: 20px;
@@ -26,8 +31,8 @@ table {
 }
 
 thead {
-    background-color: #4caf50;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 th, td {
@@ -60,8 +65,8 @@ tr:nth-child(even) {
 button {
     padding: 8px 12px;
     font-size: 0.9rem;
-    color: white;
-    background-color: #007bff;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -69,10 +74,73 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
 }
 
 button:disabled {
-    background-color: #ccc;
+    background-color: var(--secondary-color);
     cursor: not-allowed;
+}
+
+/* Tablet View (834px) */
+@media (max-width: 834px) {
+    .admin-actions {
+        padding: 15px;
+    }
+
+    .admin-actions h2 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    table {
+        font-size: 0.9rem;
+        margin-top: 15px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Mobile View (430px) */
+@media (max-width: 430px) {
+    .admin-actions {
+        padding: 10px;
+    }
+
+    .admin-actions h2 {
+        font-size: 1.1rem;
+        padding-bottom: 8px;
+    }
+
+    table {
+        font-size: 0.8rem;
+    }
+
+    th, td {
+        font-size: 0.7rem;
+        padding: 6px;
+    }
+
+    button {
+        padding: 5px 8px;
+        font-size: 0.7rem;
+    }
+
+    td[colspan] {
+        font-size: 0.7rem;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 }

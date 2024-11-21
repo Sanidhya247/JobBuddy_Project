@@ -21,7 +21,7 @@ namespace job_buddy_backend.Core.ChatService
             _logger = logger;
         }
 
-        public async Task<ApiResponse<int>> CreateChatAsync(ChatDto chatDto)
+        public async Task<ApiResponse<int>> CreateChatAsync(CreateChatDto chatDto)
         {
             try
             {

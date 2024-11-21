@@ -4,7 +4,9 @@ using job_buddy_backend.Core;
 using job_buddy_backend.Core.ChatService;
 using job_buddy_backend.Core.Interfaces;
 using job_buddy_backend.Core.Interfaces.Chat;
+using job_buddy_backend.Core.Interfaces.Payment;
 using job_buddy_backend.Core.Interfaces.UserProfile;
+using job_buddy_backend.Core.Payment;
 using job_buddy_backend.Core.UserProfile;
 using job_buddy_backend.DTO;
 using job_buddy_backend.DTO.Mapping;
@@ -136,8 +138,12 @@ namespace job_buddy_backend
             services.AddScoped<IJobListingService, JobListingService>();
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IConnectionService, ConnectionService>();
+            services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<AdminService>();
+            services.AddScoped<ContactUsService>();
+            services.AddScoped<AtsScoringService>();
 
+            services.AddControllers();
         }
 
 
@@ -176,6 +182,11 @@ namespace job_buddy_backend
         {
             services.AddControllers()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserValidator>());
+                //.AddJsonOptions(options =>
+                //{
+                //    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+                //    options.JsonSerializerOptions.WriteIndented = true;
+                //}); 
             services.AddTransient<IValidator<RegisterUserDto>, RegisterUserValidator>();
             services.AddTransient<IValidator<LoginUserDto>, LoginUserValidator>();
             services.AddTransient<IValidator<UpdateUserProfileDto>, UpdateUserProfileValidator>();

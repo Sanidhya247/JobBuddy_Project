@@ -49,6 +49,7 @@ namespace job_buddy_backend.Core.UserProfile
                 About = user.About,
                 DateOfBirth = user.DateOfBirth,
                 Nationality = user.Nationality,
+                IsPremium = user.IsPremium,
                 IsActive = user.IsActive,
                 Educations = user.Educations.Select(e => new UserEducationDto
                 {
@@ -123,6 +124,7 @@ namespace job_buddy_backend.Core.UserProfile
                 About = user.About,
                 DateOfBirth = user.DateOfBirth,
                 Nationality = user.Nationality,
+                IsPremium = user.IsPremium,
                 IsActive = user.IsActive,
                 Educations = user.Educations.Select(e => new UserEducationDto
                 {

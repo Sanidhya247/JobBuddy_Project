@@ -1,0 +1,310 @@
+:root {
+    --primary-color: #254336;
+    --secondary-color: #d1d1bd;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* About Us Section */
+.about-section {
+    background-image: url('../imgs/about_Us_Banner.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #fff;
+    text-align: center;
+}
+
+.about-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.about-content {
+    position: relative;
+}
+
+.about-content h1 {
+    font-size: 48px;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.about-content p {
+    font-size: 18px;
+    margin: 10px 0 0;
+}
+
+/* Welcome to Job Buddy Section */
+.content-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+    flex: 1;
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-style {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.text-container {
+    flex: 1.5;
+    padding-left: 20px;
+}
+
+.text-container h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.text-container p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Our Services Section */
+.services-section {
+    max-width: 1200px;
+    margin: 50px auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.services-section h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+}
+
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.service-box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.service-box:hover {
+    transform: translateY(-10px);
+}
+
+.service-icon {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 48px;
+}
+
+.service-box h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.service-box p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Statistics Section */
+.stats-section {
+    position: relative;
+    background-image: url('../imgs/About_us.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.stats-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(221, 218, 218, 0.6);
+    z-index: 1;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.stat-box {
+    color: var(--primary-color);
+    text-align: center;
+    padding: 20px;
+}
+
+.stat-icon {
+    font-size: 48px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.stat-box h3 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.stat-box p {
+    font-size: 18px;
+    color: #333;
+}
+
+/* Our Team Section */
+.team-section {
+    max-width: 1200px;
+    margin: 50px auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.team-section h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+}
+
+.team-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.team-member {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.team-icon {
+    font-size: 48px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.team-member h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: var(--primary-color);
+}
+
+.team-member p {
+    font-size: 18px;
+    color: #666;
+}
+
+/* Responsive Design */
+/* Tablet View */
+@media (max-width: 834px) {
+    .services-container {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .content-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .image-container, .text-container {
+        padding: 0;
+    }
+
+    .team-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile View */
+@media (max-width: 430px) {
+    .services-section h2 {
+        font-size: 28px;
+    }
+
+    .service-box h3 {
+        font-size: 20px;
+    }
+
+    .service-box p {
+        font-size: 14px;
+    }
+
+    .stats-container {
+        flex-direction: column;
+    }
+
+    .stat-box h3 {
+        font-size: 28px;
+    }
+
+    .stat-box p {
+        font-size: 14px;
+    }
+
+    .team-container {
+        grid-template-columns: 1fr;
+    }
+
+    .team-member h3 {
+        font-size: 20px;
+    }
+
+    .team-member p {
+        font-size: 16px;
+    }
+}

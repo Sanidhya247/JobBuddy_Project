@@ -335,6 +335,38 @@ namespace job_buddy_backend.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("job_buddy_backend.Models.ContactUs", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContactUsRequests");
+                });
+
             modelBuilder.Entity("job_buddy_backend.Models.EmployerProfile", b =>
                 {
                     b.Property<int>("EmployerProfileID")
@@ -490,6 +522,9 @@ namespace job_buddy_backend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPremium")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsProfileComplete")

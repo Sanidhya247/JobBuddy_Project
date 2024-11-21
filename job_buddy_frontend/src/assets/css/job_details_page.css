@@ -1,3 +1,8 @@
+:root {
+  --primary-color: #254336;
+  --secondary-color: #d1d1bd;
+}
+
 .job-details-container {
   max-width: 800px;
   margin: 40px auto;
@@ -33,7 +38,7 @@
   font-weight: 600;
   margin-top: 25px;
   margin-bottom: 10px;
-  color: #254336;
+  color: var(--primary-color);
   border-bottom: 2px solid #D1D1BD;
   padding-bottom: 5px;
 }
@@ -101,4 +106,32 @@
 
 .fas {
   font-size: 16px;
+}
+
+.friend-request-sent-button {
+  background-color: #ffc107; 
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.friend-request-sent-button i {
+  font-size: 16px;
+}
+/* High Contrast Mode */
+.high-contrast .job-details-container {
+  background-color: #000000;
+  color: #ffffff;
+  border: 2px solid #ffff00;
+}
+
+.high-contrast .job-details-container .section-title {
+  color: #ffff00;
+  border-bottom: 2px solid #ffff00;
 }

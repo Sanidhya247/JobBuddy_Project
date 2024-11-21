@@ -12,8 +12,8 @@ using job_buddy_backend.Models.DataContext;
 namespace job_buddy_backend.Migrations
 {
     [DbContext(typeof(JobBuddyDbContext))]
-    [Migration("20241119014825_Admin-changes")]
-    partial class Adminchanges
+    [Migration("20241119181706_added ispremium for user")]
+    partial class addedispremiumforuser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,9 +80,6 @@ namespace job_buddy_backend.Migrations
 
                     b.Property<string>("Industry")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("bit");
 
                     b.Property<string>("JobDescription")
                         .IsRequired()
@@ -239,6 +236,105 @@ namespace job_buddy_backend.Migrations
                     b.ToTable("Applications");
                 });
 
+            modelBuilder.Entity("job_buddy_backend.Models.ChatModel.Chat", b =>
+                {
+                    b.Property<int>("ChatID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChatID"));
+
+                    b.Property<int>("EmployerID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobSeekerID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ChatID");
+
+                    b.HasIndex("EmployerID");
+
+                    b.HasIndex("JobID");
+
+                    b.HasIndex("JobSeekerID");
+
+                    b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("job_buddy_backend.Models.ChatModel.Connection", b =>
+                {
+                    b.Property<int>("ConnectionID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ConnectionID"));
+
+                    b.Property<DateTime?>("AcceptedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RequestedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RequesteeID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequestorID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("ConnectionID");
+
+                    b.HasIndex("RequesteeID");
+
+                    b.HasIndex("RequestorID");
+
+                    b.ToTable("Connections");
+                });
+
+            modelBuilder.Entity("job_buddy_backend.Models.ChatModel.Message", b =>
+                {
+                    b.Property<int>("MessageID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MessageID"));
+
+                    b.Property<int>("ChatID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SenderID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MessageID");
+
+                    b.HasIndex("ChatID");
+
+                    b.HasIndex("SenderID");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("job_buddy_backend.Models.EmployerProfile", b =>
                 {
                     b.Property<int>("EmployerProfileID")
@@ -390,10 +486,10 @@ namespace job_buddy_backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool>("IsEmailVerified")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsEmailVerified")
+                    b.Property<bool>("IsPremium")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsProfileComplete")
@@ -654,6 +750,66 @@ namespace job_buddy_backend.Migrations
                     b.Navigation("Resume");
                 });
 
+            modelBuilder.Entity("job_buddy_backend.Models.ChatModel.Chat", b =>
+                {
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "Employer")
+                        .WithMany()
+                        .HasForeignKey("EmployerID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("JobBuddyBackend.Models.JobListing", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "JobSeeker")
+                        .WithMany()
+                        .HasForeignKey("JobSeekerID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Employer");
+
+                    b.Navigation("Job");
+
+                    b.Navigation("JobSeeker");
+                });
+
+            modelBuilder.Entity("job_buddy_backend.Models.ChatModel.Connection", b =>
+                {
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", null)
+                        .WithMany()
+                        .HasForeignKey("RequesteeID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", null)
+                        .WithMany()
+                        .HasForeignKey("RequestorID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("job_buddy_backend.Models.ChatModel.Message", b =>
+                {
+                    b.HasOne("job_buddy_backend.Models.ChatModel.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("job_buddy_backend.Models.UserModel.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("job_buddy_backend.Models.EmployerProfile", b =>
                 {
                     b.HasOne("job_buddy_backend.Models.UserModel.User", "Employer")
@@ -747,6 +903,11 @@ namespace job_buddy_backend.Migrations
                     b.Navigation("Applications");
 
                     b.Navigation("JobTags");
+                });
+
+            modelBuilder.Entity("job_buddy_backend.Models.ChatModel.Chat", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("job_buddy_backend.Models.Resume", b =>
