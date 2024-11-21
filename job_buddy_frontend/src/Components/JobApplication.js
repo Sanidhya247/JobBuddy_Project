@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import apiService from "../utils/apiService";
 import { toast } from "react-toastify";
-// import "../assets/css/job_search_page.css";
+import "../assets/css/job_application_page.css";
 import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
@@ -27,7 +27,6 @@ const JobApplication = () => {
   const [hasApplied, setHasApplied] = useState(false);
 
   useEffect(() => {
-    // check user and role are valid 
     const role = localStorage.getItem("role");
     if (role !== "Job Seeker") {
       toast.error("Employers cannot apply for jobs.");
@@ -39,7 +38,6 @@ const JobApplication = () => {
       return;
     }
 
-    // Fetch job details to get job title
     const fetchJobDetails = async () => {
       try {
         const response = await apiService.get(`/api/JobListing/${jobId}`);
@@ -49,7 +47,6 @@ const JobApplication = () => {
       }
     };
 
-    // Fetch user profile data from API to prefill form
     const fetchUserProfile = async () => {
       try {
         const response = await apiService.get(`/api/UserProfile/${userID}`);
@@ -103,7 +100,6 @@ const JobApplication = () => {
     setLoading(true);
 
     try {
-      // Check if a resume with the same title already exists for the user
       const existingResumesResponse = await apiService.get(`/api/resume/${userID}`);
       if (existingResumesResponse.data.success && existingResumesResponse.data.data) {
         const existingResumes = existingResumesResponse.data.data;
@@ -112,7 +108,6 @@ const JobApplication = () => {
         );
 
         if (existingResume) {
-          // Resume with the same title exists, use existing resume ID for application
           const applicationData = {
             jobId: jobId,
             userId: userID,
@@ -177,7 +172,10 @@ const JobApplication = () => {
   };
 
   return (
+    <div class="job_application">
+      <h2>Job Application Form</h2>
     <form onSubmit={handleSubmit} className="job-application-form">
+      
       <div className="form-group text-field-container">
         <label htmlFor="firstName" className="text-field-label">First Name</label>
         <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className="text-field-input" />
@@ -215,6 +213,7 @@ const JobApplication = () => {
         {loading ? "Submitting..." : hasApplied ? "Already Applied" : "Submit Application"}
       </button>
     </form>
+    </div>
   );
 };
 

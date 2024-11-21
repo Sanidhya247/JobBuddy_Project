@@ -12,7 +12,7 @@ const JobSearchPage = () => {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10; // Number of jobs per page
+  const pageSize = 10; 
 
   // Filter state
   const [filters, setFilters] = useState({
@@ -197,7 +197,7 @@ const JobSearchPage = () => {
           </div>
           <button className="apply-btn" onClick={applyFilters}>
             Apply Filters
-          </button>
+          </button><br></br>
           <button className="clear-btn" onClick={clearFilters}>
             Clear Filters
           </button>
