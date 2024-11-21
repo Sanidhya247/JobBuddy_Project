@@ -16,11 +16,8 @@ namespace job_buddy_backend.Validators
             RuleFor(x => x.ResumeID)
                 .GreaterThan(0).WithMessage("Resume ID must be a positive number.");
 
-            RuleFor(x => x.Status)
-                .NotEmpty().WithMessage("Status cannot be empty.");
-
             RuleFor(x => x.CoverLetter)
-                .MaximumLength(500).WithMessage("Cover letter cannot exceed 500 characters.");
+                .MaximumLength(1000).WithMessage("Cover letter cannot exceed 1000 characters.");
 
             // FirstName validation
             RuleFor(x => x.FirstName)
@@ -45,9 +42,6 @@ namespace job_buddy_backend.Validators
             RuleFor(x => x.Dob)
                 .LessThan(DateTime.Today).WithMessage("Date of Birth must be in the past.");
 
-            // StartDate validation (must not be in the past)
-            RuleFor(x => x.StartDate)
-                .GreaterThanOrEqualTo(DateTime.Today).WithMessage("Start date cannot be in the past.");
 
             // Linkedin validation (optional but must be a valid URL if provided)
             RuleFor(x => x.Linkedin)

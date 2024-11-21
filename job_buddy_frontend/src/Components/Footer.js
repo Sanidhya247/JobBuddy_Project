@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <div className="about-section">
+        <div className="footer-about-section">
           <h3>About</h3>
           <p>
             JobBuddy is an online career resource and platform created to help
