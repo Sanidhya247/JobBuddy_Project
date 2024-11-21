@@ -26,6 +26,7 @@ function FriendRequestsPage() {
     setLoadingRequests(true);
     try {
       const response = await apiService.get('/api/connection/user/friend-requests');
+      console.log("friend requests", response.data.data);
       const userRequests = await Promise.all(
         response.data.data
           .filter(request => request.requesteeID === user.userID)

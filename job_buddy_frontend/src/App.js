@@ -1,7 +1,7 @@
 import './App.css';
 import Footer from './components/Footer';
 import "../src/style.css";
-import { Routes, Route } from "react-router-dom"; 
+import { Routes, Route, useLocation } from "react-router-dom"; 
 import Home from './components/Home';
 import Contact from './components/Contact';
 import About from './components/About';
@@ -26,6 +26,7 @@ import PaymentSuccess from './components/payment/PaymentSuccess';
 
 function App() {
   const { user } = useContext(AuthContext);
+  const location = useLocation();
   return (
     <>
       <Navbar />
@@ -42,7 +43,7 @@ function App() {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/" element={<JobSearchPage />} />
         <Route path="/job/:jobId" element={<JobDetailsPage />} /> {/* Job Details route */}
-        <Route path="/job-apply" element={<JobApplication />} />
+        <Route path="/apply/:jobId" element={<JobApplication />} />
         <Route path="/chat" element={<ChatPage/>} />
         <Route path="/chat/:chatID?" element={<ChatPage />} />
         <Route path="/connections" element={<FriendRequestsPage/>} />
@@ -50,7 +51,7 @@ function App() {
         <Route path="/payment/:amount" element={<PaymentPage />} />
         <Route path="/Payment-success/:userID?" element = {<PaymentSuccess/>} />
       </Routes>
-      {user && <FloatingChatButton />}
+      {user && location.pathname !== '/chat/:chatID?' && <FloatingChatButton />}
       <Footer />
     </>
   );
