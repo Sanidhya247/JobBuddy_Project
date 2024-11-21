@@ -5,7 +5,7 @@ namespace job_buddy_backend.Core.Interfaces.Chat
 {
     public interface IChatService
     {
-        Task<ApiResponse<int>> CreateChatAsync(ChatDto chatDto);
+        Task<ApiResponse<int>> CreateChatAsync(CreateChatDto chatDto);
         Task<ApiResponse<string>> SendMessageAsync(MessageDto messageDto);
         Task<ApiResponse<string>> DeleteChatOnJobClosureOrUnfriendAsync(int jobId, int jobSeekerId, int employerId);
         Task<ApiResponse<List<ChatDto>>> GetChatsAsync();

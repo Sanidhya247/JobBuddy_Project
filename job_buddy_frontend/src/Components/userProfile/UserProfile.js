@@ -7,6 +7,7 @@ import apiService from "../../utils/apiService";
 import AuthContext from "../../context/AuthContext";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { Link } from "react-router-dom";
 
 function UserProfile() {
   const { user } = useContext(AuthContext);
@@ -19,7 +20,11 @@ function UserProfile() {
     async function fetchProfile() {
       try {
         const response = await apiService.get(`/api/UserProfile/${user.userID}`);
-        setProfile(response.data.data);
+        const userProfile = response.data.data;
+
+        // Set profile and store isPremium in localStorage
+        setProfile(userProfile);
+        localStorage.setItem("isPremium", userProfile.isPremium);
       } catch (error) {
         toast.error("Error fetching profile. Please try again.");
       } finally {
@@ -72,7 +77,11 @@ function UserProfile() {
         </label>
       </div>
       <div className="profile-header">
-        <div className="profile-picture-wrapper">
+        <div
+          className={`profile-picture-wrapper ${
+            profile.isPremium ? "premium-border" : ""
+          }`}
+        >
           <img
             src={profile.profilePictureUrl ? `${BASE_URL}${profile.profilePictureUrl}` : "/default-avatar.png"}
             alt={`${profile.fullName}'s Avatar`}
@@ -84,7 +93,18 @@ function UserProfile() {
           </label>
         </div>
         <div className="profile-info">
-          <h2>{profile.fullName}</h2>
+          <div className="profile-header-row">
+            <h2>{profile.fullName}</h2>
+            {profile.isPremium ? (
+              <button className="premium-user-badge" disabled>
+                Premium User
+              </button>
+            ) : (
+              <Link to="/subscription" className="subscribe-button">
+                Subscribe Now
+              </Link>
+            )}
+          </div>
           <p className="headline">{profile.headline}</p>
           <p className="email">{profile.email}</p>
           <button className="edit-profile-btn" onClick={() => setEditMode(!editMode)}>
@@ -113,19 +133,34 @@ function UserProfile() {
           </div>
           <div className="detail-card">
             <h3>Contact Info</h3>
-            <p><strong>Address:</strong> {profile.address || "N/A"}</p>
-            <p><strong>Nationality:</strong> {profile.nationality || "N/A"}</p>
-            <p><strong>LinkedIn:</strong> <a href={profile.linkedInUrl}>{profile.linkedInUrl}</a></p>
-            <p><strong>Date of Birth:</strong> {profile.dateOfBirth ? new Date(profile.dateOfBirth).toLocaleDateString() : "N/A"}</p>
+            <p>
+              <strong>Address:</strong> {profile.address || "N/A"}
+            </p>
+            <p>
+              <strong>Nationality:</strong> {profile.nationality || "N/A"}
+            </p>
+            <p>
+              <strong>LinkedIn:</strong> <a href={profile.linkedInUrl}>{profile.linkedInUrl}</a>
+            </p>
+            <p>
+              <strong>Date of Birth:</strong>{" "}
+              {profile.dateOfBirth ? new Date(profile.dateOfBirth).toLocaleDateString() : "N/A"}
+            </p>
           </div>
           <div className="detail-card">
             <h3>Education</h3>
             {profile.educations && profile.educations.length > 0 ? (
               profile.educations.map((edu, idx) => (
                 <div key={idx} className="item">
-                  <p><strong>Degree:</strong> {edu.degree}</p>
-                  <p><strong>Institution:</strong> {edu.institution}</p>
-                  <p><strong>Graduation Date:</strong> {new Date(edu.graduationDate).toLocaleDateString()}</p>
+                  <p>
+                    <strong>Degree:</strong> {edu.degree}
+                  </p>
+                  <p>
+                    <strong>Institution:</strong> {edu.institution}
+                  </p>
+                  <p>
+                    <strong>Graduation Date:</strong> {new Date(edu.graduationDate).toLocaleDateString()}
+                  </p>
                 </div>
               ))
             ) : (
@@ -137,10 +172,18 @@ function UserProfile() {
             {profile.experiences && profile.experiences.length > 0 ? (
               profile.experiences.map((exp) => (
                 <div key={exp.userExperienceID} className="item">
-                  <p><strong>Job Title:</strong> {exp.jobTitle}</p>
-                  <p><strong>Company:</strong> {exp.company}</p>
-                  <p><strong>Start Date:</strong> {new Date(exp.startDate).toLocaleDateString()}</p>
-                  <p><strong>End Date:</strong> {exp.endDate ? new Date(exp.endDate).toLocaleDateString() : "Present"}</p>
+                  <p>
+                    <strong>Job Title:</strong> {exp.jobTitle}
+                  </p>
+                  <p>
+                    <strong>Company:</strong> {exp.company}
+                  </p>
+                  <p>
+                    <strong>Start Date:</strong> {new Date(exp.startDate).toLocaleDateString()}
+                  </p>
+                  <p>
+                    <strong>End Date:</strong> {exp.endDate ? new Date(exp.endDate).toLocaleDateString() : "Present"}
+                  </p>
                 </div>
               ))
             ) : (
@@ -152,8 +195,12 @@ function UserProfile() {
             {profile.projects && profile.projects.length > 0 ? (
               profile.projects.map((proj) => (
                 <div key={proj.userProjectID} className="item">
-                  <p><strong>Title:</strong> {proj.projectTitle}</p>
-                  <p><strong>Description:</strong> {proj.description}</p>
+                  <p>
+                    <strong>Title:</strong> {proj.projectTitle}
+                  </p>
+                  <p>
+                    <strong>Description:</strong> {proj.description}
+                  </p>
                 </div>
               ))
             ) : (
@@ -165,8 +212,12 @@ function UserProfile() {
             {profile.certifications && profile.certifications.length > 0 ? (
               profile.certifications.map((cert) => (
                 <div key={cert.userCertificationID} className="item">
-                  <p><strong>Title:</strong> {cert.title}</p>
-                  <p><strong>Issued By:</strong> {cert.issuedBy}</p>
+                  <p>
+                    <strong>Title:</strong> {cert.title}
+                  </p>
+                  <p>
+                    <strong>Issued By:</strong> {cert.issuedBy}
+                  </p>
                 </div>
               ))
             ) : (

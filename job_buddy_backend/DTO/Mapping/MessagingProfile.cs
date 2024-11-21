@@ -10,6 +10,7 @@ namespace job_buddy_backend.DTO.Mapping
         {
             // Chat mappings
             CreateMap<Chat, ChatDto.ChatDto>().ReverseMap();
+            CreateMap<Chat, ChatDto.CreateChatDto>().ReverseMap();
 
             // Message mappings
             CreateMap<Message, MessageDto>()

@@ -12,6 +12,7 @@ namespace job_buddy_backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Employer, Job Seeker, Admin")]
     public class JobListingController : ControllerBase
     {
         private readonly IJobListingService _jobListingService;
@@ -24,7 +25,7 @@ namespace job_buddy_backend.Controllers
         }
 
         [HttpGet("{jobId}")]
-
+        
         public async Task<IActionResult> GetJobById(int jobId)
         {
             var job = await _jobListingService.GetJobByIdAsync(jobId);

@@ -1,3 +1,8 @@
+:root {
+    --primary-color: #254336;
+    --secondary-color: #d1d1bd;
+  }
+
 .profile-modal {
     position: fixed;
     top: 0;
@@ -52,7 +57,7 @@
 }
 
 .modal-content a {
-    color: #0073b1;
+    color: var(--primary-color);
     text-decoration: none;
 }
 .modal-content a:hover {
