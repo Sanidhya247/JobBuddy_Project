@@ -1,7 +1,7 @@
-import './App.css';
-import Footer from './components/Footer';
+import "./App.css";
+import Footer from "./components/Footer";
 import "../src/style.css";
-import { Routes, Route, useLocation } from "react-router-dom"; 
+import { Routes, Route, useLocation, Navigate } from "react-router-dom"; 
 import Home from './components/Home';
 import Contact from './components/Contact';
 import About from './components/About';
@@ -34,14 +34,32 @@ function App() {
   return (
     <>
       <Navbar />
-      
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/Job" element={<JobSearchPage />} />
+        <Route
+          path="/job"
+          element={
+            user?.role === "Employer" ? (
+              <Navigate to="/" replace />
+            ) : (
+              <JobSearchPage />
+            )
+          }
+        />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/post" element={<PostJob />} />
+        <Route
+          path="/post"
+          element={
+            user?.role === "Job Seeker" ? (
+              <Navigate to="/" replace />
+            ) : (
+              <PostJob />
+            )
+          }
+        />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
