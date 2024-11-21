@@ -87,4 +87,22 @@
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
   }
-  
+  /* High Contrast Mode */
+.high-contrast .edit-profile-form {
+  background-color: #000000;
+  color: #ffff00;
+  border: 2px solid #ffff00;
+}
+
+.high-contrast .edit-profile-form input,
+.high-contrast .edit-profile-form textarea {
+  background-color: #333333;
+  color: #ffffff;
+  border: 2px solid #ffff00;
+}
+
+.high-contrast .save-profile-btn {
+  background-color: #000000;
+  color: #ffff00;
+  border: 2px solid #ffff00;
+}

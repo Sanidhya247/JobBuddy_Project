@@ -24,6 +24,7 @@ import Subscription from './components/payment/Subscription';
 import PaymentSuccess from './components/payment/PaymentSuccess';
 import AdminDashboard from './components/AdminDashboard';
 import AdminActions from './components/AdminActions';
+import AccessibilityPanel from './components/AccessibilityPanel';
 
 
 
@@ -74,7 +75,7 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-actions" element={<AdminActions />} />
       </Routes>
-      {user && location.pathname !== '/chat/:chatID?' && <FloatingChatButton />}
+      <AccessibilityPanel />
       <Footer />
     </>
   );

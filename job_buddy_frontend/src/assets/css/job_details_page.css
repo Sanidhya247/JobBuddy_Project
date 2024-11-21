@@ -124,3 +124,14 @@
 .friend-request-sent-button i {
   font-size: 16px;
 }
+/* High Contrast Mode */
+.high-contrast .job-details-container {
+  background-color: #000000;
+  color: #ffffff;
+  border: 2px solid #ffff00;
+}
+
+.high-contrast .job-details-container .section-title {
+  color: #ffff00;
+  border-bottom: 2px solid #ffff00;
+}

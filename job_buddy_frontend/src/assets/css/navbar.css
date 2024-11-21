@@ -111,18 +111,17 @@
     margin: 15px 0;
     text-align: center;
   }
-
-  .hamburger {
-    display: flex;
-  }
-
-  .navbar-right {
-    display: none;
-  }
+  /* High Contrast Mode */
+.high-contrast .navbar {
+  background-color: #000000;
+  border-bottom: 2px solid #ffff00;
 }
 
-@media (max-width: 768px) {
-  .navbar-right.active {
-    display: block;
-  }
+.high-contrast .navbar-links a {
+  color: #ffff00;
+}
+
+.high-contrast .navbar-links a:hover {
+  color: #ffcc00;
+}
 }

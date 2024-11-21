@@ -48,7 +48,7 @@ const Navbar = () => {
       </div>
       
       <ul className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
-        <li><Link onClick={toggleMenu} className="nav-link" to="/">Home</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/" aria-label="Home">Home</Link></li>
         <li><Link onClick={toggleMenu} className="nav-link" to="/Job">Jobs</Link></li>
         <li><Link onClick={toggleMenu} className="nav-link" to="/chat">Messages</Link></li>
         <li><Link onClick={toggleMenu} className="nav-link" to="/connections">Connections</Link></li>
@@ -56,6 +56,9 @@ const Navbar = () => {
         <li><Link onClick={toggleMenu} className="nav-link" to="/contact">Contact</Link></li>
         {user?.role === "Employer" && (
           <li><Link onClick={toggleMenu} className="nav-link" to="/post">Post Job</Link></li>
+        )}
+        {user?.role === "Admin" && (
+          <li><Link onClick={toggleMenu} className="nav-link" to="/admin-dashboard">Admin Dashboard</Link></li>
         )}
       </ul>
 

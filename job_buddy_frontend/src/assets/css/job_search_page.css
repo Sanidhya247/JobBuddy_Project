@@ -280,6 +280,192 @@
 
 /* Tablet View (834px) */
 @media (max-width: 834px) {
+    .search-bar {
+      max-width: 500px;
+    }
+  
+    .search-input input {
+      font-size: 14px;
+    }
+  
+    .search-button {
+      padding: 12px 20px;
+      font-size: 14px;
+    }
+    .main-container {
+      padding: 10px;
+    }
+  
+    .content-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .filter-sidebar {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: var(--primary-color);
+      border-radius: 10px;
+    }
+  
+    .job-list {
+      width: 100%;
+    }
+  
+    .job-card {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 15px;
+      gap: 10px;
+    }
+  
+    .company-logo {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .company-details h3 {
+      font-size: 18px;
+    }
+  
+    .company-details p {
+      font-size: 14px;
+    }
+  
+    .apply-now-btn {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  }
+  
+  /* Mobile View (430px) */
+  @media (max-width: 430px) {
+    .search-bar {
+      flex-direction: column;
+      align-items: stretch;
+      border-radius: 25px;
+    }
+  
+    .search-input {
+      padding: 8px 15px;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+    }
+  
+    .search-input input {
+      font-size: 16px;
+    }
+  
+    .search-button {
+      border-radius: 25px;
+      margin-top: 10px;
+      padding: 12px 20px;
+      font-size: 16px;
+      width: 100%;
+      background-color: var(--primary-color);
+    }
+  
+    .job-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      gap: 10px;
+      text-align: center;
+    }
+  
+    .company-logo {
+      font-size: 40px;
+      background-color: var(--secondary-color);
+      color: #fff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+  
+    .company-details h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #304e40;
+      line-height: 1.2;
+    }
+  
+    .company-details p {
+      margin: 5px 0;
+      color: #666;
+      font-size: 14px;
+    }
+  
+    .apply-now-btn {
+      padding: 10px 20px;
+      background-color: #304e40;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+  
+    .apply-now-btn:hover {
+      background-color: var(--secondary-color);
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+    }
+  }
+  
+  .resume-upload-container {
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 50px;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .resume-upload-container:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+  }
+  
+  .upload-resume-text {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--secondary-color);
+  }
+  .resume-upload-container:hover .upload-resume-text {
+    color: var(--primary-color);
+  }
+  /* High Contrast Mode */
+.high-contrast .main-container,
+.high-contrast .filter-sidebar {
+    background-color: #000000;
+    color: #ffff00;
+    border: 2px solid #ffff00;
+}
+
+.high-contrast .search-button,
+.high-contrast .view-all-button,
+.high-contrast .apply-btn, 
+.high-contrast .clear-btn {
+    background-color: #000000;
+    color: #ffff00;
+    border: 2px solid #ffff00;
+}
   .search-bar {
     max-width: 500px;
   }
@@ -374,7 +560,7 @@
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
   }
-}
+
 
 /* Mobile View (430px) */
 @media (max-width: 430px) {
