@@ -1,3 +1,5 @@
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using job_buddy_backend.Core;
@@ -44,6 +46,36 @@ namespace job_buddy_backend
 
             var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
 
+            builder.Configuration
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+
+
+            if (builder.Environment.IsProduction())
+            {
+                // Use Managed Identity to authenticate to Azure Key Vault
+                string keyVaultName = "JobBuddyKeyVault"; 
+                var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
+
+                var secretClient = new SecretClient(keyVaultUri, new DefaultAzureCredential());
+
+                try
+                {
+                    // Fetch the production connection string from Key Vault
+                    KeyVaultSecret secret = await secretClient.GetSecretAsync("ProdConnection");
+                    string prodConnectionString = secret.Value;
+
+                    // Store the connection string in configuration
+                    builder.Configuration["ConnectionStrings:DefaultConnection"] = prodConnectionString;
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Error fetching secret from Key Vault: {0}", ex.Message);
+                    throw;
+                }
+            }
             // Configure SQL Server
             builder.Services.AddDbContext<JobBuddyDbContext>(options =>
                 options.UseSqlServer(
@@ -219,14 +251,12 @@ namespace job_buddy_backend
         // Configure HTTP Request Pipeline
         private static void ConfigurePipeline(WebApplication app)
         {
-            if (app.Environment.IsDevelopment())
-            {
+
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Job Buddy API V1");
                 });
-            }
 
             app.UseHttpsRedirection();
             app.UseCors("AllowSpecificOrigins");
