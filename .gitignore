@@ -4,3 +4,5 @@
 
 *.zip
 /.vs/JobBuddy_Project/v17
+/Job_buddy_backend.Tests/bin/Debug/net8.0
+/Job_buddy_backend.Tests/obj
