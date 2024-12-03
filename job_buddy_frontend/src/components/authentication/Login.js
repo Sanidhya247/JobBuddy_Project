@@ -93,7 +93,7 @@ const Login = () => {
           </div>
           {fieldErrors.password && <span className="error-text">{fieldErrors.password}</span>}
         </div>
-        <button type="submit" className="auth-button">Sign In</button>
+        <button type="submit" className="btn-submit">Sign In</button>
         <div className="auth-options">
           <Link to="/forgot-password" className="forgot-password">Forgot your password?</Link>
           <p>Don’t have an account? <Link to="/register" className="switch-auth-link">Sign Up</Link></p>

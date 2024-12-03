@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using iTextSharp.text.pdf;
-using iTextSharp.text.pdf.parser;
 using DocumentFormat.OpenXml.Packaging; // For parsing Word documents
-using Microsoft.Extensions.Logging; // For logging
+using Microsoft.Extensions.Logging;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
+using iText.Kernel.Pdf.Canvas.Parser;
+using iText.Kernel.Pdf;
+using System.Text;
 
 namespace job_buddy_backend.Core
 {
@@ -98,17 +100,20 @@ namespace job_buddy_backend.Core
 
         private string ExtractTextFromPdf(string pdfPath)
         {
-            _logger.LogInformation("Starting PDF text extraction.");
+            _logger.LogInformation("Starting PDF text extraction with iText7.");
             try
             {
-                using (PdfReader reader = new PdfReader(pdfPath))
+                using (PdfReader pdfReader = new PdfReader(pdfPath))
+                using (PdfDocument pdfDocument = new PdfDocument(pdfReader))
                 {
-                    string text = string.Empty;
-                    for (int i = 1; i <= reader.NumberOfPages; i++)
+                    StringBuilder text = new StringBuilder();
+                    for (int i = 1; i <= pdfDocument.GetNumberOfPages(); i++)
                     {
-                        text += PdfTextExtractor.GetTextFromPage(reader, i) + " ";
+                        var page = pdfDocument.GetPage(i);
+                        ITextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
+                        text.AppendLine(PdfTextExtractor.GetTextFromPage(page, strategy));
                     }
-                    return text.Trim();
+                    return text.ToString().Trim();
                 }
             }
             catch (Exception ex)
@@ -117,6 +122,7 @@ namespace job_buddy_backend.Core
                 return string.Empty;
             }
         }
+
 
         private string ExtractTextFromDocx(string docxPath)
         {

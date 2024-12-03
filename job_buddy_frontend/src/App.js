@@ -25,6 +25,7 @@ import PaymentSuccess from './components/payment/PaymentSuccess';
 import AdminDashboard from './components/AdminDashboard';
 import AdminActions from './components/AdminActions';
 import AccessibilityPanel from './components/AccessibilityPanel';
+import EmployerProfile from "./components/employerProfile/EmployerProfile";
 
 
 
@@ -61,6 +62,7 @@ function App() {
           }
         />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/employer-profile" element={<EmployerProfile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/" element={<JobSearchPage />} />

@@ -18,6 +18,7 @@ const SpeechInput = ({ label,type, name, value, onChange, error }) => {
   const handleSpeechInput = () => {
     resetTranscript();
     SpeechRecognition.startListening();
+    toast.success("Press Stop to get the transcript.")
   };
 
   const stopListening = () => {
