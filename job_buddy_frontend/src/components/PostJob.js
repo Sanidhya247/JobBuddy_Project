@@ -153,7 +153,7 @@ const PostJob = () => {
 
         <div className="form-group text-field-container">
           <label htmlFor="city" className="text-field-label">City</label>
-          <input
+          <SpeechInput
             type="text"
             name="city"
             value={formData.city}
@@ -166,7 +166,7 @@ const PostJob = () => {
 
         <div className="form-group text-field-container">
           <label htmlFor="province" className="text-field-label">Province</label>
-          <input
+          <SpeechInput
             type="text"
             name="province"
             value={formData.province}
@@ -245,16 +245,17 @@ const PostJob = () => {
             </select>
         </div>
 
-        <div className="form-group text-field-container">
-          <label htmlFor="termsAccepted">
-            <input
+        <div className="form-group">
+          {/* <label htmlFor="termsAccepted"> */}
+            
+            <span><input
               type="checkbox"
               name="termsAccepted"
               checked={formData.termsAccepted}
               onChange={handleChange}
-            />
-            Accept <Link to="#">Terms of Use</Link> and <Link to="#">Privacy Policy</Link>
-          </label>
+              className="w-auto"
+            />Accept <Link to="#">Terms of Use</Link> and <Link to="#">Privacy Policy</Link></span>
+          {/* </label> */}
           {errors.termsAccepted && <span className="error-text">{errors.termsAccepted}</span>}
         </div>
 

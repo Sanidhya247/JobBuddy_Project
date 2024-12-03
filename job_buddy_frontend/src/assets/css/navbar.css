@@ -5,6 +5,8 @@
   background-color: white;
   padding: 15px 30px;
   border-bottom: 2px solid #254336;
+  position: relative;
+  z-index: 2;
 }
 
 .navbar-logo {
@@ -16,12 +18,6 @@
   height: 50px;
   margin-right: 10px;
   cursor: pointer;
-}
-
-.logo-text {
-  font-size: 24px;
-  font-weight: bold;
-  color: #254336;
 }
 
 .navbar-links {
@@ -46,7 +42,6 @@
   color: #1e3b2f;
 }
 
-/* Profile icon */
 .navbar-right {
   display: flex;
   align-items: center;
@@ -54,12 +49,6 @@
 
 .navbar-right a {
   margin-left: 15px;
-}
-
-.profile-img {
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
 }
 
 .profile-icon {
@@ -82,20 +71,16 @@
   transition: 0.4s;
 }
 
-.display-hide {
-  display: none;
-}
-
-.display-block {
-  display: block;
-}
-
 @media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
   .navbar-links {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 60px;
+    top: 75%;
     left: 0;
     width: 100%;
     background-color: white;
@@ -111,17 +96,15 @@
     margin: 15px 0;
     text-align: center;
   }
-  /* High Contrast Mode */
-.high-contrast .navbar {
-  background-color: #000000;
-  border-bottom: 2px solid #ffff00;
-}
 
-.high-contrast .navbar-links a {
-  color: #ffff00;
-}
+  .navbar-right {
+    display: none;
+  }
 
-.high-contrast .navbar-links a:hover {
-  color: #ffcc00;
-}
+  .navbar-right.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+  }
 }

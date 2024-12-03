@@ -36,3 +36,24 @@
 .high-contrast .job-application-header {
   color: #ffff00;
 }
+
+
+button:disabled{
+  background-color: none !important;
+}
+
+.termsAccepted{
+  display: flex;
+}
+
+.form-group input[type="checkbox"] {
+  margin: 0; /* Remove default margin */
+}
+
+.form-group span {
+  display: inline; /* Ensure the text and links are on the same line */
+}
+
+.w-auto{
+  width: auto;
+}

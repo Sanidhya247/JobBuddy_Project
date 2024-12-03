@@ -24,6 +24,7 @@ const Home = () => {
   const closeModal = () => setIsModalOpen(false);
   const [jobs,setJobs] = useState([]);
   const [error,setError] = useState("");
+  const [user , setUser] = useState({});
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const jobsPerPage = 5;
@@ -53,6 +54,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    setUser(JSON.parse(localStorage?.getItem("user")));
     fetchJobs();
   },[])
 
@@ -67,7 +69,7 @@ const Home = () => {
         <div className="overlay"></div>
       </div>
 
-      <section className="explore-jobs">
+     { user?.role !== 'Employer' && <section className="explore-jobs">
       <h2>Explore Jobs</h2>
       <div className="job-cards">
         {visibleJobs.map((job, index) => (
@@ -90,7 +92,7 @@ const Home = () => {
           Next
         </button>
       </div>
-    </section>
+    </section>}
 
       {/* Profile Section - ATS Score */}
       <div className="profile-section">
