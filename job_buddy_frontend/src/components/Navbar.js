@@ -49,27 +49,27 @@ const Navbar = () => {
       
       <ul className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
         <li><Link onClick={toggleMenu} className="nav-link" to="/" aria-label="Home">Home</Link></li>
-        <li><Link onClick={toggleMenu} className="nav-link" to="/Job">Jobs</Link></li>
-        <li><Link onClick={toggleMenu} className="nav-link" to="/chat">Messages</Link></li>
-        <li><Link onClick={toggleMenu} className="nav-link" to="/connections">Connections</Link></li>
-        <li><Link onClick={toggleMenu} className="nav-link" to="/about">About</Link></li>
-        <li><Link onClick={toggleMenu} className="nav-link" to="/contact">Contact</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/Job" aria-label="Jobs">Jobs</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/chat" aria-label="Messages">Messages</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/connections" aria-label="Connections">Connections</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/about" aria-label="About">About</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/contact" aria-label="Contact">Contact</Link></li>
         {user?.role === "Employer" && (
-          <li><Link onClick={toggleMenu} className="nav-link" to="/post">Post Job</Link></li>
+          <li><Link onClick={toggleMenu} className="nav-link" to="/post" aria-label="Post Job">Post Job</Link></li>
         )}
         {user?.role === "Admin" && (
-          <li><Link onClick={toggleMenu} className="nav-link" to="/admin-dashboard">Admin Dashboard</Link></li>
+          <li><Link onClick={toggleMenu} className="nav-link" to="/admin-dashboard" aria-label="Admin Dashboard">Admin Dashboard</Link></li>
         )}
       </ul>
 
       <div className={`navbar-right ${isMenuOpen ? 'active' : ''}`}>
-        { user ? (<Link to="/profile">
+        { user ? (<Link to="/profile" aria-label="View Profile">
           <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
         </Link>) : null}
         {user ? (
           <Button label={"Logout"} className={"btn-submit"} onClick={handleLogout} />
         ) : (
-          <Link to="/login">
+          <Link to="/login" aria-label="Login">
             <Button label={"Login"} className={"btn-submit"} />
           </Link>
         )}
