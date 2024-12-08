@@ -48,7 +48,7 @@
   }
   
   .ats-form-group textarea:focus {
-    border-color: #007bff;
+    border-color: #0056b3;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
   }
   
@@ -78,7 +78,7 @@
     padding: 15px;
     font-size: 1rem;
     color: #fff;
-    background-color: #007bff;
+    background-color: #0056b3;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -100,7 +100,7 @@
   
   .ats-score-result h3 {
     font-size: 1.5rem;
-    color: #007bff;
+    color: #0056b3;
     font-weight: bold;
     margin: 0;
   }

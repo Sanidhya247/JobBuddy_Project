@@ -30,27 +30,27 @@ const Footer = () => {
           <h3>Resources</h3>
           <ul>
             <li>
-              <Link className="nav-link" to="/">
+              <Link className="nav-link" to="/" aria-label="Navigate to Home">
                 Home
               </Link>
             </li>
             <li>
-              <Link className="nav-link" to="/Job">
+              <Link className="nav-link" to="/Job" aria-label="Navigate to Jobs">
                 Jobs
               </Link>
             </li>
             <li>
-              <Link className="nav-link" to="/about">
+              <Link className="nav-link" to="/about" aria-label="Navigate to About">
                 About
               </Link>
             </li>
             <li>
-              <Link className="nav-link" to="/contact">
+              <Link className="nav-link" to="/contact" aria-label="Navigate to Contact">
                 Contact
               </Link>
             </li>
             <li>
-              <Link className="nav-link" to="/post">
+              <Link className="nav-link" to="/post" aria-label="Navigate to Post Job">
                 Post Job
               </Link>
             </li>
@@ -60,16 +60,32 @@ const Footer = () => {
         <div className="social-section">
           <h3>Social</h3>
           <div className="social-icons">
-            <Link to={"https://www.facebook.com"} target="_blank">
-              <FontAwesomeIcon icon={faFacebookF} style={{ "animation-iteration-count": "1" }} bounce/>
+            <Link 
+              to={"https://www.facebook.com"} 
+              target="_blank" 
+              aria-label="Visit our Facebook page"
+            >
+              <FontAwesomeIcon icon={faFacebookF} />
             </Link>
-            <Link to={"https://www.google.com"} target="_blank">
+            <Link 
+              to={"https://www.google.com"} 
+              target="_blank" 
+              aria-label="Visit our Google page"
+            >
               <FontAwesomeIcon icon={faGoogle} />
             </Link>
-            <Link to={"https://www.twitter.com"} target="_blank">
+            <Link 
+              to={"https://www.twitter.com"} 
+              target="_blank" 
+              aria-label="Visit our Twitter profile"
+            >
               <FontAwesomeIcon icon={faTwitter} />
             </Link>
-            <Link to={"https://www.instagram.com"} target="_blank">
+            <Link 
+              to={"https://www.instagram.com"} 
+              target="_blank" 
+              aria-label="Visit our Instagram profile"
+            >
               <FontAwesomeIcon icon={faInstagram} />
             </Link>
           </div>

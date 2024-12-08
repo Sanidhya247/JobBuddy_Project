@@ -58,51 +58,62 @@ const Login = () => {
 
   return (
     <div className="auth-page">
-    <div className="auth-container">
-      <h2>Sign In</h2>
-      {localError && <p className="error">{localError}</p>}
-      <form onSubmit={handleSubmit} className="auth-form">
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className={fieldErrors.email ? "error-input" : ""}
-          />
-          {fieldErrors.email && <span className="error-text">{fieldErrors.email}</span>}
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <div className="password-container">
+      <div className="auth-container">
+        <h2>Sign In</h2>
+        {localError && <p className="error">{localError}</p>}
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
               required
-              className={fieldErrors.password ? "error-input" : ""}
+              aria-required="true"
+              className={fieldErrors.email ? "error-input" : ""}
             />
-            <span
-              className="toggle-password"
-              onClick={() => setShowPassword(!showPassword)}
-              title={showPassword ? "Hide Password" : "Show Password"}
-            >
-              {showPassword ? "👁️‍🗨️" : "👁️"}
-            </span>
+            {fieldErrors.email && <span className="error-text">{fieldErrors.email}</span>}
           </div>
-          {fieldErrors.password && <span className="error-text">{fieldErrors.password}</span>}
-        </div>
-        <button type="submit" className="auth-button">Sign In</button>
-        <div className="auth-options">
-          <Link to="/forgot-password" className="forgot-password">Forgot your password?</Link>
-          <p>Don’t have an account? <Link to="/register" className="switch-auth-link">Sign Up</Link></p>
-        </div>
-      </form>
-    </div>
-    <div className="auth-image">
-    <img src={loginimage} alt="login" />
-  </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <div className="password-container">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+                aria-required="true"
+                className={fieldErrors.password ? "error-input" : ""}
+              />
+              <span
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide Password" : "Show Password"}
+                role="button"
+                tabIndex={0}
+              >
+                {showPassword ? "👁️‍🗨️" : "👁️"}
+              </span>
+            </div>
+            {fieldErrors.password && <span className="error-text">{fieldErrors.password}</span>}
+          </div>
+          <button type="submit" className="auth-button">Sign In</button>
+          <div className="auth-options">
+            <Link to="/forgot-password" className="forgot-password" aria-label="Forgot your password?">Forgot your password?</Link>
+            <p>
+              Don’t have an account?{" "}
+              <Link to="/register" className="switch-auth-link" aria-label="Sign Up">Sign Up</Link>
+            </p>
+          </div>
+        </form>
+      </div>
+      <div className="auth-image">
+        <img src={loginimage} alt="Person logging into JobBuddy" />
+      </div>
     </div>
   );
 };
