@@ -35,29 +35,31 @@ const Navbar = () => {
         <span></span>
         <span></span>
       </div>
-
-      <ul className={`navbar-links ${isMenuOpen ? "active" : ""}`}>
-        <li><Link onClick={toggleMenu} to="/">Home</Link></li>
-        {user?.role !== "Employer" && <li><Link onClick={toggleMenu} to="/job">Jobs</Link></li>}
-        <li><Link onClick={toggleMenu} to="/chat">Messages</Link></li>
-        <li><Link onClick={toggleMenu} to="/connections">Connections</Link></li>
-        <li><Link onClick={toggleMenu} to="/about">About</Link></li>
-        <li><Link onClick={toggleMenu} to="/contact">Contact</Link></li>
-        {user?.role === "Employer" && <li><Link onClick={toggleMenu} to="/post">Post Job</Link></li>}
-        {user?.role === "Admin" && <li><Link onClick={toggleMenu} to="/admin-dashboard">Admin Dashboard</Link></li>}
+      
+      <ul className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/" aria-label="Home">Home</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/Job" aria-label="Jobs">Jobs</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/chat" aria-label="Messages">Messages</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/connections" aria-label="Connections">Connections</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/about" aria-label="About">About</Link></li>
+        <li><Link onClick={toggleMenu} className="nav-link" to="/contact" aria-label="Contact">Contact</Link></li>
+        {user?.role === "Employer" && (
+          <li><Link onClick={toggleMenu} className="nav-link" to="/post" aria-label="Post Job">Post Job</Link></li>
+        )}
+        {user?.role === "Admin" && (
+          <li><Link onClick={toggleMenu} className="nav-link" to="/admin-dashboard" aria-label="Admin Dashboard">Admin Dashboard</Link></li>
+        )}
       </ul>
 
-      <div className={`navbar-right ${isMenuOpen ? "active" : ""}`}>
-        {user && (
-          <Link to={user.role === "Employer" ? "/employer-profile" : "/profile"}>
-            <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
-          </Link>
-        )}
+      <div className={`navbar-right ${isMenuOpen ? 'active' : ''}`}>
+        { user ? (<Link to="/profile" aria-label="View Profile">
+          <FontAwesomeIcon className="profile-icon" icon={faCircleUser} />
+        </Link>) : null}
         {user ? (
           <Button label="Logout" className="btn-submit" onClick={handleLogout} />
         ) : (
-          <Link to="/login">
-            <Button label="Login" className="btn-submit" />
+          <Link to="/login" aria-label="Login">
+            <Button label={"Login"} className={"btn-submit"} />
           </Link>
         )}
       </div>

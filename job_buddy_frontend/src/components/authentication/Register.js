@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import "./Auth.css";
 import signUpImage from '../../assets/imgs/sign_up.png';
-
 import { toast } from "react-toastify";
 
 const Register = () => {
@@ -27,7 +26,6 @@ const Register = () => {
   const validateForm = () => {
     let formErrors = {};
 
-    //validation logic for the registration form
     if (!formData.fullName) formErrors.fullName = "Full name is required.";
     if (!formData.email) {
       formErrors.email = "Email is required.";
@@ -75,101 +73,118 @@ const Register = () => {
   };
 
   return (
-<div className="auth-page">
-  <div className="auth-image">
-    <img src={signUpImage} alt="Sign Up" />
-  </div>
-    <div className="auth-container">
-      <h2>Create Account</h2>
-      {errors.server && <div className="error">{errors.server}</div>}
-      <form onSubmit={handleSubmit} className="auth-form">
-        <div className="form-group">
-          <label>Role</label>
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            className={errors.role ? "error-input" : ""}
-          >
-            <option name='role' value="Job Seeker">Job Seeker</option>
-            <option name='role' value="Employer">Employer</option>
-          </select>
-          {errors.role && <span className="error-text">{errors.role}</span>}
-        </div>
-        <div className="form-group">
-          <label>Full Name</label>
-          <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-            className={errors.fullName ? "error-input" : ""}
-          />
-          {errors.fullName && (
-            <span className="error-text">{errors.fullName}</span>
-          )}
-        </div>
+    <div className="auth-page">
+      <div className="auth-image">
+        <img src={signUpImage} alt="Sign Up illustration" />
+      </div>
+      <div className="auth-container">
+        <h2>Create Account</h2>
+        {errors.server && <div className="error">{errors.server}</div>}
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label htmlFor="role">Role</label>
+            <select
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className={errors.role ? "error-input" : ""}
+              aria-label="Select your role"
+            >
+              <option value="Job Seeker">Job Seeker</option>
+              <option value="Employer">Employer</option>
+            </select>
+            {errors.role && <span className="error-text">{errors.role}</span>}
+          </div>
 
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className={errors.email ? "error-input" : ""}
-          />
-          {errors.email && <span className="error-text">{errors.email}</span>}
-        </div>
+          <div className="form-group">
+            <label htmlFor="fullName">Full Name</label>
+            <input
+              id="fullName"
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              className={errors.fullName ? "error-input" : ""}
+              placeholder="Enter your full name"
+              aria-required="true"
+            />
+            {errors.fullName && (
+              <span className="error-text">{errors.fullName}</span>
+            )}
+          </div>
 
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className={errors.password ? "error-input" : ""}
-          />
-          {errors.password && (
-            <span className="error-text">{errors.password}</span>
-          )}
-        </div>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className={errors.email ? "error-input" : ""}
+              placeholder="Enter your email"
+              aria-required="true"
+            />
+            {errors.email && <span className="error-text">{errors.email}</span>}
+          </div>
 
-        <div className="form-group">
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className={errors.confirmPassword ? "error-input" : ""}
-          />
-          {errors.confirmPassword && (
-            <span className="error-text">{errors.confirmPassword}</span>
-          )}
-        </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className={errors.password ? "error-input" : ""}
+              placeholder="Create a strong password"
+              aria-required="true"
+            />
+            {errors.password && (
+              <span className="error-text">{errors.password}</span>
+            )}
+          </div>
 
-        <div className="form-group">
-          <label>Phone Number (Optional)</label>
-          <input
-            type="text"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit" className="btn-submit">
-          Sign Up
-        </button>
-        <p>
-          Already have an account?{" "}
-          <Link to="/login" className="switch-auth-link">
-            Log In
-          </Link>
-        </p>
-      </form>
-    </div>
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              id="confirmPassword"
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className={errors.confirmPassword ? "error-input" : ""}
+              placeholder="Confirm your password"
+              aria-required="true"
+            />
+            {errors.confirmPassword && (
+              <span className="error-text">{errors.confirmPassword}</span>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="phoneNumber">Phone Number (Optional)</label>
+            <input
+              id="phoneNumber"
+              type="text"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              placeholder="Enter your phone number"
+            />
+          </div>
+          <button type="submit" className="auth-button">
+            Sign Up
+          </button>
+          <p>
+            Already have an account?{" "}
+            <Link to="/login" className="switch-auth-link" aria-label="Log In">
+              Log In
+            </Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };

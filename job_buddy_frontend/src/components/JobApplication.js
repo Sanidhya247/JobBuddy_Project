@@ -2,20 +2,16 @@ import React, { useEffect, useState, useContext } from "react";
 import apiService from "../utils/apiService";
 import { toast } from "react-toastify";
 import "../assets/css/job_application_page.css";
-import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import SpeechInput from "./SpeechInput";
-import { text } from "@fortawesome/fontawesome-svg-core";
 
 const JobApplication = () => {
   const location = useLocation();
-   const { jobId } = location.state || {};
+  const { jobId } = location.state || {};
   const { user } = useContext(AuthContext);
   const userID = user?.userID;
   const navigate = useNavigate();
-  // //const [user, setUser] = useState({});
-
-  // const { jobId } = useParams();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -27,35 +23,18 @@ const JobApplication = () => {
     resume: null,
     coverLetter: "",
   });
+
   const [jobTitle, setJobTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [hasApplied, setHasApplied] = useState(false);
-  //const [userID, setUserID] = useState("");
-
-  // useEffect(() => {
-  //   // setUser(JSON.parse(localStorage.getItem("user")));
-  //   // setUserID(JSON.parse(localStorage.getItem("user"))?.userID);
-  //   // console.log(JSON.parse(localStorage.getItem("user"))?.userID);
-
-  //   setFormData({
-  //     ...formData,
-  //     jobId: jobId,
-  //     userId: user.userId || JSON.parse(localStorage.getItem("user")).userID,
-  //   });
-  // }, []);
 
   useEffect(() => {
     const role = localStorage.getItem("role");
     if (role !== "Job Seeker") {
-      toast?.error("Employers cannot apply for jobs.");
+      toast.error("Employers cannot apply for jobs.");
       return;
     }
-
-    // if (!userID || !jobId) {
-    //   toast.error("Missing job or user information.");
-    //   return;
-    // }
 
     const fetchJobDetails = async () => {
       try {
@@ -68,8 +47,6 @@ const JobApplication = () => {
 
     const fetchUserProfile = async () => {
       try {
-        // const userID = user?.userID || JSON.parse(localStorage.getItem("user")?.userID);
-
         const response = await apiService.get(`/api/UserProfile/${userID}`);
         const profile = response.data.data;
         if (!profile || !profile.fullName) {
@@ -206,20 +183,15 @@ const JobApplication = () => {
           <label htmlFor="firstName" className="text-field-label">
             First Name
           </label>
-          {/* <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            className="text-field-input"
-          /> */}
           <SpeechInput
-          type="text"
-            // label="firstName"
+            type="text"
+            id="firstName"
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
             className="text-field-input"
+            aria-label="Enter your first name"
+            title="First Name"
           />
         </div>
         <div className="form-group text-field-container">
@@ -228,10 +200,13 @@ const JobApplication = () => {
           </label>
           <SpeechInput
             type="text"
+            id="lastName"
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
             className="text-field-input"
+            aria-label="Enter your last name"
+            title="Last Name"
           />
         </div>
         <div className="form-group text-field-container">
@@ -240,20 +215,15 @@ const JobApplication = () => {
           </label>
           <input
             type="email"
+            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            // readOnly
             className="text-field-input"
+            aria-label="Enter your email address"
+            title="Email Address"
+            readOnly
           />
-          {/* <SpeechInput 
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            // readOnly
-            className="text-field-input"
-          /> */}
         </div>
         <div className="form-group text-field-container">
           <label htmlFor="dob" className="text-field-label">
@@ -261,11 +231,13 @@ const JobApplication = () => {
           </label>
           <input
             type="date"
+            id="dob"
             name="dob"
             value={formData.dob}
-            // readOnly
             onChange={handleChange}
             className="text-field-input"
+            aria-label="Enter your date of birth"
+            title="Date of Birth"
           />
         </div>
         <div className="form-group text-field-container">
@@ -273,11 +245,14 @@ const JobApplication = () => {
             Phone
           </label>
           <SpeechInput
-           type="text"
+            type="text"
+            id="phone"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
             className="text-field-input"
+            aria-label="Enter your phone number"
+            title="Phone Number"
           />
         </div>
         <div className="form-group text-field-container">
@@ -286,10 +261,13 @@ const JobApplication = () => {
           </label>
           <input
             type="text"
+            id="linkedin"
             name="linkedin"
             value={formData.linkedin}
             onChange={handleChange}
             className="text-field-input"
+            aria-label="Enter your LinkedIn profile URL"
+            title="LinkedIn Profile"
           />
         </div>
         <div className="form-group text-field-container">
@@ -298,9 +276,12 @@ const JobApplication = () => {
           </label>
           <input
             type="file"
+            id="resume"
             name="resume"
             onChange={handleChange}
             className="text-field-input"
+            aria-label="Upload your resume file"
+            title="Resume Upload"
           />
           {errors.resume && <span className="error-text">{errors.resume}</span>}
         </div>
@@ -309,22 +290,23 @@ const JobApplication = () => {
             Cover Letter (Optional)
           </label>
           <textarea
+            id="coverLetter"
             name="coverLetter"
             value={formData.coverLetter}
             onChange={handleChange}
             className="text-field-input"
+            aria-label="Enter your cover letter"
+            title="Cover Letter"
           />
         </div>
         <button
           type="submit"
           className="btn-submit full-width"
           disabled={loading || hasApplied}
+          aria-label="Submit Job Application"
+          title={loading ? "Submitting..." : "Submit Application"}
         >
-          {loading
-            ? "Submitting..."
-            : hasApplied
-            ? "Already Applied"
-            : "Submit Application"}
+          {loading ? "Submitting..." : hasApplied ? "Already Applied" : "Submit Application"}
         </button>
       </form>
     </div>
