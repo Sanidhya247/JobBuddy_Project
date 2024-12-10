@@ -1,6 +1,7 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using FluentValidation;
+// using EntityFrameworkCore.UseRowNumberForPaging;
 using FluentValidation.AspNetCore;
 using job_buddy_backend.Core;
 using job_buddy_backend.Core.ChatService;
@@ -9,6 +10,7 @@ using job_buddy_backend.Core.Interfaces.Chat;
 using job_buddy_backend.Core.Interfaces.Payment;
 using job_buddy_backend.Core.Interfaces.UserProfile;
 using job_buddy_backend.Core.Payment;
+using job_buddy_backend.Core.Services;
 using job_buddy_backend.Core.UserProfile;
 using job_buddy_backend.DTO;
 using job_buddy_backend.DTO.Mapping;
@@ -80,6 +82,7 @@ namespace job_buddy_backend
             builder.Services.AddDbContext<JobBuddyDbContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")
+                    // o => o.UseRowNumberForPaging()
                     //sqlOptions => sqlOptions.EnableRetryOnFailure()
                 ));
             builder.Services.AddSignalR();
@@ -163,6 +166,7 @@ namespace job_buddy_backend
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IConfigurationService, ConfigurationService>();
             services.AddScoped<IUserProfileService, UserProfileService>();
+            services.AddScoped<IEmployerProfileService, EmployerProfileService>();
             services.AddScoped<IResumeService, ResumeService>();
             services.AddHttpClient<LocationService>();
             services.AddScoped<ILocationService, LocationService>();

@@ -34,8 +34,8 @@
 }
 
 .profile-image {
-    width: 60px;
-    height: 60px;
+    width: 60px !important;
+    height: 60px !important;
     border-radius: 50%;
     cursor: pointer;
     margin-right: 15px;

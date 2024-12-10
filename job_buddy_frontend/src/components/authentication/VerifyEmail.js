@@ -20,7 +20,7 @@ const VerifyEmail = () => {
       </p>
       
       <div className="auth-form">
-        <button onClick={handleResendEmail} className="auth-button resend-button">
+        <button onClick={handleResendEmail} className="btn-submit resend-button">
           Resend Verification Email
         </button>
 

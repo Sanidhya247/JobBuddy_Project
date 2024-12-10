@@ -1,4 +1,6 @@
 ﻿using job_buddy_backend.DTO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace job_buddy_backend.Core.Interfaces
 {
