@@ -190,7 +190,7 @@ const JobApplication = () => {
             value={formData.firstName}
             onChange={handleChange}
             className="text-field-input"
-            aria-label="Enter your first name"
+            ariaLabel="Enter your first name"
             title="First Name"
           />
         </div>
@@ -205,7 +205,7 @@ const JobApplication = () => {
             value={formData.lastName}
             onChange={handleChange}
             className="text-field-input"
-            aria-label="Enter your last name"
+            ariaLabel="Enter your last name"
             title="Last Name"
           />
         </div>
@@ -251,7 +251,7 @@ const JobApplication = () => {
             value={formData.phone}
             onChange={handleChange}
             className="text-field-input"
-            aria-label="Enter your phone number"
+            ariaLabel="Enter your phone number"
             title="Phone Number"
           />
         </div>

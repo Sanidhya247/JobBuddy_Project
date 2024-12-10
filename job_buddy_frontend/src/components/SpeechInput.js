@@ -7,9 +7,11 @@ import "../../src/assets/css/speech.css";
 
 
 
-const SpeechInput = ({ label,type, name, value, onChange, error }) => {
+const SpeechInput = ({ label,type, name, value, onChange, error ,ariaLabel }) => {
   const { transcript, resetTranscript } = useSpeechRecognition();
   const [isListening , setIsListening] = useState(false);
+
+  console.log(name)
 
   const handleListening = () => {
     setIsListening(!isListening);
@@ -44,26 +46,31 @@ const SpeechInput = ({ label,type, name, value, onChange, error }) => {
         {label}
       </label>
       <input
+        aria-label={ariaLabel}
         type={type}
         name={name}
         value={value}
         onChange={onChange}
         placeholder={label}
+        htmlFor={name}
         className={`text-field-input ${error ? "input-error" : ""}`}
       />
-      <button type="button" className="voice-input-button" onClick={handleListening}>
+      <button aria-label="Start Listening" type="button" className="voice-input-button" onClick={handleListening}>
         <FaMicrophone />
       </button>
       <button
         type="button"
         className="btn-stop-listening bg-red"
+        aria-label="Stop Listening"
         onClick={stopListening}
         disabled={!transcript}
       >
         <FaStop />
       </button>
       {error && <span className="error-text">{error}</span>}
+    {/* </div> */}
     </div>
+
   );
 };
 

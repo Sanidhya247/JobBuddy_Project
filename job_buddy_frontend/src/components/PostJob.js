@@ -122,6 +122,7 @@ const PostJob = () => {
             value={formData.jobTitle}
             onChange={handleChange}
             placeholder="Job Title"
+            ariaLabel={"Enter Job Title"}
             className={`text-field-input ${errors.jobTitle ? "input-error" : ""}`}
           />
           {errors.jobTitle && <span className="error-text">{errors.jobTitle}</span>}
@@ -159,6 +160,7 @@ const PostJob = () => {
             value={formData.city}
             onChange={handleChange}
             placeholder="City"
+            ariaLabel={'Enter City'}
             className={`text-field-input ${errors.city ? "input-error" : ""}`}
           />
           {errors.city && <span className="error-text">{errors.city}</span>}
@@ -171,6 +173,7 @@ const PostJob = () => {
             name="province"
             value={formData.province}
             onChange={handleChange}
+            ariaLabel={'Enter Province'}
             placeholder="Province"
             className={`text-field-input ${errors.province ? "input-error" : ""}`}
           />
@@ -185,6 +188,7 @@ const PostJob = () => {
             value={formData.zipCode}
             onChange={handleChange}
             placeholder="Zip Code"
+            aria-label="Enter Zipcode"
             className={`text-field-input ${errors.zipCode ? "input-error" : ""}`}
           />
           {errors.zipCode && <span className="error-text">{errors.zipCode}</span>}
@@ -196,6 +200,7 @@ const PostJob = () => {
             name="salaryRange"
             value={formData.salaryRange}
             onChange={handleChange}
+            aria-label='Select salary range'
             className={`text-field-input ${errors.salaryRange ? "input-error" : ""}`}
           >
             <option value="">Select Salary Range</option>
@@ -219,6 +224,7 @@ const PostJob = () => {
               onChange={handleChange}
               className="text-field-input"
               required
+              aria-label="Select Job Type"
             >
               <option value="">Select Type Of Job</option>
               <option value="part-time">Part - Time</option>
@@ -237,6 +243,7 @@ const PostJob = () => {
               onChange={handleChange}
               className="text-field-input"
               required
+              aria-label="Select Work Type"
             >
               <option value="">Select Type Of Work</option>
               <option value="on-site">On-Site</option>
@@ -254,6 +261,7 @@ const PostJob = () => {
               checked={formData.termsAccepted}
               onChange={handleChange}
               className="w-auto"
+              aria-label="Accept Terms and Conditions"
             />Accept <Link to="#">Terms of Use</Link> and <Link to="#">Privacy Policy</Link></span>
           {/* </label> */}
           {errors.termsAccepted && <span className="error-text">{errors.termsAccepted}</span>}
