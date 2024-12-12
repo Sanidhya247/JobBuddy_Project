@@ -74,6 +74,7 @@ function App() {
         <Route path="/Payment-success/:userID?" element = {<PaymentSuccess/>} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-actions" element={<AdminActions />} />
+        <Route path="*" element={<Home />} />
       </Routes>
       <AccessibilityPanel />
       <Footer />
