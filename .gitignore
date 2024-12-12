@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+*.zip
+/.vs/JobBuddy_Project/v17
+/Job_buddy_backend.Tests/bin/Debug/net8.0
+/Job_buddy_backend.Tests/obj
+Job_buddy_backend.Tests/bin/Release/net8.0/CoverletSourceRootsMapping_Job_buddy_backend.Tests

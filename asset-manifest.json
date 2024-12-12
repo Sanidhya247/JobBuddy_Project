@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/JobBuddy_Project/static/css/main.59229468.css",
+    "main.js": "/JobBuddy_Project/static/js/main.1f89b02c.js",
+    "static/media/banner.jpg": "/JobBuddy_Project/static/media/banner.eb589506808fbf208501.jpg",
+    "static/media/contact_us.jpg": "/JobBuddy_Project/static/media/contact_us.6967d8eff7230ec0c1f0.jpg",
+    "static/media/logo-transparent.png": "/JobBuddy_Project/static/media/logo-transparent.a24d0af323ca200f17db.png",
+    "static/media/Logitech-Logo.png": "/JobBuddy_Project/static/media/Logitech-Logo.863c26e235756c71b901.png",
+    "static/media/Ford-Logo.png": "/JobBuddy_Project/static/media/Ford-Logo.2eef1c7f140415cd1ade.png",
+    "static/media/about_Us_Banner.jpg": "/JobBuddy_Project/static/media/about_Us_Banner.2e1c80ce51d44eecaef6.jpg",
+    "static/media/Meta-Logo.png": "/JobBuddy_Project/static/media/Meta-Logo.5ed034b237982247cea0.png",
+    "static/media/logo-transparent.svg": "/JobBuddy_Project/static/media/logo-transparent.702ea2f6e2d98db0c7639dc1cfd00225.svg",
+    "static/media/Timberland-Logo.png": "/JobBuddy_Project/static/media/Timberland-Logo.26acead449aca786396b.png",
+    "static/media/Amazon-Logo.png": "/JobBuddy_Project/static/media/Amazon-Logo.8d18db2733a5a9873e7c.png",
+    "static/media/Google-logo.png": "/JobBuddy_Project/static/media/Google-logo.c807ec60db269afac9ca.png",
+    "static/media/GitHub-logo.png": "/JobBuddy_Project/static/media/GitHub-logo.2cf8271f5763fd96e189.png",
+    "static/media/Blackberry-logo.png": "/JobBuddy_Project/static/media/Blackberry-logo.ddaa44bb76d326bfbe68.png",
+    "static/media/sign_up.png": "/JobBuddy_Project/static/media/sign_up.f247779654983d3d02e5.png",
+    "static/media/buildProfile.jpg": "/JobBuddy_Project/static/media/buildProfile.59d1753a4df60476b092.jpg",
+    "static/media/login.png": "/JobBuddy_Project/static/media/login.259d63e86ef512f2e34e.png",
+    "static/media/About_us.png": "/JobBuddy_Project/static/media/About_us.bcf1d7ef1543386f678b.png",
+    "static/media/bg-canadanumbers.png": "/JobBuddy_Project/static/media/bg-canadanumbers.fbd4e9c3e884d6c90e6a.png",
+    "index.html": "/JobBuddy_Project/index.html",
+    "main.59229468.css.map": "/JobBuddy_Project/static/css/main.59229468.css.map",
+    "main.1f89b02c.js.map": "/JobBuddy_Project/static/js/main.1f89b02c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.59229468.css",
+    "static/js/main.1f89b02c.js"
+  ]
+}
