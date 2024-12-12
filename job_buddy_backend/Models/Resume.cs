@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using static System.Net.Mime.MediaTypeNames;
+using job_buddy_backend.Models.UserModel;
 
 namespace job_buddy_backend.Models
 {
@@ -10,8 +11,6 @@ namespace job_buddy_backend.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ResumeID { get; set; }
-
-        public int UserID { get; set; }
 
         public string? Title { get; set; }
 
@@ -23,17 +22,13 @@ namespace job_buddy_backend.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+        public int UserID { get; set; }
 
-        public User JobSeeker { get; set; } = new User();
+        [ForeignKey("UserID")]
+        public User? JobSeeker { get; set; } 
         public ICollection<Application> Applications { get; set; } = new List<Application>();
         public ICollection<ATSScore> ATSScores { get; set; } = new List<ATSScore>();
         public ICollection<ResumeSkill> ResumeSkills { get; set; } = new List<ResumeSkill>();
 
-        public Resume()
-        {
-            Applications = Applications ?? new List<Application>();
-            ATSScores = ATSScores ?? new List<ATSScore>();
-            ResumeSkills = ResumeSkills ?? new List<ResumeSkill>();
-        }
     }
 }

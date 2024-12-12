@@ -85,6 +85,21 @@ namespace job_buddy_backend.Controllers
             }
         }
 
+        [HttpPost("{userId}/upload-cover-photo")]
+        public async Task<IActionResult> UploadCoverPhoto(int userId, [FromForm] CoverPhotoUploadDto pictureDto)
+        {
+            try
+            {
+                var profilePictureUrl = await _userProfileService.UploadCoverPhotoAsync(userId, pictureDto.CoverPhoto);
+                return Ok(ApiResponse<string>.SuccessResponse(profilePictureUrl, "Cover photo uploaded successfully."));
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while uploading the Cpover photo picture for user {userId}.");
+                return StatusCode(500, ApiResponse<string>.FailureResponse("An error occurred while uploading the Cover photo."));
+            }
+        }
+
         [HttpDelete("{userId}/remove-profile-picture")]
         public async Task<IActionResult> RemoveProfilePicture(int userId)
         {

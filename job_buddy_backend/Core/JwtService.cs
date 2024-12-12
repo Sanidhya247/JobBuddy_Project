@@ -1,6 +1,6 @@
 ﻿using job_buddy_backend.Core.Interfaces;
 using job_buddy_backend.Helpers;
-using job_buddy_backend.Models;
+using job_buddy_backend.Models.UserModel;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -33,13 +33,18 @@ namespace job_buddy_backend.Core
             // Get the key and credentials from the configuration
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(await _configurationService.GetSettingAsync("JwtKey")));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
+            DateTime currentTime = DateTime.UtcNow;
+            DateTime tokenExpiration = currentTime.AddMinutes(Convert.ToDouble(_configuration["JwtSettings:DurationInMinutes"]));
+            var expiryMinutes = Convert.ToDouble(_configuration["JwtSettings:DurationInMinutes"]);
+            var expiration = currentTime.AddMinutes(expiryMinutes);
+            Console.WriteLine($"Token generated at: {currentTime}");
+            Console.WriteLine($"Token expires at: {tokenExpiration}");
             // Define the token's expiration and other properties
             var token = new JwtSecurityToken(
                 issuer: _configuration["JwtSettings:Issuer"],
                 audience: _configuration["JwtSettings:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["JwtSettings:ExpiryMinutes"])),
+                expires: expiration,
                 signingCredentials: creds
             );
 

@@ -53,10 +53,19 @@ Open the backend project solution in either Visual studio(Preffered) or Visual s
 Go to Appsettings.json file and change the server name to your sql server name (for eg., "localhost","Your-laptopname"check for the server name in your ssms connections)
 ```
 ```bash 
-Go to Tools menu > Nuget package manager > Package manager console > run "update-database"
+Open Package manager console in Visual studio from Tools > Nuget Package Manager> Package manager console
 ```
 ```bash 
-If the build is successful, database is created for you for Job Buddy application. You can verify in SSMS.
+Run "Update-database"
+```
+```bash 
+JobBuddy DB is created in your sql server.
+```
+```bash 
+Or you can skip the above two steps and directly run the "JobbuddySqlScriptSprint2" file shared via submission folder in the SSMS to create the JobBuddyDb along with data needed to run application.
+```
+```bash 
+Now! Job buddy database with tables are created in your sql server.
 ```
 ```bash 
 Run the application from Visual studio by clicking on green button from below the menu section. The app starts on port 7113.
@@ -72,10 +81,183 @@ Npm install
 If your backend url runs on any other port than 7113, you need to configure the backend url in .env file in frontend
 ```
 ```bash 
-Run "Npm run" command 
+Run "Npm start" command 
 ```
 ```bash 
 Now UI application runs on localhost:3000
 ```
+## Demo
+
+https://drive.google.com/file/d/1oZIWdZHSxJO3qT2auFkxFE0SbhnUQ-OT/view?usp=drive_link
+
+# API Documentation - Swagger
+## Version: 1.0
+
+##Below are the few api endpoints, for more details on the API documentation please visit [Swagger-API documentation](https://localhost:7113/swagger/index.html)
+
+### /api/Auth/register
+
+#### POST
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| fullName | body |  | Yes | string |
+| email | body |  | Yes | string |
+| password | body |  | Yes | string |
+| role | body |  | Yes | string |
+| phoneNumber | body |  | No | string |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
+### /api/Auth/login
+
+#### POST
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| email | body |  | Yes | string |
+| password | body |  | Yes | string |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
+### /api/Auth/forgot-password
+
+#### POST
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| email | body |  | Yes | string |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
+### /api/Auth/confirm-email
+
+#### GET
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| token | query |  | No | string |
+| userId | query |  | No | integer |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
+### /api/Auth/reset-password
+
+#### POST
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| token | query |  | No | string |
+| userId | query |  | No | integer |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
+### /api/Auth/verify-token
+
+#### GET
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
+### /api/Configuration/{key}
+
+#### GET
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| key | path |  | Yes | string |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
+#### DELETE
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| key | path |  | Yes | string |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
+### /api/Configuration/all
+
+#### GET
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
+### /api/Configuration/create
+
+#### POST
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| key | body |  | Yes | string |
+| value | body |  | Yes | string |
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
+### /api/Configuration/update
+
+#### PUT
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
+### /api/Configuration/clear-cache
+
+#### POST
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+
 
 

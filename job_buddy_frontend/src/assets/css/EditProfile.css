@@ -1,0 +1,108 @@
+:root {
+  --primary-color: #254336;
+  --secondary-color: #d1d1bd;
+}
+
+.edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #f6f8fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .edit-profile-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    color: #24292e;
+    margin-bottom: 10px;
+  }
+  
+  .edit-profile-form input,
+  .edit-profile-form textarea {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 14px;
+    border: 1px solid #d1d5da;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+  }
+  
+  .edit-profile-form input:focus,
+  .edit-profile-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+  }
+  
+  .toggle-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  h3 {
+    font-size: 18px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+  }
+  
+  .add-btn,
+  .remove-btn {
+    display: flex;
+    align-items: center;
+    color: var(--primary-color);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 5px 0 20px;
+  }
+  
+  .add-btn:hover,
+  .remove-btn:hover {
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+  }
+  
+  .save-profile-btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: center;
+    margin-top: 20px;
+  }
+  
+  .save-profile-btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+  }
+  /* High Contrast Mode */
+.high-contrast .edit-profile-form {
+  background-color: #000000;
+  color: #ffff00;
+  border: 2px solid #ffff00;
+}
+
+.high-contrast .edit-profile-form input,
+.high-contrast .edit-profile-form textarea {
+  background-color: #333333;
+  color: #ffffff;
+  border: 2px solid #ffff00;
+}
+
+.high-contrast .save-profile-btn {
+  background-color: #000000;
+  color: #ffff00;
+  border: 2px solid #ffff00;
+}

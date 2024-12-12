@@ -1,0 +1,172 @@
+/* ATS Scoring Component Styles - Modern and Visually Appealing */
+
+.ats-scoring-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .ats-scoring-container:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  }
+  
+  .ats-scoring-container h2 {
+    text-align: center;
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .ats-form-group {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .ats-form-group label {
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .ats-form-group textarea {
+    width: 100%;
+    height: 100px;
+    padding: 15px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.3s;
+  }
+  
+  .ats-form-group textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+  }
+  
+  .ats-form-group input[type="file"] {
+    font-size: 1rem;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .ats-error-message {
+    color: #ff4d4f;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  .create-btn{
+    width: 100%;
+  }
+  .ats-submit-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .ats-submit-button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
+  }
+  
+  .ats-score-result {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #e8f4ff;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .ats-score-result h3 {
+    font-size: 1.5rem;
+    color: #007bff;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  /* Modal Overlay Styling */
+.ats-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Modal Content Styling */
+.ats-modal {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close Button Styling */
+.close-modal-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4d4f;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.close-modal-btn:hover {
+    background: #ff1a1d;
+}
+
+/* ATS Modal Content Adjustments */
+.ats-modal-content {
+    text-align: center;
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+
+  

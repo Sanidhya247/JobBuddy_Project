@@ -79,7 +79,13 @@ export const AuthProvider = ({ children }) => {
       if (data.success) {
         setToken(data.data.token);
         localStorage.setItem("authToken", data.data.token);
-        setUser(data.data.user);
+        localStorage.setItem("role", data.data.user.role);
+        const decodedToken = JSON.parse(atob(data.data.token.split('.')[1]));
+        console.log("user profile", data.data.user); 
+        setUser({user: data.data.user, id: decodedToken.UserID,
+          email: decodedToken.email,
+          role: data.data.user.role,
+          fullName: decodedToken.fullName,});
         setError(null);
         setLoggedOut(false); // Reset loggedOut flag on successful login
         hasCheckedToken.current = false; // Reset token check flag

@@ -27,4 +27,40 @@ code {
   --link-hover-color: #1e3b2f;
 }
 
+/* Existing styles for high contrast */
+.high-contrast {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.high-contrast a {
+  color: #ff0;
+}
+
+.high-contrast button {
+  background-color: #ff0;
+  color: #000;
+}
+
+/* Grayscale Mode */
+.grayscale {
+  filter: grayscale(100%);
+}
+
+/* Dyslexia-Friendly Font */
+.dyslexia-font {
+  font-family: 'OpenDyslexic', Arial, sans-serif;
+}
+
+/* Accessibility Button Styles */
+.accessibility-button {
+  border: none;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
 
