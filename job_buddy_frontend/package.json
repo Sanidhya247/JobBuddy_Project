@@ -2,7 +2,7 @@
   "name": "job_buddy_frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://HemanthTech-freak.github.io/JobBuddy_Project",
+  "homepage": "https://HemanthTech-freak.github.io/JobBuddy_Project/job_buddy_frontend",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
@@ -31,11 +31,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build" 
+    "predeploy": "npm --prefix job_buddy_frontend run build", 
+    "deploy": "gh-pages -d job_buddy_frontend/build" 
   },
   "eslintConfig": {
     "extends": [
